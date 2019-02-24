@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <!-- SEO -->
-    <meta name="description" content="учебник scipy, пакет программ для научных вычислений, специальные функции, интегрирование, оптимизация, интерполяция, преобразования Фурье, цифровая обработка сигналов, линейная алгебра, проблема собственных значений разреженных матриц, алгоритмы на разреженных графах, пространственные структуры данных и алгоритмы, статистика, обработка многомерных данных, numpy">
+    <meta name="description" content="scipy, scipy python, numpy scipy, import scipy, scipy функции, scipy пример, scipy питон, scipy python 3, библиотека scipy, scipy examples, scipy optimize, scipy minimize, scipy solve, scipy linalg solve">
     <meta name="author" content="labintsevai">
     <meta name="url" content="http://www.scipy-tutorial.ru">
     <meta name="copyright" content="labintsevai">
@@ -99,7 +99,7 @@
 	  <div class="my-detail">
 		
 		<div class="white-spacing">
-			<h1><a href="https://docs.scipy.org/doc/scipy/reference/tutorial/index.html">SciPy.org</a></h1>
+			<h1><a href="http://www.scipy-tutorial.ru">scipy-tutorial.ru</a></h1>
 			<span>Научные вычисления</span>
 		</div> 
 	   
@@ -125,7 +125,7 @@
 	
 	
 	<div class="sub-title">
-		<h2><a href="index.html">Содержание</h2></a>
+		<h2><a href="index.html">Содержание</a></h2>
 	</div>
 	
 	
@@ -942,7 +942,7 @@ $$ J_{i,3} = \frac{\partial f_i}{\partial x_3} = - \frac{x_0 (u_i^2 + u_i x_1)}{
 <h4>Минимизация без ограничений </h4>
 <div>
 	<p>
-В scipy используются два метода минимизации одномерной функции: brent и golden. Метод golden - используется редко, в основном только для академических целей. Метод может быть выбран с помощью параметра функции minim_scalar. Метод brent использует алгоритм Брента для определения минимума. Желательно явно указывать параметр bracket, который определяет интервал поиска минимума. Скобка (bracket) является тройкой значений аргумента `\left (a, b, c \right)` для которой справедливо ` f(a) \&q; f(b) \&q; f(c) \&q;` и a \&q; b \&q; c , Если скобка не задана, то в качестве альтернативы можно выбрать две стартовые точки. Из этих точек будет найдена скобка, с помощью простого алгоритма перебора. Если две исходные точки не указаны, по умолчанию будет использоваться 0 и 1 (это может быть плохим выбором и привести к неожиданному результату).<br>
+В scipy используются два метода минимизации одномерной функции: brent и golden. Метод golden - используется редко, в основном только для академических целей. Метод может быть выбран с помощью параметра функции minim_scalar. Метод brent использует алгоритм Брента для определения минимума. Желательно явно указывать параметр bracket, который определяет интервал поиска минимума. Скобка (bracket) является тройкой значений аргумента `\left (a, b, c \right)` для которой справедливо  f(a)  f(b)  f(c)  и a  b  c . Если скобка не задана, то в качестве альтернативы можно выбрать две стартовые точки. Из этих точек будет найдена скобка, с помощью простого алгоритма перебора. Если две исходные точки не указаны, по умолчанию будет использоваться 0 и 1 (это может быть плохим выбором и привести к неожиданному результату).<br>
 
 Пример:
 	</p>
@@ -1050,7 +1050,7 @@ array([1., 1., 1., 1., 1.])
 ...         for testx in [bestx - stepsize, bestx + stepsize]:
 ...             testy = fun(testx, *args)
 ...             funcalls += 1
-...             if testy &q; besty:
+...             if testy &  besty:
 ...                 besty = testy
 ...                 bestx = testx
 ...                 improved = True
@@ -1400,12 +1400,12 @@ Phys. 193, 357 (2004). doi:10.1016/j.jcp.2003.08.010
 	   <li><a href="about.html">О сайте</a></li>
 	</ul>
 	
-  <p>© Copyright 2016 DevBlog. All rights reserved</p>
+  <p>© Copyright 2019. All rights reserved. </p>
   
 						  
-  <!-- UiPasta Credit Start -->
-  <div class="uipasta-credit">Design By <a href="http://www.uipasta.com" target="_blank">UiPasta</a></div>
-  <!-- UiPasta Credit End -->
+  <!-- UiPasta   Credit Start -->
+  <div class="UiPasta  -credit">Design By UiPasta   </div>
+  <!-- UiPasta   Credit End -->
   
    
  </footer>
@@ -1432,7 +1432,7 @@ Phys. 193, 357 (2004). doi:10.1016/j.jcp.2003.08.010
 <h4>Read Also</h4>
 <a href="#">How to make your company website based on bootstrap framework...</a>
 </div>
-<!-- Endpage Box (Popup When Scroll Down) End -->
+< !-- Endpage Box (Popup When Scroll Down) End -->
 
 
 

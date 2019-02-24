@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <!-- SEO -->
-    <meta name="description" content="учебник scipy, пакет программ для научных вычислений, специальные функции, интегрирование, оптимизация, интерполяция, преобразования Фурье, цифровая обработка сигналов, линейная алгебра, проблема собственных значений разреженных матриц, алгоритмы на разреженных графах, пространственные структуры данных и алгоритмы, статистика, обработка многомерных данных, numpy">
+    <meta name="description" content="scipy, scipy python, numpy scipy, import scipy, scipy функции, scipy пример, scipy питон, scipy python 3, библиотека scipy, scipy examples, scipy signal, scipy cosine">
     <meta name="author" content="labintsevai">
     <meta name="url" content="http://www.scipy-tutorial.ru">
     <meta name="copyright" content="labintsevai">
@@ -92,7 +92,7 @@
 <div class="my-detail">
 
 <div class="white-spacing">
-	<h1><a href="https://docs.scipy.org/doc/scipy/reference/tutorial/index.html">SciPy.org</a></h1>
+	<h1><a href="http://www.scipy-tutorial.ru">scipy-tutorial.ru</a></h1>
 	<span>Научные вычисления</span>
 </div> 
 
@@ -113,7 +113,7 @@
 <div class="row">
 	
 <div class="sub-title">
-	<h2><a href="index.html">Содержание</h2></a>
+	<h2><a href="index.html">Содержание</a></h2>
  </div>
 
 <div class="col-md-12 content-page">
@@ -812,7 +812,7 @@ $$
 	<p>
 Процедура scipy.signal.periodogram реализует метод оценки спектральной плотности с использованием метода периодограмм.
 <br>
-В приведенном ниже примере вычисляется периодограмма синусоидального сигнала с белым гауссовским шумом.
+В приведенном ниже примере вычисляется периодограмма синусоидального сигнала с гауссовским шумом.
 	</p>
 
 	<div class="margin-top-40 margin-bottom-40">  
@@ -830,13 +830,13 @@ $$
    >>> x = amp*np.sin(2*np.pi*freq*time)
    >>> x += np.random.normal(scale=np.sqrt(noise_power), size=time.shape)
 
-   >>> f, Pwelch_spec = signal.welch(x, fs, scaling='spectrum')
+>>> f, Pper_spec = signal.periodogram(x, fs, 'flattop', scaling='spectrum')
 
-   >>> plt.semilogy(f, Pwelch_spec)
-   >>> plt.xlabel('frequency [Hz]')
-   >>> plt.ylabel('PSD')
-   >>> plt.grid()
-   >>> plt.show()
+>>> plt.semilogy(f, Pper_spec)
+>>> plt.xlabel('frequency [Hz]')
+>>> plt.ylabel('PSD')
+>>> plt.grid()
+>>> plt.show()
 	</pre>
 	</div>
 <img src="img/signal-8.png">
@@ -986,12 +986,12 @@ Some further reading and related software:<br>
 	   <li><a href="about.html">О сайте</a></li>
 	</ul>
 	
-  <p>© Copyright 2016 DevBlog. All rights reserved</p>
+  <p>© Copyright 2019. All rights reserved. </p>
   
 						  
-  <!-- UiPasta Credit Start -->
-  <div class="uipasta-credit">Design By <a href="http://www.uipasta.com" target="_blank">UiPasta</a></div>
-  <!-- UiPasta Credit End -->
+  <!-- UiPasta   Credit Start -->
+  <div class="UiPasta  -credit">Design By UiPasta   </div>
+  <!-- UiPasta   Credit End -->
   
    
  </footer>
@@ -1016,7 +1016,7 @@ Some further reading and related software:<br>
        <h4>Read Also</h4>
        <a href="#">How to make your company website based on bootstrap framework...</a>
       </div>
-      <!-- Endpage Box (Popup When Scroll Down) End -->
+      < !-- Endpage Box (Popup When Scroll Down) End -->
       
     
     
