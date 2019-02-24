@@ -1,0 +1,702 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    
+    <!-- Meta Tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- SEO -->
+    <meta name="description" content="учебник scipy, пакет программ для научных вычислений, специальные функции, интегрирование, оптимизация, интерполяция, преобразования Фурье, цифровая обработка сигналов, линейная алгебра, проблема собственных значений разреженных матриц, алгоритмы на разреженных графах, пространственные структуры данных и алгоритмы, статистика, обработка многомерных данных, numpy">
+    <meta name="author" content="labintsevai">
+    <meta name="url" content="http://www.scipy-tutorial.ru">
+    <meta name="copyright" content="labintsevai">
+    <meta name="robots" content="index,follow">
+	
+	
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(51612041, "init", {
+        id:51612041,
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/51612041" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+    
+    <title>SciPy Интерполяция</title>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="144x144" type="image/x-icon" href="images/favicon/apple-touch-icon.png">
+    
+    <!-- All CSS Plugins -->
+    <link rel="stylesheet" type="text/css" href="css/plugin.css">
+    
+    <!-- Main CSS Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+    <!-- Google Web Fonts  -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700">
+    
+    <!-- Syntax Highlighter  -->
+    <link rel="stylesheet" type="text/css" href="css/syntax/shCore.css">
+    <link rel="stylesheet" type="text/css" href="css/syntax/shThemeDefault.css">
+    
+        	<!-- MathJax support-->
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML" async>
+</script>
+
+    <!-- HTML5 shiv and Respond.js support IE8 or Older for HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+	   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+
+  </head>
+
+ <body>
+
+	<!-- Preloader Start -->
+     <div class="preloader">
+	   <div class="rounder"></div>
+      </div>
+      <!-- Preloader End -->
+      
+      
+    
+    
+<div id="main">
+<div class="container">
+<div class="row">
+
+<!-- About Me (Left Sidebar) Start -->
+<div class="col-md-3">
+<div class="about-fixed">
+
+<div class="my-pic">
+<img src="images/pic/scipyLogo.png" alt="">
+</div>
+
+
+
+<div class="my-detail">
+
+<div class="white-spacing">
+	<h1><a href="https://docs.scipy.org/doc/scipy/reference/tutorial/index.html">SciPy.org</a></h1>
+	<span>Научные вычисления</span>
+</div> 
+
+<ul class="social-icon">
+ <li><a href="https://www.facebook.com/scipyconf" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a></li>
+ <li><a href="https://twitter.com/hashtag/scipy" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a></li>
+<li><a href="https://github.com/scipy" target="_blank" class="github"><i class="fa fa-github"></i></a></li>
+</ul>
+
+</div>
+</div>
+</div>
+<!-- About Me (Left Sidebar) End -->
+
+<!-- Blog Post (Right Sidebar) Start -->
+<div class="col-md-9">
+<div class="col-md-12 page-body">
+<div class="row">
+	
+<div class="sub-title">
+	<h2><a href="index.html">Содержание</h2></a>
+ </div>
+
+<div class="col-md-12 content-page">
+	<div class="col-md-12 blog-post">
+
+	<!-- Post Headline Start -->
+	<div class="post-title">
+	<ul class="simple">
+	<h3>Интерполяция (scipy.interpolate)(stub)</h3>
+	<li><a class="reference internal" href="#id1">Интерполяция функции одной переменной</a></li>
+	<li><a class="reference internal" href="#id2">Интерполяция функции нескольких переменных <a></li>
+	<li><a class="reference internal" href="#id3">Интерполяция сплайнами</a>
+		<ul class="simple">
+		<li>Одномерная интерполяция сплайнами в процедурном стиле </li>
+		<li>Одномерная интерполяция сплайнами в объектно ориентированном стиле  </li>
+		<li>Двумерная интерполяция сплайнами в процедурном стиле </li>
+		<li>Двумерная интерполяция сплайнами в объектно ориентированном стиле </li>
+		</ul>
+	</li>
+	<li><a class="reference internal" href="#id4">Радиально базисные функции в задачах сглаживания / интерполяции</a>
+		<ul class="simple">
+		<li>Пример 1-d </li>
+		<li>Пример 2-d </li>
+		</ul>
+	</li>
+	
+	</ul>
+	</li>
+	</ul>
+	</div>
+	   <!-- Post Headline End -->
+	   
+
+	<p>
+В SciPy имеется несколько общих интерполяционных средств для данных в размерах 1, 2 и более:
+
+Класс, представляющий интерполятор (: class: `interp1d`) в 1-D, предлагающий несколько методов интерполяции.
+Удобная функция: func: `griddata`, предлагающая простой интерфейс для интерполяции в N измерениях (N = 1, 2, 3, 4, ...). Также доступен объектно-ориентированный интерфейс для основных подпрограмм.
+Функции для 1- и 2-мерной (сглаженной) кубической сплайновой интерполяции, основанной на библиотеке FORTRAN FITPACK. Для библиотеки FITPACK существуют как процедурные, так и объектно-ориентированные интерфейсы.
+Интерполяция с использованием радиальных базисных функций.
+	</p>
+
+<div class="section" id="id1">
+<h3>1-D интерполяция (interp1d)</h3>
+	<p>
+Класс interp1d в scipy.interpolate является удобным способом создания функции на основе фиксированных точек данных, которые могут быть оценены в любом месте домена, определенного данными, с использованием линейной интерполяции. Экземпляр этого класса создается путем передачи 1-d векторов, содержащих данные. Экземпляр этого класса определяет метод __call__ и поэтому может обрабатываться как функция, которая интерполирует между известными значениями данных для получения неизвестных значений (для справки также имеется docstring). Поведение на границе может быть указано во время создания. Следующий пример демонстрирует его использование для линейной и кубической сплайновой интерполяции:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> from scipy.interpolate import interp1d
+
+   >>> x = np.linspace (0, 10, num = 11, endpoint = True)
+   >>> y = np.cos (-x ** 2 / 9.0)
+   >>> f = interp1d (x, y)
+   >>> f2 = interp1d (x, y, kind = 'кубик)
+
+   >>> xnew = np.linspace (0, 10, num = 41, endpoint = True)
+   >>> import matplotlib.pyplot как plt
+   >>> plt.plot (x, y, 'o', xnew, f (xnew), '-', xnew, f2 (xnew), '-')
+   >>> plt.legend (['data', 'linear', 'cub'], loc = 'best')
+   >>> plt.show ()
+	</pre>
+	</div>
+	
+   
+	<p>
+Другой набор интерполяций в interp1d ближайший, предыдущий и следующий, где они возвращают ближайшую, предыдущую или следующую точку вдоль оси x. Ближайший и следующий можно рассматривать как частный случай причинного интерполяционного фильтра. Следующий пример демонстрирует их использование, используя те же данные, что и в предыдущем примере:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> from scipy.interpolate import interp1d
+
+>>> x = np.linspace (0, 10, num = 11, endpoint = True)
+>>> y = np.cos (-x ** 2 / 9.0)
+>>> f1 = interp1d (x, y, kind = 'ближайшее')
+>>> f2 = interp1d (x, y, kind = 'previous')
+>>> f3 = interp1d (x, y, kind = 'next')
+
+>>> xnew = np.linspace (0, 10, num = 1001, endpoint = True)
+>>> import matplotlib.pyplot как plt
+>>> plt.plot (x, y, 'o')
+>>> plt.plot (xnew, f1 (xnew), '-', xnew, f2 (xnew), '-', xnew, f3 (xnew), ':')
+>>> plt.legend (['data', 'ближайшее', 'предыдущее', 'next'], loc = 'best')
+>>> plt.show ()
+	</pre>
+	</div>
+	
+ </div>
+   
+   <div class="section" id="id2">
+<h3>Многомерная интерполяция данных (: func: `griddata`)</h3>
+
+	<p>
+Предположим, что у вас многомерные данные, например, для базовой функции f (x, y) вы знаете только значения в точках (x [i], y [i]), которые не образуют регулярную сетку.
+
+Предположим, что мы хотим интерполировать двухмерную функцию
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> def func (x, y):
+    ... return x * (1-x) * np.cos (4 * np.pi * x) * np.sin (4 * np.pi * y ** 2) ** 2
+	</pre>
+	</div>
+	
+	<p>
+    на сетке в [0, 1] x [0, 1]
+	</p>
+
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> grid_x, grid_y = np.mgrid [0: 1: 100j, 0: 1: 200j]
+	</pre>
+	</div>
+	
+	<p>
+    но мы знаем только его значения в 1000 точках данных:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> points = np.random.rand (1000, 2)
+    >>> values ​​= func (точки [:, 0], точки [:, 1])
+	</pre>
+	</div>
+	
+	<p> 
+    Это можно сделать с помощью «griddata» - ниже мы пробуем все
+    методы интерполяции:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> from scipy.interpolate import griddata
+    >>> grid_z0 = griddata (точки, значения, (grid_x, grid_y), метод = 'ближайший')
+    >>> grid_z1 = griddata (точки, значения, (grid_x, grid_y), метод = 'linear')
+    >>> grid_z2 = griddata (точки, значения, (grid_x, grid_y), метод = 'кубик')
+	</pre>
+	</div>
+	
+	<p> 
+    Можно видеть, что точный результат воспроизводится всеми
+    в некоторой степени, но для этой гладкой функции кусочно
+    кубическая интерполяция дает наилучшие результаты:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">	
+    >>> import matplotlib.pyplot как plt
+    >>> plt.subplot (221)
+    >>> plt.imshow (func (grid_x, grid_y) .T, extent = (0,1,0,1), origin = 'lower')
+    >>> plt.plot (точки [:, 0], точки [:, 1], 'k.', ms = 1)
+    >>> plt.title («Оригинал»)
+    >>> plt.subplot (222)
+    >>> plt.imshow (grid_z0.T, extent = (0,1,0,1), origin = 'lower')
+    >>> plt.title ('Ближайший')
+    >>> plt.subplot (223)
+    >>> plt.imshow (grid_z1.T, extent = (0,1,0,1), origin = 'lower')
+    >>> plt.title («Линейный»)
+    >>> plt.subplot (224)
+    >>> plt.imshow (grid_z2.T, extent = (0,1,0,1), origin = 'lower')
+    >>> plt.title ('Cubic')
+    >>> plt.gcf (). set_size_inches (6, 6)
+    >>> plt.show ()
+	</pre>
+	</div>
+	
+</div>
+
+<div class="section" id="id3">
+<h3>Сплайн-интерполяция</h3>
+
+<h4>Сплайн-интерполяция в 1-й: Процедурная (interpolate.splXXX)</h4>
+	<p> 
+Сплайн-интерполяция требует двух важных шагов: (1) вычисляется сплайн-представление кривой и (2) сплайн оценивается в нужных точках. Чтобы найти сплайн-представление, существует два разных способа представления кривой и получения (сглаживания) коэффициентов сплайна: непосредственно и параметрически. Прямой метод находит сплайн-представление кривой в двумерной плоскости с использованием функции: obj: `splrep`. Первые два аргумента являются единственными, которые требуются, и они обеспечивают компоненты x и y кривой. Нормальным выходом является 3-кортеж, \ left (t, c, k \ right), содержащий узловые точки, t, коэффициенты c и порядок k сплайна. По умолчанию сплайн-порядок является кубическим, но это можно изменить с помощью ключевого слова ввода, k.
+<br>
+Для кривых в N-мерном пространстве функция: obj: `splprep` позволяет параметрически определять кривую. Для этой функции требуется только 1 входной аргумент. Этот ввод представляет собой список N-массивов, представляющих кривую в N-мерном пространстве. Длина каждого массива - это количество точек кривой, и каждый массив предоставляет один компонент N-мерной точки данных. Параметрическая переменная задается аргументом ключевого слова u, который по умолчанию соответствует монотонной последовательности с одинаковым интервалом между 0 и 1. Выход по умолчанию состоит из двух объектов: 3-кортежа, \ left (t, c, k \ right), содержащего сплайн-представление и переменную параметра u.
+<br>
+Параметр ключевого слова s используется для указания количества сглаживания для выполнения во время сплайна. Значение по умолчанию s равно s = m- \ sqrt {2m}, где m - количество подходящих точек данных. Поэтому, если сглаживание не требуется, значение \ mathbf {s} = 0 должно быть передано подпрограммам.
+<br>
+После определения сплайн-представления данных функции доступны для оценки сплайна (: func: `splev`) и его производных (: func:` splev`,: func: `spalde`) в любой точке, а интеграл сплайна между любыми двумя точками (: func: `splint`). Кроме того, для кубических сплайнов (k = 3) с 8 или более узлами корни сплайна можно оценить (: func: `sproot`). Эти функции показаны в следующем примере.
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">	
+>>> import numpy как np
+>>> import matplotlib.pyplot как plt
+>>> от интерполяции импортного импорта
+	</pre>
+	</div>
+	
+Кубический сплайн-
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> x = np.arange (0, 2 * np.pi + np.pi / 4, 2 * np.pi / 8)
+>>> y = np.sin (x)
+>>> tck = interpolate.splrep (x, y, s = 0)
+>>> xnew = np.arange (0, 2 * np.pi, np.pi / 50)
+>>> ynew = interpolate.splev (xnew, tck, der = 0)
+
+>>> plt.figure ()
+>>> plt.plot (x, y, 'x', xnew, ynew, xnew, np.sin (xnew), x, y, 'b')
+>>> plt.legend (['Linear', 'Cubic Spline', 'True'])
+>>> plt.axis ([- 0,05, 6,33, -1,05, 1,05])
+>>> plt.title («Интервация кубического сплайна»)
+>>> plt.show ()
+	</pre>
+	</div>
+	
+Производные сплайна
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> yder = interpolate.splev (xnew, tck, der = 1)
+>>> plt.figure ()
+>>> plt.plot (xnew, yder, xnew, np.cos (xnew), '-')
+>>> plt.legend (['Cubic Spline', 'True'])
+>>> plt.axis ([- 0,05, 6,33, -1,05, 1,05])
+>>> plt.title («Производная оценка от сплайна»)
+>>> plt.show ()
+	</pre>
+	</div>
+	
+Интеграл сплайна
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> def integ (x, tck, constant = -1):
+... x = np.atleast_1d (x)
+... out = np.zeros (x.shape, dtype = x.dtype)
+... для n в диапазоне (len (out)):
+... out [n] = interpolate.splint (0, x [n], tck)
+... out + = constant
+... вернуть
+
+>>> yint = integ (xnew, tck)
+>>> plt.figure ()
+>>> plt.plot (xnew, yint, xnew, -np.cos (xnew), '-')
+>>> plt.legend (['Cubic Spline', 'True'])
+>>> plt.axis ([- 0,05, 6,33, -1,05, 1,05])
+>>> plt.title («Интегральная оценка из сплайна»)
+>>> plt.show ()
+	</pre>
+	</div>
+	
+Корни сплайна
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> interpolate.sproot (tck)
+Массив ([3,1416])
+	</pre>
+	</div>
+	
+	<p> 
+Обратите внимание, что `sproot` не смог найти очевидного решения на краю
+интервал аппроксимации: math: `x = 0`. Если мы определим сплайн на слегка
+больший интервал, мы восстанавливаем оба корня: math: `x = 0` и: math:` x = 2 \ pi`:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> x = np.linspace (-np.pi / 4, 2. * np.pi + np.pi / 4, 21)
+>>> y = np.sin (x)
+>>> tck = interpolate.splrep (x, y, s = 0)
+>>> interpolate.sproot (tck)
+массив ([0, 3.1416])
+	</pre>
+	</div>
+	
+	<p>
+Параметрический сплайн
+	</p>
+
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">	
+>>> t = np.arange (0, 1.1, .1)
+>>> x = np.sin (2 * np.pi * t)
+>>> y = np.cos (2 * np.pi * t)
+>>> tck, u = interpolate.splprep ([x, y], s = 0)
+>>> unew = np.arange (0, 1.01, 0.01)
+>>> out = interpolate.splev (unew, tck)
+>>> plt.figure ()
+>>> plt.plot (x, y, 'x', out [0], out [1], np.sin (2 * np.pi * unew), np.cos (2 * np.pi * unew) , x, y, 'b')
+>>> plt.legend (['Linear', 'Cubic Spline', 'True'])
+>>> plt.axis ([- 1,05, 1,05, -1,05, 1,05])
+>>> plt.title («Сплайн параметрически определенной кривой»)
+>>> plt.show ()
+	</pre>
+	</div>
+	
+<h4>Сплайн-интерполяция в 1-й: Объектно-ориентированная (: class: `UnivariateSpline`)</h4>
+
+	<p>
+Возможности сплайн-фитинга, описанные выше, также доступны через объектно-ориентированный интерфейс. Одномерные сплайны являются объектами класса UnivariateSpline и создаются с компонентами x и y кривой, представленными в качестве аргументов конструктору. Класс определяет: meth: `__call__ <UnivariateSpline .__ call __>`, позволяющий вызывать объект со значениями оси x, на которых должен оцениваться сплайн, возвращая интерполированные значения y. Это показано в примере ниже для подкласса InterpolatedUnivariateSpline. В объектах UnivariateSpline также доступны методы: meth: `integer <UnivariateSpline.integral>`,: meth: `производные <UnivariateSpline.derivatives>` и: meth: `roots <UnivariateSpline.roots>, позволяющие определенные интегралы, производные , и корни, которые будут вычислены для сплайна.
+<br>
+Класс UnivariateSpline также можно использовать для сглаживания данных путем предоставления ненулевого значения параметра сглаживания s с тем же значением, что и ключевое слово s описанной выше функции: obj: `splrep`. Это приводит к сплайну, который имеет меньше узлов, чем количество точек данных, и, следовательно, уже не является строго интерполирующим сплайном, а скорее сглаживающим сплайном. Если это нежелательно, доступен класс InterpolatedUnivariateSpline. Это подкласс UnivariateSpline, который всегда проходит через все точки (что эквивалентно тому, что параметр сглаживания равен 0). Этот класс показан в приведенном ниже примере.
+<br>
+Класс LSQUnivariateSpline является другим подклассом UnivariateSpline. Он позволяет пользователю явно указывать количество и расположение внутренних узлов с параметром t. Это позволяет создавать настраиваемые сплайны с нелинейным интервалом, интерполировать в некоторых областях и сглаживать в других или изменять характер сплайна.
+	</p>
+
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> import numpy как np
+   >>> import matplotlib.pyplot как plt
+   >>> от интерполяции импортного импорта
+	</pre>
+	</div>
+	
+	<p>
+   InterpolatedUnivariateSpline
+	</p>
+   	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> x = np.arange (0, 2 * np.pi + np.pi / 4, 2 * np.pi / 8)
+   >>> y = np.sin (x)
+   >>> s = интерполяция .InterpolatedUnivariateSpline (x, y)
+   >>> xnew = np.arange (0, 2 * np.pi, np.pi / 50)
+   >>> ynew = s (xnew)
+
+   >>> plt.figure ()
+   >>> plt.plot (x, y, 'x', xnew, ynew, xnew, np.sin (xnew), x, y, 'b')
+   >>> plt.legend (['Linear', 'InterpolatedUnivariateSpline', 'True'])
+   >>> plt.axis ([- 0,05, 6,33, -1,05, 1,05])
+   >>> plt.title ('InterpolatedUnivariateSpline')
+   >>> plt.show ()
+	</pre>
+	</div>
+	
+   <p>
+   LSQUnivarateSpline с неравномерными узлами
+	</p>
+		
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> t = [np.pi / 2-.1, np.pi / 2 + .1, 3 * np.pi / 2-.1, 3 * np.pi / 2 + .1]
+   >>> s = интерполяция.SQUnivariateSpline (x, y, t, k = 2)
+   >>> ynew = s (xnew)
+
+   >>> plt.figure ()
+   >>> plt.plot (x, y, 'x', xnew, ynew, xnew, np.sin (xnew), x, y, 'b')
+   >>> plt.legend (['Linear', 'LSQUnivariateSpline', 'True'])
+   >>> plt.axis ([- 0,05, 6,33, -1,05, 1,05])
+   >>> plt.title («Сплайн с указанными внутренними узлами»)
+   >>> plt.show ()
+	</pre>
+	</div>
+	
+
+<h4>Двумерное представление сплайнов в процедурном стиле (bisplrep)</h4>
+
+	<p>
+Для (гладкого) сплайн-фитинга на двумерную поверхность доступна функция: func: `bisplrep`. Эта функция принимает по мере необходимости входы 1-D массивов x, y и z, которые представляют точки на поверхности z = f \ left (x, y \ right). Выход по умолчанию - это список \ left [tx, ty, c, kx, ky \ right], чьи записи представляют соответственно компоненты компонентов узла, коэффициенты сплайна и порядок сплайна в каждой координате. Удобно хранить этот список в одном объекте, tck, чтобы он легко передавался функции: obj: `bisplev`. Ключевое слово, s, может использоваться для изменения количества сглаживания, выполняемого на данных, при определении соответствующего сплайна. Значение по умолчанию: s = m- \ sqrt {2m}, где m - количество точек данных в векторах x, y и z. В результате, если сглаживание не требуется, то s = 0 следует передать: obj: `bisplrep`.
+<br>
+Для оценки двумерного сплайна и его частных производных (с точностью до порядка сплайна) требуется функция: obj: `bisplev`. Эта функция принимает в качестве первых двух аргументов два 1-D массива, чье кросс-произведение определяет область, по которой можно оценить сплайн. Третий аргумент - это список tck, возвращаемый из: obj: `bisplrep`. При желании четвертый и пятый аргументы обеспечивают порядки частичной производной в направлениях х и у соответственно.
+<br>
+Важно отметить, что двумерную интерполяцию не следует использовать для определения сплайн-представления изображений. Используемый алгоритм не поддается большому количеству входных точек. Панель инструментов обработки сигналов содержит более подходящие алгоритмы для поиска сплайн-представления изображения. Двумерные команды интерполяции предназначены для использования при интерполяции двухмерной функции, как показано в следующем примере. В этом примере используется команда: obj: `mgrid <numpy.mgrid>` в NumPy, которая полезна для определения «сетки-сетки» во многих измерениях. (См. Также команду: obj: `ogrid <numpy.ogrid>`, если полная сетка не нужна). Количество выходных аргументов и количество измерений каждого аргумента определяется количеством объектов индексирования, переданных в: obj: `mgrid <numpy.mgrid>`.
+	</p>
+
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> import numpy как np
+   >>> от интерполяции импортного импорта
+   >>> import matplotlib.pyplot как plt
+	</pre>
+	</div>
+	
+   Определить функцию по разреженной сетке 20x20
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> x, y = np.mgrid [-1: 1: 20j, -1: 1: 20j]
+   >>> z = (x + y) * np.exp (-6.0 * (x * x + y * y))
+
+   >>> plt.figure ()
+   >>> plt.pcolor (x, y, z)
+   >>> plt.colorbar ()
+   >>> plt.title («Функция с выборочной выборкой»).
+   >>> plt.show ()
+	</pre>
+	</div>
+	
+   Функция интерполирования по новой сетке 70x70
+
+   	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> xnew, ynew = np.mgrid [-1: 1: 70j, -1: 1: 70j]
+   >>> tck = interpolate.bisplrep (x, y, z, s = 0)
+   >>> znew = interpolate.bisplev (xnew [:, 0], ynew [0 ,:], tck)
+
+   >>> plt.figure ()
+   >>> plt.pcolor (xnew, ynew, znew)
+   >>> plt.colorbar ()
+   >>> plt.title («Интерполированная функция»).
+   >>> plt.show ()
+	</pre>
+	</div>
+	
+   
+<h4>Двумерное сплайн-представление: Object-oriented (BivariateSpline)</h4>
+
+	<p>
+Класс: class: `BivariateSpline` является двумерным аналогом класса: class: UnivariateSpline. Он и его подклассы реализуют функции FITPACK, описанные выше, объектно-ориентированным образом, позволяя создавать объекты, которые могут быть вызваны для вычисления значения сплайна, передавая в двух координатах два аргумента.
+	</p>
+	
+</div>
+
+<div class="section" id="id4">
+<h3>Радиальные базисные функции для сглаживания / интерполяции</h3>
+	<p>
+Радиальные базисные функции могут использоваться для сглаживания / интерполяции рассеянных данных в n-измерениях, но их следует использовать с осторожностью для экстраполяции за пределами наблюдаемого диапазона данных.
+	</p>
+
+<h4>Пример 1-d</h4>
+
+	<p>
+В этом примере сравнивается использование классов Rbf и UnivariateSpline из модуля scipy.interpolate.
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> import numpy как np
+>>> from scipy.interpolate import Rbf, InterpolatedUnivariateSpline
+>>> import matplotlib.pyplot как plt
+
+>>> # установочные данные
+>>> x = np.linspace (0, 10, 9)
+>>> y = np.sin (x)
+>>> xi = np.linspace (0, 10, 101)
+
+>>> # использовать метод fitpack2
+>>> ius = InterpolatedUnivariateSpline (x, y)
+>>> yi = ius (xi)
+
+>>> plt.subplot (2, 1, 1)
+>>> plt.plot (x, y, 'bo')
+>>> plt.plot (xi, yi, 'g')
+>>> plt.plot (xi, np.sin (xi), 'r')
+>>> plt.title («Интерполяция с использованием одномерного сплайна»)
+
+>>> # использование метода RBF
+>>> rbf = Rbf (x, y)
+>>> fi = rbf (xi)
+
+>>> plt.subplot (2, 1, 2)
+>>> plt.plot (x, y, 'bo')
+>>> plt.plot (xi, fi, 'g')
+>>> plt.plot (xi, np.sin (xi), 'r')
+>>> plt.title («Интерполяция с использованием RBF - мультиквадрики»)
+>>> plt.show ()
+	</pre>
+	</div>
+	
+
+<h4>Пример 2-d</h4>
+
+	<p>
+В этом примере показано, как интерполировать рассеянные 2d-данные.
+	</p>
+
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> import numpy как np
+>>> из scipy.interpolate import Rbf
+>>> import matplotlib.pyplot как plt
+>>> from matplotlib import cm
+
+>>> # 2-d тесты - настройка рассеянных данных
+>>> x = np.random.rand (100) * 4.0-2.0
+>>> y = np.random.rand (100) * 4.0-2.0
+>>> z = x * np.exp (-x ** 2-y ** 2)
+>>> ti = np.linspace (-2.0, 2.0, 100)
+>>> XI, YI = np.meshgrid (ti, ti)
+
+>>> # использовать RBF
+>>> rbf = Rbf (x, y, z, epsilon = 2)
+>>> ZI = rbf (XI, YI)
+
+>>> # показать результат
+>>> plt.subplot (1, 1, 1)
+>>> plt.pcolor (XI, YI, ZI, cmap = cm.jet)
+>>> plt.scatter (x, y, 100, z, cmap = cm.jet)
+>>> plt.title (интерполяция RBF - мультиквадрики)
+>>> plt.xlim (-2, 2)
+>>> plt.ylim (-2, 2)
+>>> plt.colorbar ()
+	</pre>
+	</div>
+	
+
+</div>
+ 
+</div>
+</div>
+</div>
+
+</div>	
+		 
+
+<!-- Footer Start -->
+<div class="col-md-12 page-body margin-top-50 footer">
+  <footer>
+  <ul class="menu-link">
+	   <li><a href="index.html">Содержание</a></li>
+	   <li><a href="about.html">О сайте</a></li>
+	</ul>
+	
+  <p>© Copyright 2016 DevBlog. All rights reserved</p>
+  
+						  
+  <!-- UiPasta Credit Start -->
+  <div class="uipasta-credit">Design By <a href="http://www.uipasta.com" target="_blank">UiPasta</a></div>
+  <!-- UiPasta Credit End -->
+  
+   
+ </footer>
+</div>
+ <!-- Footer End -->
+ 
+</div>
+</div>
+
+   
+</div>
+</div>
+</div>
+
+<!-- Blog Post (Right Sidebar) End -->
+    
+    
+     
+     <!-- Endpage Box (Popup When Scroll Down) Start 
+     <div id="scroll-down-popup" class="endpage-box">
+       <h4>Read Also</h4>
+       <a href="#">How to make your company website based on bootstrap framework...</a>
+      </div>
+      <!-- Endpage Box (Popup When Scroll Down) End -->
+      
+    
+    
+    
+    <!-- Back to Top Start -->
+    <a href="#" class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></a>
+    <!-- Back to Top End -->
+    
+    
+    <!-- All Javascript Plugins  -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/plugin.js"></script>
+    
+    <!-- Main Javascript File  -->
+    <script type="text/javascript" src="js/scripts.js"></script>
+    
+    <!-- Syntax Highlighter Javascript File  -->
+    <script type="text/javascript" src="js/syntax/shCore.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushCss.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushJScript.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPerl.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPhp.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPlain.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPython.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushRuby.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushSql.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushVb.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushXml.js"></script>
+    
+	<!-- Syntax Highlighter Call Function -->
+	<script type="text/javascript">
+		SyntaxHighlighter.config.clipboardSwf = 'js/syntax/clipboard.swf';
+		SyntaxHighlighter.all();
+	</script>
+
+    
+   </body>
+ </html>

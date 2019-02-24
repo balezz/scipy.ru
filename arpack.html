@@ -1,0 +1,420 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    
+    <!-- Meta Tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- SEO -->
+    <meta name="description" content="учебник scipy, пакет программ для научных вычислений, специальные функции, интегрирование, оптимизация, интерполяция, преобразования Фурье, цифровая обработка сигналов, линейная алгебра, проблема собственных значений разреженных матриц, алгоритмы на разреженных графах, пространственные структуры данных и алгоритмы, статистика, обработка многомерных данных, numpy">
+    <meta name="author" content="labintsevai">
+    <meta name="url" content="http://www.scipy-tutorial.ru">
+    <meta name="copyright" content="labintsevai">
+    <meta name="robots" content="index,follow">
+	
+	
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(51612041, "init", {
+        id:51612041,
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/51612041" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+    
+    <title>SciPy Проблема собственных значений разреженных матриц</title>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="144x144" type="image/x-icon" href="images/favicon/apple-touch-icon.png">
+    
+    <!-- All CSS Plugins -->
+    <link rel="stylesheet" type="text/css" href="css/plugin.css">
+    
+    <!-- Main CSS Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+    <!-- Google Web Fonts  -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700">
+    
+    <!-- Syntax Highlighter  -->
+    <link rel="stylesheet" type="text/css" href="css/syntax/shCore.css">
+    <link rel="stylesheet" type="text/css" href="css/syntax/shThemeDefault.css">
+    
+        	<!-- MathJax support-->
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML" async>
+</script>
+
+    <!-- HTML5 shiv and Respond.js support IE8 or Older for HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+	   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+
+  </head>
+
+ <body>
+
+	<!-- Preloader Start -->
+     <div class="preloader">
+	   <div class="rounder"></div>
+      </div>
+      <!-- Preloader End -->
+      
+      
+    
+    
+<div id="main">
+<div class="container">
+<div class="row">
+
+<!-- About Me (Left Sidebar) Start -->
+<div class="col-md-3">
+<div class="about-fixed">
+
+<div class="my-pic">
+<img src="images/pic/scipyLogo.png" alt="">
+</div>
+
+
+
+<div class="my-detail">
+
+<div class="white-spacing">
+	<h1><a href="https://docs.scipy.org/doc/scipy/reference/tutorial/index.html">SciPy.org</a></h1>
+	<span>Научные вычисления</span>
+</div> 
+
+<ul class="social-icon">
+ <li><a href="https://www.facebook.com/scipyconf" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a></li>
+ <li><a href="https://twitter.com/hashtag/scipy" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a></li>
+<li><a href="https://github.com/scipy" target="_blank" class="github"><i class="fa fa-github"></i></a></li>
+</ul>
+
+</div>
+</div>
+</div>
+<!-- About Me (Left Sidebar) End -->
+
+<!-- Blog Post (Right Sidebar) Start -->
+<div class="col-md-9">
+<div class="col-md-12 page-body">
+<div class="row">
+	
+<div class="sub-title">
+	<h2><a href="index.html">Содержание</h2></a>
+ </div>
+
+<div class="col-md-12 content-page">
+<div class="col-md-12 blog-post">
+
+	<!-- Post Headline Start -->
+	<div class="post-title">
+	<ul class="simple">
+	<li><h4>Проблема собственных значений разреженных матриц </h4>
+	<ul>
+		<li><a class="reference internal" href="#id1">Введение </a></li>
+		<li><a class="reference internal" href="#id2">Основной функционал  </a></li>
+		<li><a class="reference internal" href="#id3">Обращение и сдвиг матрицы </a></li>
+		<li><a class="reference internal" href="#id4">Примеры  </a></li>
+	</ul>	
+	</li>
+	</ul>
+	</div>
+	   <!-- Post Headline End -->
+	   
+
+<div class="section" id="id1">
+<h3>Введение</h3>
+	<p>
+ARPACK - это пакет подпрограмм Fortran, предназначенный для поиска собственных значений и собственных векторов больших разреженных матриц. При поиске решения осуществляется только левосторонне умножение на матрицу. Эта операция выполняется через reverse-communication интерфейс. Благодаря этому, с помощью пакета ARPACK можно найти собственные значения и векторы для любого линейного преобразования вектор-вектор.
+<br>
+Вся функциональность ARPACK доступна через интерфейсы высокого уровня двух процедур: scipy.sparse.linalg.eigs и scipy.sparse.linalg.eigsh. Интерфейс eigs предназначен для поиска собственных значений и векторов действительных или комплексных несимметричных квадратных матриц. Интерфейс eigsh предоставляет интерфейс для действительных симметричных или комплексных Эрмитовых матриц.
+	</p>
+</div>
+
+<div class="section" id="id2">
+<h3>Основной функционал</h3>
+	<p>
+ARPACK решает стандартную задачу собственных значений вида
+
+$$ A \mathbf{x} = \lambda \mathbf{x} $$
+
+или обобщенную проблему собственных значений вида
+
+$$ A \mathbf{x} = \lambda M \mathbf{x} $$
+
+Преимуществом ARPACK является то, что можно вычислять только определенную пару собственных значений-векторов. Нужная пара определяется с помощью ключевого слова which. Доступны следующие значения:
+<br>
+    which = 'LM' : Собственные значения с максимальным модулем (eigs, eigsh), евклидовой нормой для комплексных чисел.<br>
+    which = 'SM' : Собственные значения с минимальным модулем (eigs, eigsh), евклидовой нормой для комплексных чисел.<br>
+    which = 'LR' : Собственные значения с максимальной действительной частью (eigs).<br>
+    which = 'SR' : Собственные значения с минимальной действительной частью (eigs).<br>
+    which = 'LI' : Собственные значения с максимальной мнимой частью (eigs).<br>
+    which = 'SI' : Собственные значения с минимальной мнимой частью (eigs).<br>
+    which = 'LA' : Собственные значения с максимальным алгебраическим значением (eigsh), с учетом знака.<br>
+    which = 'SA' : Собственные значения с минимальным алгебраическим значением (eigsh), с учетом знака.<br>
+    which = 'BE' : Собственные значения с двух сторон спектра матрицы (eigsh).<br>
+
+В общем случае ARPACK решает задачу поиска экстремальных собственных значений, особенно максимальных значений. Однако поиск минимальных значений (which = 'SM') может занять много времени или дать неправильный результат. Лучшим подходом к решению таких задач является обращение и сдвиг матрицы.
+	</p>
+</div>
+
+<div class="section" id="id3">
+<h3>Обращение и сдвиг матрицы</h3>
+	<p>
+Обращение и сдвиг матрицы основано на том свойстве, что обобщенная задача собственных значений
+
+$$ A \mathbf{x} = \lambda M \mathbf{x} $$
+
+может быть записана в виде
+
+$$ (A - \sigma M)^{-1} M \mathbf{x} = \nu \mathbf{x} $$
+
+где 
+
+$$ \nu = \frac{1}{\lambda - \sigma} $$
+	</p>
+</div>
+
+<div class="section" id="id4">
+<h3>Примеры</h3>
+	<p>
+Рассмотрим задачу поиска максимального и минимального собственных значений и соответствующих им собственных векторов для большой матрицы. ARPACK может обрабатывать различные формы входных данных: numpy.ndarray, разреженные матрицы scipy.sparse.csr_matrix, или линейный оператор scipy.sparse.linalg.LinearOperator. Ниже приведен простой пример решения для симметричной положительной матрицы
+	
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> import numpy as np
+    >>> from scipy.linalg import eigh
+    >>> from scipy.sparse.linalg import eigsh
+    >>> np.set_printoptions(suppress=True)
+    >>>
+    >>> np.random.seed(0)
+    >>> X = np.random.random((100,100)) - 0.5
+    >>> X = np.dot(X, X.T) #create a symmetric matrix
+	</pre>
+	</div>
+	
+	<p>
+We now have a symmetric matrix X with which to test the routines. First compute a standard eigenvalue decomposition using eigh:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">	
+    >>> evals_all, evecs_all = eigh(X)
+	</pre>
+	</div>
+		
+	<p>
+По мере роста размерности X, вычисления могут занимать очень много времени. В случаях, когда не нужно вычислять все собственные значения, ARPACK является лучшим решением. Для начала, вычислим максимальное собственное занчение (which = 'LM') матрицы X и сравним его с известным результатом
+		
+	<p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">    
+    >>> evals_large, evecs_large = eigsh(X, 3, which='LM')
+    >>> print(evals_all[-3:])
+    [29.1446102  30.05821805 31.19467646]
+    >>> print(evals_large)
+    [29.1446102  30.05821805 31.19467646]
+    >>> print(np.dot(evecs_large.T, evecs_all[:,-3:]))
+    array([[-1.  0.  0.],       # may vary (signs)
+           [ 0.  1.  0.],
+           [-0.  0. -1.]])
+	</pre>
+	</div>
+	
+	<p>
+Результат соответствует ожиданию. Кроме того, собственные векторы ортогональны, как и должно быть. Теперь рассмотрим пример с вычисление наименьшего собственного значения.
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">	
+    >>> evals_small, evecs_small = eigsh(X, 3, which='SM')
+    Traceback (most recent call last):       # may vary (convergence)
+    ...
+    scipy.sparse.linalg.eigen.arpack.arpack.ArpackNoConvergence:
+    ARPACK error -1: No convergence (1001 iterations, 0/3 eigenvectors converged)
+	</pre>
+	</div>
+	
+	<p>
+Как было сказано выше, ARPACK не всегда позволяет найти наименьшее собственное значение. Для решения этой проблемы существует несколько путей. Можно увеличить допустимую погрешность решения (tol).
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">	
+    >>> evals_small, evecs_small = eigsh(X, 3, which='SM', tol=1E-2)
+    >>> evals_all[:3]
+    array([0.0003783, 0.00122714, 0.00715878])
+    >>> evals_small
+    array([0.00037831, 0.00122714, 0.00715881])
+    >>> np.dot(evecs_small.T, evecs_all[:,:3])
+    array([[ 0.99999999  0.00000024 -0.00000049],    # may vary (signs)
+           [-0.00000023  0.99999999  0.00000056],
+           [ 0.00000031 -0.00000037  0.99999852]])
+	</pre>
+	</div>
+		
+	<p>
+Способ работает, но результат получился менее точным. Другим путем является увеличение максимального числа итераций с 1000 до 5000
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">	
+    >>> evals_small, evecs_small = eigsh(X, 3, which='SM', maxiter=5000)
+    >>> evals_all[:3]
+    array([0.0003783, 0.00122714, 0.00715878])
+    >>> evals_small
+    array([0.0003783, 0.00122714, 0.00715878])
+    >>> np.dot(evecs_small.T, evecs_all[:,:3])
+    array([[ 1.  0.  0.],           # may vary (signs)
+           [-0.  1.  0.],
+           [ 0.  0. -1.]])
+	</pre>
+	</div>
+		
+	<p>
+Получен точный результат, но за счет увеличения времени вычислений. К счастью, в ARPACK есть режим, который позволяет быстро определить не внешние собственные значения - режим сдвига и обращения. Этот режим позволяет свести задачу вычисления собственных значений к эквивалентной задаче с другими значениями. В нашем случае, для поиска собственных значений, близких к нулю, следует установить \( \sigma = 0 \). Преобразованные собственные значения будут удовлетворять равенству \( \nu = 1/(\lambda - \sigma) = 1/\lambda \). Таким образом, малое собственное значение \( \lambda \) становится большим \( \nu \).
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> evals_small, evecs_small = eigsh(X, 3, sigma=0, which='LM')
+    >>> evals_all[:3]
+    array([0.0003783, 0.00122714, 0.00715878])
+    >>> evals_small
+    array([0.0003783, 0.00122714, 0.00715878])
+    >>> np.dot(evecs_small.T, evecs_all[:,:3])
+    array([[ 1.  0.  0.],    # may vary (signs)
+           [ 0. -1. -0.],
+           [-0. -0.  1.]])
+	</pre>
+	</div>
+	
+	<p>
+Результат соответствует, при этом время вычисления уменьшилось. Заметим, что преобразование \( \nu \to \lambda \) выполнено в фоне, так что пользователю не нужно беспокоиться о деталях.
+<br>
+Режим сдвига-обращения позволяет не только увеличить скорость вычислений для малых собственных значений. Предположим, необходимо найти внутренние собственные значения и векторы в окрестности \( \lambda = 1 \). Просто устанавливаем \( sigma = 1 \), ARPACK легко найдет это решение.
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> evals_mid, evecs_mid = eigsh(X, 3, sigma=1, which='LM')
+    >>> i_sort = np.argsort(abs(1. / (1 - evals_all)))[-3:]
+    >>> evals_all[i_sort]
+    array([1.16577199, 0.85081388, 1.06642272])
+    >>> evals_mid
+    array([0.85081388, 1.06642272, 1.16577199])
+    >>> print(np.dot(evecs_mid.T, evecs_all[:,i_sort]))
+    array([[-0.  1.  0.],     # may vary (signs)
+           [-0. -0.  1.],
+           [ 1.  0.  0.]]
+	</pre>
+	</div>
+	
+	<p>
+Собственные значения следуют не по порядку, но ни одно не потеряно. Заметим, что режим сдвига-обращения требует внутреннего решения обращения матрицы. Проверка требования осуществляетя автоматически с помощью eigsh и eigs, однако эта операция может быть определена пользователем. Подробности см. в документации  scipy.sparse.linalg.eigsh и scipy.sparse.linalg.eigs.
+	</p>
+<br>
+<h3>Литература</h3>
+	<p>
+[1]	http://www.caam.rice.edu/software/ARPACK/
+	</p>
+ 
+
+</div>
+ 
+
+
+
+<!-- Footer Start -->
+<div class="col-md-12 page-body margin-top-50 footer">
+  <footer>
+  <ul class="menu-link">
+	   <li><a href="index.html">Содержание</a></li>
+	   <li><a href="about.html">О сайте</a></li>
+	</ul>
+	
+  <p>© Copyright 2016 DevBlog. All rights reserved</p>
+  
+						  
+  <!-- UiPasta Credit Start -->
+  <div class="uipasta-credit">Design By <a href="http://www.uipasta.com" target="_blank">UiPasta</a></div>
+  <!-- UiPasta Credit End -->
+  
+   
+ </footer>
+</div>
+ <!-- Footer End -->
+ 
+</div>
+</div>
+
+   
+</div>
+</div>
+</div>
+
+<!-- Blog Post (Right Sidebar) End -->
+    
+    
+     
+     <!-- Endpage Box (Popup When Scroll Down) Start 
+     <div id="scroll-down-popup" class="endpage-box">
+       <h4>Read Also</h4>
+       <a href="#">How to make your company website based on bootstrap framework...</a>
+      </div>
+      <!-- Endpage Box (Popup When Scroll Down) End -->
+      
+    
+    
+    
+    <!-- Back to Top Start -->
+    <a href="#" class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></a>
+    <!-- Back to Top End -->
+    
+    
+    <!-- All Javascript Plugins  -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/plugin.js"></script>
+    
+    <!-- Main Javascript File  -->
+    <script type="text/javascript" src="js/scripts.js"></script>
+    
+    <!-- Syntax Highlighter Javascript File  -->
+    <script type="text/javascript" src="js/syntax/shCore.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushCss.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushJScript.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPerl.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPhp.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPlain.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPython.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushRuby.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushSql.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushVb.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushXml.js"></script>
+    
+	<!-- Syntax Highlighter Call Function -->
+	<script type="text/javascript">
+		SyntaxHighlighter.config.clipboardSwf = 'js/syntax/clipboard.swf';
+		SyntaxHighlighter.all();
+	</script>
+
+    
+   </body>
+ </html>

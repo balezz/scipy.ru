@@ -1,0 +1,1562 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    
+    <!-- Meta Tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- SEO -->
+    <meta name="description" content="учебник scipy, пакет программ для научных вычислений, специальные функции, интегрирование, оптимизация, интерполяция, преобразования Фурье, цифровая обработка сигналов, линейная алгебра, проблема собственных значений разреженных матриц, алгоритмы на разреженных графах, пространственные структуры данных и алгоритмы, статистика, обработка многомерных данных, numpy">
+    <meta name="author" content="labintsevai">
+    <meta name="url" content="http://www.scipy-tutorial.ru">
+    <meta name="copyright" content="labintsevai">
+    <meta name="robots" content="index,follow">
+	
+	
+    <!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(51612041, "init", {
+        id:51612041,
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/51612041" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+	
+    <title>SciPy Статистика</title>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="144x144" type="image/x-icon" href="images/favicon/apple-touch-icon.png">
+    
+    <!-- All CSS Plugins -->
+    <link rel="stylesheet" type="text/css" href="css/plugin.css">
+    
+    <!-- Main CSS Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  
+    <!-- Google Web Fonts  -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700">
+    
+    <!-- Syntax Highlighter  -->
+    <link rel="stylesheet" type="text/css" href="css/syntax/shCore.css">
+    <link rel="stylesheet" type="text/css" href="css/syntax/shThemeDefault.css">
+    
+    
+    <!-- HTML5 shiv and Respond.js support IE8 or Older for HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+	   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+	<!-- MathJax support-->
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML" async>
+</script>
+
+  </head>
+
+ <body>
+
+	
+     
+	 <!-- Preloader Start -->
+     <div class="preloader">
+	   <div class="rounder"></div>
+      </div>
+      <!-- Preloader End -->
+      
+      
+    
+    
+    <div id="main">
+    <div class="container">
+    <div class="row">
+                 
+		 <!-- About Me (Left Sidebar) Start -->
+		 <div class="col-md-3">
+		   <div class="about-fixed">
+
+			 <div class="my-pic">
+				<img src="images/pic/scipyLogo.png" alt="">
+			 </div>
+			  
+			  
+			  
+			  <div class="my-detail">
+				
+				<div class="white-spacing">
+					<h1><a href="https://docs.scipy.org/doc/scipy/reference/tutorial/index.html">SciPy.org</a></h1>
+					<span>Научные вычисления</span>
+				</div> 
+			   
+			   <ul class="social-icon">
+				 <li><a href="https://www.facebook.com/scipyconf" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a></li>
+				 <li><a href="https://twitter.com/hashtag/scipy" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a></li>
+				<li><a href="https://github.com/scipy" target="_blank" class="github"><i class="fa fa-github"></i></a></li>
+				</ul>
+
+			</div>
+		  </div>
+		</div>
+		<!-- About Me (Left Sidebar) End -->
+		
+		
+		 <!-- Blog Post (Right Sidebar) Start -->
+		<div class="col-md-9">
+		<div class="col-md-12 page-body">
+		<div class="row">
+					
+					
+			<div class="sub-title">
+				<h2><a href="index.html">Содержание</a></h2>
+			</div>
+					
+			<!-- Post  Start -->		
+			<div class="col-md-12 content-page">
+			<div class="col-md-12 blog-post">
+			
+						
+				<!-- Post Headline Start -->
+				<div class="post-title">
+				<ul class="simple">
+				<h2>Статистика</h2>
+				<li><a class="reference internal" href="#введение">Введение</a></li>
+				
+				<li><a class="reference internal" href="#случайные-числа">Случайные числа</a>
+					<ul class="simple">
+						<li>Вызов справки</li>
+						<li>Общие методы</li>
+						<li>Смещение и масштабирование</li>
+						<li>Параметры формы распределения</li>
+						<li>Заморозка распределения</li>
+						<li>Расширение размерности </li>
+						<li>Особенности дискретных распределений </li>
+						<li>Оценка параметров распределения</li>
+						<li>Вопросы производительности и другие замечания</li>
+					</ul>
+				</li>
+				
+				<li><a class="reference internal" href="#специфичные-распределения" id="id3">Создание произвольных распределений </a>
+					<ul class="simple">
+						<li>Создание непрерывного распределения</li>
+						<li>Создание дискретного распределения</li>
+					</ul>
+				</li>
+				
+				<li><a class="reference internal" href="#анализ-одной">Анализ одной выборки</a>
+					<ul class="simple">
+						<li>Описательная статистика</li>
+						<li>T-тест и KS-тест</li>
+						<li>Хвосты распределения</li>
+						<li>Специальные тесты для нормального распределения</li>
+					</ul>
+				</li>
+				
+				<li><a class="reference internal" href="#сравнение-двух" >Сравнение двух выборок</a>
+						<ul class="simple">
+						<li>Сравнение средних</li>
+						<li>Тест Смирнова-Колмогорова</li>
+					</ul>
+				</li>
+				
+				<li><a class="reference internal" href="#оценка-плотности" >Оценка плотности ядра распределения</a>
+					<ul class="simple">
+						<li>Одномерная оценка</li>
+						<li>Многомерная оценка</li>
+					</ul>
+				</li>
+
+				</ul>
+				</div>
+				<!-- Post Headline End -->
+							
+						
+				<!-- Section Start -->						 
+				<div class="section" id="введение">
+				<h3 class="headerlink"><a>Введение</a></h3>
+					<p>
+					В этой главе обсуждаются некоторые возможности пакета scipy.stats. 
+					Главной целью является изложение базовых возможностей этого пакета. 
+					Более подробная информация приведена в справочном руководстве.
+					</p>
+				
+				</div>
+				<!-- Section End -->				
+
+				
+				<!-- Section Start -->				
+				<div class="section" id="случайные-числа">
+				<h3 class="headerlink"><a >Случайные числа</a></h3>
+
+					<p>
+					Для определения непрерывных  и дискретных случайных величин (СВ) в scipy.stats используются два различных класса. 
+					С помощью этих классов были реализованы более 80 непрерывных и 10 дискретных СВ. 
+					Помимо этого, новые типы распределений легко могут быть добавлены пользователем. (Если Вы его создадите, внесите вклад в развитие scipy).
+					</p>
+					
+					<p>
+					Все статистические функции расположены в scipy.stats и довольно полный список этих функций можно получить с помощью info(stats). 
+					Список доступных СВ можно получить прямо из командной строки (docstring) для пакета scipy.stats.
+					</p>
+					<p>
+					Ниже обсуждаются в основном непрерывные величины. 
+					Почти все их свойства относятся также и к дискретным величинам, особые отличия указаны в подразделе Особенность дискретных распределений.
+					</p>
+					<p>
+					В примерах кода предполагается, что пакет scipy.stats импортируется следующим образом
+					</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+						>>> from scipy import stats
+					   </pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					
+					<p>
+					Отдельные объекты импортируются так
+					</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+						>>> from scipy.stats import norm
+					   </pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+
+					
+					<p>
+					Для согласованности между Python 2 и Python 3 мы явно указываем, что print является функцией:
+					</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+						>>> from __future__ import print_function
+					   </pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					
+					
+					
+					<h4 class="headerlink">Вызов справки</h4>
+					<p>
+					Все распределения СВ сопровождаются функцией help. 
+					Чтобы получить только некоторую основную информацию, необходимо вызвать соответствующую документацию: print(stats.norm.__doc__) .
+					</p>
+					
+					<p>
+					Для решения конкретных вопросов, например, определить верхнюю и нижнюю границы распределения, следует вызвать:
+					</p>
+					
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+							>>> print('bounds of distribution lower: %s, upper: %s' % (norm.a, norm.b))
+							bounds of distribution lower: -inf, upper: inf
+					   </pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					
+					<p>
+					Перечислить все доступные методы и свойства для каждого распределения можно с помощью команды dir(norm). 
+					Некоторые из методов являются private, хотя их имя не начинается с  подчеркивания. 
+					Например, функция veccdf доступна только для внутреннего расчета (при вызове veccdf  будут выводиться предупреждения).
+					</p>
+					
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> rv = norm()
+>>> dir(rv)  # reformatted
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__',
+'__format__', '__ge__', '__getattribute__', '__gt__', '__hash__',
+'__init__', '__le__', '__lt__', '__module__', '__ne__', '__new__',
+'__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__',
+'__str__', '__subclasshook__', '__weakref__', 'a', 'args', 'b', 'cdf',
+'dist', 'entropy', 'expect', 'interval', 'isf', 'kwds', 'logcdf',
+'logpdf', 'logpmf', 'logsf', 'mean', 'median', 'moment', 'pdf', 'pmf',
+'ppf', 'random_state', 'rvs', 'sf', 'stats', 'std', 'var']
+					   </pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					
+					<p>
+					Наконец, можно получить список доступных распределений через интроспекцию:
+					</p>
+					
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> dist_continu = [d for d in dir(stats) if
+...                 isinstance(getattr(stats, d), stats.rv_continuous)]
+>>> dist_discrete = [d for d in dir(stats) if
+...                  isinstance(getattr(stats, d), stats.rv_discrete)]
+>>> print('number of continuous distributions: %d' % len(dist_continu))
+number of continuous distributions: 98
+>>> print('number of discrete distributions:   %d' % len(dist_discrete))
+number of discrete distributions:   13
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					
+
+					
+					
+					
+	<h4 class="headerlink">Общие методы</h4>
+					<p>
+					
+					<ul>
+					<p>Основными общедоступными методами непрерывных СВ являются:
+					<li><strong> 	rvs:</strong>  Возвращает выборку СВ </li>
+					<li><strong>	pdf:</strong> Функция плотности вероятности </li>
+					<li><strong>	cdf:</strong> Функция распределения </li>
+					<li><strong>	sf:</strong> Функция выживания (1-CDF) </li>
+					<li><strong>	ppf:</strong> Функция процентной точки (обратная CDF) </li>
+					<li><strong>	isf:</strong> Функция обратного выживания (обратная SF) </li>
+					<li><strong>	stats:</strong> Возвращает среднее, дисперсию, (Fisher's) ассиметрию или (Fisher's) эксцесс </li>
+					<li><strong>	moment:</strong> нецентральные моменты распределения. </li>
+					</p>
+					</ul>
+					</p>
+					
+					<p>
+В качестве примера рассмотрим СВ, распределенную по нормальному закону:
+					</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> norm.cdf(0)
+0.5
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					
+					<p>
+Чтобы вычислить cdf (функцию распределения вероятности) в нескольких точках, мы можем передать список или массив numpy.
+					</p>
+					
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> norm.cdf([-1., 0, 1])
+array([ 0.15865525,  0.5,  0.84134475])
+>>> import numpy as np
+>>> norm.cdf(np.array([-1., 0, 1]))
+array([ 0.15865525,  0.5,  0.84134475])
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					 
+					 <p>
+Таким образом, основные методы, такие как pdf , cdf и др., векторизованы.
+					</p>
+					 
+					 <p>
+Также поддерживаются другие общедоступные методы:
+					</p>
+					 <!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> norm.mean(), norm.std(), norm.var()
+(0.0, 1.0, 1.0)
+>>> norm.stats(moments="mv")
+(array(0.0), array(1.0))
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					 
+					 <p>
+Чтобы найти медиану распределения, мы можем использовать процентную функцию ppf, которая является обратной для cdf 
+					</p>
+					 
+					 <!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> norm.ppf(0.5)
+0.0</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					 
+					 <p>
+					Чтобы создать выборку СВ, используется аргумент size 
+					</p>
+					 
+					 <!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> norm.rvs(size=3)
+array([-0.35687759,  1.34347647, -0.11710531])   # random
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					<p>
+Обратите внимание, что генератор СВ основан на пакете numpy.random. 
+В приведенном выше примере конкретный набор случайных чисел будет отличаться при каждом новом вызове. 
+Чтобы добиться воспроизводимости, можно явно указать источник для генерации СВ (seed)
+					</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> np.random.seed(1234)		
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					 <p>
+Не рекомендуется явно указывать аргумент для функции seed. 
+Лучше использовать параметр random_state, который принимает экземпляр класса numpy.random.RandomState или целое число, которое затем используется в качестве источника для внутреннего объекта RandomState
+					</p>
+					 <!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> norm.rvs(size=5, random_state=1234)
+array([ 0.47143516, -1.19097569,  1.43270697, -0.3126519 , -0.72058873])
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					 <p>
+Внимание! norm.rvs(5) не генерирует выборку из 5 СВ:
+					</p>
+					 <!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> norm.rvs(5)
+5.471435163732493				
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					 
+					 <p>
+Здесь 5 без ключевого слова интерпретируется как первый возможный аргумент ключевого слова loc, принятый для всех непрерывных распределений. 
+Этот факт подводит нас к теме следующего подраздела.
+					</p>
+					
+					
+					
+				<h4 class="headerlink">Смещение и масштабирование</h4>
+				
+				<p>
+Все непрерывные распределения принимают ключевые слова loc и scale  в качестве параметров для определения смещения и масштаба распределения.
+Например, для стандартного нормального распределения местоположение является средним, а масштаб является стандартным отклонением.
+				</p>
+				<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> norm.stats(loc=3, scale=4, moments="mv")
+(array(3.0), array(16.0))
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					 
+					 <p>
+Во многих случаях стандартное распределение для случайной величины X вычисляется по формуле:  \(\frac{X - loc}{scale}\) . 
+Значения по умолчанию: loc = 0 и scale = 1 .
+					</p>
+					<p>
+Умелое использование loc и scale может помочь изменить стандартные распределения разными способами. 
+Чтобы проиллюстрировать это, рассмотрим функцию распределения экспоненциального распределения СВ, которое задается формулой
+					</p>
+					
+					<p>
+$$F(x) = 1 - \exp(-\lambda x)$$
+					 </p>
+					 <p>
+Применяя масштабирование, можно видеть, что, взяв \(scale = 1/\lambda\) получим правильный масштаб.
+					</p>
+					 
+					 <!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> from scipy.stats import expon
+>>> expon.mean(scale=3.)
+3.0				
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					 
+					 <p>
+Примечание. Функции пакета scipy.stats, могут принимают в качестве аргументов параметры формы распределения. 
+В этом случае может потребоваться больше чем простое указание loc и / или scale для достижения желаемого результата.
+					</p>
+					
+					<p>
+Интересно рассмотреть также равномерное распределение
+					</p>
+					 <!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> from scipy.stats import uniform
+>>> uniform.cdf([0, 1, 2, 3, 4, 5], loc=1, scale=4)
+array([ 0.  ,  0.  ,  0.25,  0.5 ,  0.75,  1.  ])			
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					 
+					 <p>
+Наконец, вспомним пример из предыдущего параграфа, где мы столкнулись с проблемой значения norm.rvs(5) . 
+Как оказалось, вызывая распределение таким образом, первый аргумент 5, используется, чтобы установить параметр loc . Проверим это:
+					</p>
+
+					 <!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> np.mean(norm.rvs(5, size=500))
+5.0098355106969992			
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					 
+					<p>
+Таким образом, norm.rvs(5) генерирует одну нормально распределенную СВ со средним loc=5 и значением по умолчанию size=1.
+					</p>
+					
+					<p>
+Рекомендуется явно указывать параметры loc и scale, передавая значения с ключевыми словами, а не как безымянные аргументы. 
+Повторение может быть сведено к минимуму при вызове более одного метода для СВ с использованием метода замораживания распределения. 
+Подробнее будет пояснено ниже.
+					</p>
+				
+				
+				<h4 class="headerlink">Параметры формы распределения</h4>
+				
+				<p>
+В общем случае любая непрерывная СВ может быть сдвинута и масштабирована с помощью параметров loc и scale. 
+Однако некоторые распределения требуют дополнительных параметров формы. 
+Например, гамма-распределение имеет плотность вероятности
+					</p>
+				<p>
+$$γ(x,a)=λ(λx)a−1Γ(a)e−λx$$
+				</p>
+					
+				<p>
+Для определения функции плотности требуется указать параметр формы a . 
+Обратите внимание, что параметр λ можно получить, установив ключевое слово scale равным 1/λ .
+Проверим количество и имя параметров формы гамма-распределения. (Из вышеизложенного мы знаем, что их должно быть 1.)
+
+				</p>
+				<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> from scipy.stats import gamma
+>>> gamma.numargs
+1
+>>> gamma.shapes
+'a'
+					   </pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					 
+					 <p>
+Для получения экспоненциального распределения установим значение переменной формы равной 1. 
+Легко проверить правильность результата
+					</p>
+				<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> gamma(1, scale=2.).stats(moments="mv")
+(array(2.0), array(4.0))
+					   </pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					 
+					 <p>
+Обратите внимание, параметры формы можно указать как ключевые слова
+					</p>
+					 
+					 <!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> gamma(a=1, scale=2.).stats(moments="mv")
+(array(2.0), array(4.0))
+					   </pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					 
+					 
+					 
+				<h4 class="headerlink">Заморозка распределения</h4>
+				
+				<p>
+Явное указание параметров loc и scale каждый раз может стать довольно утомительным. 
+Для упрощения ввода используется концепция заморозки СВ.
+				</p>
+				
+				<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> rv = gamma(1, scale=2.)
+					   </pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					 
+					 <p>
+Используя переменную rv, больше не нужно указывать масштаб или параметры формы. 
+Распределения могут использоваться одним из двух способов: либо путем передачи всех параметров распределения при каждом вызове метода (как это было ранее), либо путем замораживания параметров для экземпляра распределения. 
+Давайте проверим как это работает
+					</p>
+					 
+					 <!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> rv.mean(), rv.std()
+(2.0, 2.0)
+					   </pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					 
+					 <p>
+Это действительно то, что мы должны получить.
+					</p>
+					 
+				<h4 class="headerlink">Расширение размерности </h4>
+				
+				<p>
+Основные методы (pdf и т. д.) удовлетворяют общепринятым правилам расширения размерности numpy. 
+Например, мы можем вычислить критические значения верхнего хвоста распределения t для разных значений вероятностей и степеней свободы.
+					</p>
+				
+				<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> stats.t.isf([0.1, 0.05, 0.01], [[10], [11]])
+array([[ 1.37218364,  1.81246112,  2.76376946],
+[ 1.36343032,  1.79588482,  2.71807918]])
+					   </pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					
+					<p>
+Здесь первая строка - это критические значения для 10 степеней свободы, а вторая строка для 11 степеней свободы (dof). 
+Таким образом, расширение размерности предоставляет возможность сократить количество кода за счет передачи в качестве аргумента функции списка вместо скаляра. 
+Результат такой же, как при вызове isf два раза:
+					</p>
+					
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> stats.t.isf([0.1, 0.05, 0.01], 10)
+array([ 1.37218364,  1.81246112,  2.76376946])
+>>> stats.t.isf([0.1, 0.05, 0.01], 11)
+array([ 1.36343032,  1.79588482,  2.71807918])
+					   </pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+
+					 <p>
+Если массивы с вероятностями  [0.1, 0.05, 0.01] и степенями свободы [10, 11, 12], имеют одинаковую размерность, то используется поэлементное сопоставление. 
+В качестве примера, мы можем получить 10% -ный хвост для 10 dof, 5% -ный хвост для 11 dof и 1% -ный хвост для 12 dof, следующим образом:
+					</p>
+												 
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> stats.t.isf([0.1, 0.05, 0.01], [10, 11, 12])
+array([ 1.37218364,  1.79588482,  2.68099799])
+					   </pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					 
+
+					 
+	<h4 class="headerlink">Особенности дискретных распределений </h4>
+				
+				<p>
+Дискретные распределения имеют в основном те же основные методы, что и непрерывные. 
+Однако имеются особенности: функция pdf заменяется на pmf, отсутствуют методы оценки (такие как fit), scale не является допустимым параметром ключевого слова. 
+Параметр смещения (ключевое слово loc)  можно использовать для переноса центра распределения.
+					</p>
+				
+				<p>
+Вычисление функции распределения cdf требует некоторого дополнительного внимания. 
+В случае непрерывного распределения функция распределения в большинстве случаев строго монотонна возрастает в пределах (a, b) и поэтому имеет единственную соответствующую ей обратную функцию. 
+Однако cdf дискретного распределения является ступенчатой, поэтому функция ppf, обратная cdf,  требует другого определения:
+					</p>
+				
+				<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+ppf(q) = min{x : cdf(x) >= q, x integer}
+					   </pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					
+					<p>
+Для получения дополнительной информации см. документацию на функцию ppf.
+					</p>
+					
+					<p>
+Рассмотрим пример c гипергеометрическим распределением
+					</p>
+					
+										
+				<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> from scipy.stats import hypergeom
+>>> [M, n, N] = [20, 7, 12]
+					   </pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					
+					<p>
+Если мы вычисляем cdf в некоторых целочисленных точках, а затем оцениваем ppf при этих значениях cdf, обратно получаем начальные целые числа
+					</p>
+					
+				<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> x = np.arange(4)*2
+>>> x
+array([0, 2, 4, 6])
+>>> prb = hypergeom.cdf(x, M, n, N)
+>>> prb
+array([  1.03199174e-04,   5.21155831e-02,   6.08359133e-01,
+ 9.89783282e-01])
+>>> hypergeom.ppf(prb, M, n, N)
+array([ 0.,  2.,  4.,  6.])
+					   </pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					
+					<p>
+Если использовать значения, близкие к изломам кусочной функции cdf, в результате будут целые числа, округленные вверх
+					</p>
+					
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> hypergeom.ppf(prb + 1e-8, M, n, N)
+array([ 1.,  3.,  5.,  7.])
+>>> hypergeom.ppf(prb - 1e-8, M, n, N)
+array([ 0.,  2.,  4.,  6.])
+					   </pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+				
+	<h4 class="headerlink">Оценка параметров распределения</h4>
+				
+				<p>
+Дополнительные методы незамороженного распространения связаны с оценкой параметров распределения:
+				<ul>
+				<li>fit: оценка максимального правдоподобия параметров распределения, включая местоположение и масштабирование</li>
+				<li>fit_loc_scale: оценка местоположения и масштаба при заданных параметрах формы</li>
+				<li>nnlf: функция отрицательного логарифмического правдоподобия</li>
+				<li>expect: вычисление математического ожидания функций pdf или pmf</li>
+				</ul>
+					</p>
+
+				<h4 class="headerlink">Вопросы производительности и другие замечания</h4>
+				
+				<p>
+Производительность отдельных методов с точки зрения скорости варьируется в широких пределах в зависимости от вида распределения и метода вычисления. 
+Значения в выборке могут быть получены одним из двух способов: либо явным вычислением, либо общим алгоритмом, который не зависит от конкретного распределения.
+					</p>
+				
+				
+				<p>
+Явное вычисление предполагает, чтобы метод непосредственно указывался для данного распределения либо через аналитические формулы, либо через специальные функции в scipy.special или numpy.random для СВ. 
+В результате вычисления выполняются относительно быстро.
+					</p>
+
+				<p>
+Общие алгоритмы используются, если распределение нецелесообразно указывать в аналитическом виде. 
+Чтобы определить такое распределение, необходима только общая функция (pdf или cdf), производное распределение может быть получено с помощью численного интегрирования и поиска корней.
+Однако такой метод вычисления может быть очень медленным. В качестве примера, rgh=stats.gausshyper.rvs(0.5, 2, 2, 2, size=100) создает случайные переменные косвенным образом и занимает около 19 секунд для 100 случайных переменных на домашнем компьютере. 
+Тогда как создание миллиона СВ от стандартного нормального или от распределения t занимает чуть более одной секунды.
+					</p>
+				
+				<p>
+Остальные вопросы 
+<ul>Распределения в scipy.stats были недавно исправлены и улучшены и протестированы, однако осталось несколько вопросов:
+<li>распределения были протестированы лишь в некотором диапазоне параметров, однако при некоторых граничных значениях может остаться несколько неправильных результатов</li>
+<li>оценка максимального правдоподобия в функции  fit с начальными параметрами по умолчанию работает не одинаково хорошо для всех распределений, и пользователю необходимо самому подбирать подходящие начальные параметры. 
+Кроме того, для некоторых распределений использование метода максимального правдоподобия не может давать наилучшие оценки.</li>
+</ul>
+					</p>
+
+				</div>
+				<!-- Section End -->				
+
+				
+				<!-- Section Start -->
+				<div class="section" id="специфичные-распределения">
+						
+					<h3 class="headerlink"><a>Создание произвольных распределений </a></h3>
+						
+						<p>
+В следующих примерах показано, как создавать собственные распределения. 
+Дальнейшие примеры показывают использование распределений и некоторые статистические тесты.
+						</p>
+						
+			<h4 class="headerlink">Создание непрерывного распределения  (наследование от rv_continuous)</h4>
+						<p>
+Создать непрерывное распределение довольно просто.
+						</p>
+						
+						<!-- Post Coding (SyntaxHighlighter) Start -->
+				<div class="margin-top-40 margin-bottom-40">
+				<pre class="brush: python">
+>>> from scipy import stats
+>>> class deterministic_gen(stats.rv_continuous):
+...     def _cdf(self, x):
+...     return np.where(x &lt; 0, 0., 1.)
+...     def _stats(self):
+...         return 0., 0., 0., 0.
+</pre>
+				</div>
+
+
+				</div>
+				<!-- Section End -->
+
+
+				<!-- Section Start -->
+				<div class="section" id="анализ-одной">
+				<h3  class="headerlink"><a>Анализ одной выборки</a></h3>
+				<p>
+Для начала, создадим выборку СВ с явным значением seed, так что в каждом прогоне мы получаем одинаковые результаты. 
+В качестве примера создадим выборку СВ с t-распределением Стьюдента:
+				</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> np.random.seed(282629734)
+>>> x = stats.t.rvs(10, size=1000)
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->	
+					 
+					 <p>
+Параметр формы t-распределения (число степеней свободы) в данном примере равен 10. Размер выборки равен 1000 независимых (псевдо) случайных чисел. 
+Поскольку мы не указали ключевые слова аргументов loc и scale, они по умолчанию равны ноль и один соответственно.
+				</p>
+			
+				
+		<h4 class="headerlink">Описательная статистика</h4>
+
+					<p>
+x  является массивом numpy, поэтому у нас есть прямой доступ ко всем методам массива, например
+				</p>
+					
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> print(x.min())   # equivalent to np.min(x)
+-3.78975572422
+>>> print(x.max())   # equivalent to np.max(x)
+5.26327732981
+>>> print(x.mean())  # equivalent to np.mean(x)
+0.0140610663985
+>>> print(x.var())   # equivalent to np.var(x))
+1.28899386208
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->	
+					 
+					 <p>
+Насколько свойства выборки соответствуют их теоретическим аналогам?
+				</p>
+					 
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> m, v, s, k = stats.t.stats(10, moments='mvsk')
+>>> n, (smin, smax), sm, sv, ss, sk = stats.describe(x)
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->	
+					 <p>
+Примечание: stats.describe использует несмещенную оценку для дисперсии, а np.var - смещенную оценку.
+Для нашей выборки статистические данные немного отличаются от их теоретических аналогов.
+				</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> sstr = '%-14s mean = %6.4f, variance = %6.4f, skew = %6.4f, kurtosis = %6.4f'
+>>> print(sstr % ('distribution:', m, v, s ,k))
+distribution:  mean = 0.0000, variance = 1.2500, skew = 0.0000, kurtosis = 1.0000
+>>> print(sstr % ('sample:', sm, sv, ss, sk))
+sample:        mean = 0.0141, variance = 1.2903, skew = 0.2165, kurtosis = 1.0556
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->	
+					 
+
+												 
+		<h4 class="headerlink">T-тест и KS-тест</h4>
+					<p>
+Для проверки нулевой гипотезы \(H_0 : E(X) = m \), т.е. оценки вероятности того, что среднее по выборке равно теоретическому мат ожиданию, используется t-тест
+</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> print('t-statistic = %6.3f pvalue = %6.4f' %  stats.ttest_1samp(x, m))
+t-statistic =  0.391 pvalue = 0.6955
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->	
+					
+					<p>
+Значение p = 0,7 означает вероятность ошибки отвержения нулевой гипотезы (т.е. с вероятностью 0,7 мы ошибемся, если скажем, что выборка не подчиняется закону t-распределения).
+				</p>
+					<p>
+В качестве упражнения мы также можем вычислить значения t-statistic и p-value непосредственно, не используя функцию ttest_1samp. 
+Как видим, результаты совпадают
+				</p>
+					
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> tt = (sm-m)/np.sqrt(sv/float(n))  # t-statistic for mean
+>>> pval = stats.t.sf(np.abs(tt), n-1)*2  # two-sided pvalue = Prob(abs(t)>tt)
+>>> print('t-statistic = %6.3f pvalue = %6.4f' % (tt, pval))
+t-statistic =  0.391 pvalue = 0.6955
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->	
+					<p>
+Тест Колмогорова-Смирнова может быть использован для проверки нулевой гипотезы: выборка подчиняется закону t-распределения
+				</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> print('KS-statistic D = %6.3f pvalue = %6.4f' % stats.kstest(x, 't', (10,)))
+KS-statistic D =  0.016 pvalue = 0.9606
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->	
+					
+					<p>
+Т.к. p-value достаточно велико, мы не можем отвергнуть нулевую гипотезу (выборка подчиняется t-распределению). 
+В реальных приложениях мы не знаем базовое распределение. 
+Если мы проведем тест Колмогорова-Смирнова нашей выборки для ее принадлежности стандартному нормальному распределению, то мы также не можем отвергать нулевую гипотезу т.к. p-значение составляет почти 40%.
+				</p>
+					
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> print('KS-statistic D = %6.3f pvalue = %6.4f' % stats.kstest(x, 'norm'))
+KS-statistic D =  0.028 pvalue = 0.3949
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->	
+					
+					<p>
+Однако стандартное нормальное распределение имеет дисперсию 1, в то время как наша выборка имеет дисперсию 1,29. 
+Даже если нормировать значения выборки и провести тест на ее принадлежность к нормальному распределению, то p-value снова будет достаточно большим, а значит мы не можем отклонить нулевую гипотезу.
+				</p>
+					
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> d, pval = stats.kstest((x-x.mean())/x.std(), 'norm')
+>>> print('KS-statistic D = %6.3f pvalue = %6.4f' % (d, pval))
+KS-statistic D =  0.032 pvalue = 0.2402
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->	
+					
+					<p>
+Примечание. Тест Колмогорова-Смирнова предполагает, что проводится тест на принадлежность к распределению с заданными параметрами. 
+Поскольку в последнем случае используется среднее значение и дисперсия по выборке, это предположение нарушено и распределение тестовой статистики, на которой основано p-значение, является не совсем правильным.
+				</p>
+						
+						
+						
+	<h4 class="headerlink">Хвосты распределения</h4>
+					<p>
+Верхний хвост распределения – это вероятность того, что СВ превысит заданное критическое значение. 
+Для оценки критических значений по заданным значениям верхних хвостов можно использовать функцию процентных точек ppf (обратная функции вероятности) или обратную функцию выживания isf.
+					</p>
+					
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> crit01, crit05, crit10 = stats.t.ppf([1-0.01, 1-0.05, 1-0.10], 10)
+>>> print('critical values from ppf at 1%%, 5%% and 10%% %8.4f %8.4f %8.4f' % (crit01, crit05, crit10))
+critical values from ppf at 1%, 5% and 10%   2.7638   1.8125   1.3722
+>>> print('critical values from isf at 1%%, 5%% and 10%% %8.4f %8.4f %8.4f' % tuple(stats.t.isf([0.01,0.05,0.10],10)))
+critical values from isf at 1%, 5% and 10%   2.7638   1.8125   1.3722
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->	
+		
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> freq01 = np.sum(x>crit01) / float(n) * 100
+>>> freq05 = np.sum(x>crit05) / float(n) * 100
+>>> freq10 = np.sum(x>crit10) / float(n) * 100
+>>> print('sample %%-frequency at 1%%, 5%% and 10%% tail %8.4f %8.4f %8.4f' % (freq01, freq05, freq10))
+sample %-frequency at 1%, 5% and 10% tail   1.4000   5.8000  10.5000
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->	
+					<p>
+Чем больше значение верхнего хвоста, тем больше частота превышения критического значения в наблюдаемой выборке. 
+Можно проверить на более крупной выборке, насколько наблюдаемая частота будет близка к теоретической вероятности. 
+Однако если повторить опыт несколько раз, флуктуации будут довольно большие.
+					</p>
+					
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					<div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> freq05l = np.sum(stats.t.rvs(10, size=10000) > crit05) / 10000.0 * 100
+>>> print('larger sample %%-frequency at 5%% tail %8.4f' % freq05l)
+larger sample %-frequency at 5% tail   4.8000
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->	
+					<p>
+Мы также можем оценить нормальное распределение, которое имеет меньший вес в хвостах
+					</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> print('tail prob. of normal at 1%%, 5%% and 10%% %8.4f %8.4f %8.4f' %
+...       tuple(stats.norm.sf([crit01, crit05, crit10])*100))
+tail prob. of normal at 1%, 5% and 10%   0.2857   3.4957   8.5003
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->	
+					<p>
+Количество наблюдений в выборке, которое попало в заданный интервал, стремится к соответствующему значению вероятности, но не равно ей. 
+Для оценки меры этого отличия можно использовать тест Хи-квадрат.
+					</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> quantiles = [0.0, 0.01, 0.05, 0.1, 1-0.10, 1-0.05, 1-0.01, 1.0]
+>>> crit = stats.t.ppf(quantiles, 10)
+>>> crit
+array([       -inf, -2.76376946, -1.81246112, -1.37218364,  1.37218364,
+1.81246112,  2.76376946,         inf])
+>>> n_sample = x.size
+>>> freqcount = np.histogram(x, bins=crit)[0]
+>>> tprob = np.diff(quantiles)
+>>> nprob = np.diff(stats.norm.cdf(crit))
+>>> tch, tpval = stats.chisquare(freqcount, tprob*n_sample)
+>>> nch, npval = stats.chisquare(freqcount, nprob*n_sample)
+>>> print('chisquare for t:      chi2 = %6.2f pvalue = %6.4f' % (tch, tpval))
+chisquare for t:      chi2 =  2.30 pvalue = 0.8901
+>>> print('chisquare for normal: chi2 = %6.2f pvalue = %6.4f' % (nch, npval))
+chisquare for normal: chi2 = 64.60 pvalue = 0.0000
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->	
+					
+					<p>
+Мы видим, что нулевая гипотеза для нормального распределения явно отклоняется (p-value = 0), а для t-распределения не может быть отклонено. 
+Поскольку дисперсия нашего образца отличается от стандартного распределения, мы можем снова повторить тест, учитывающий оценку масштаба и смещения.
+					</p>
+					<p>
+Метод fit может использоваться для оценки параметров распределения. Эти параметры можно использовать для повторного проведения теста.
+					</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> tdof, tloc, tscale = stats.t.fit(x)
+>>> nloc, nscale = stats.norm.fit(x)
+>>> tprob = np.diff(stats.t.cdf(crit, tdof, loc=tloc, scale=tscale))
+>>> nprob = np.diff(stats.norm.cdf(crit, loc=nloc, scale=nscale))
+>>> tch, tpval = stats.chisquare(freqcount, tprob*n_sample)
+>>> nch, npval = stats.chisquare(freqcount, nprob*n_sample)
+>>> print('chisquare for t:      chi2 = %6.2f pvalue = %6.4f' % (tch, tpval))
+chisquare for t:      chi2 =  1.58 pvalue = 0.9542
+>>> print('chisquare for normal: chi2 = %6.2f pvalue = %6.4f' % (nch, npval))
+chisquare for normal: chi2 = 11.08 pvalue = 0.0858
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->	
+					
+					<p>
+Принимая во внимание оценку параметров, мы все так же можем отказаться от нулевой гипотезы для нормального распределения (на уровне 5%). 
+Но с p-value = 0,95, мы не можем отказаться от гипотезы о t-распределении.
+					</p>
+					
+						
+		<h4 class="headerlink">Специальные тесты для нормального распределения</h4>
+				<p>
+Поскольку нормальное распределение является наиболее распространенным распределением в статистике, существует несколько дополнительных функций, позволяющих проверить принадлежность выборки к нормальному распределению.
+Прежде всего, можно проверить, отличаются ли скос и эксцесс нашей выборки от нормального распределения:
+
+				</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> print('normal skewtest teststat = %6.3f pvalue = %6.4f' % stats.skewtest(x))
+normal skewtest teststat =  2.785 pvalue = 0.0054
+>>> print('normal kurtosistest teststat = %6.3f pvalue = %6.4f' % stats.kurtosistest(x))
+normal kurtosistest teststat =  4.757 pvalue = 0.0000
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					<p>
+Эти два теста объединяются в тест на нормальность выборки
+				</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> print('normaltest teststat = %6.3f pvalue = %6.4f' % stats.normaltest(x))
+normaltest teststat = 30.379 pvalue = 0.0000
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+				<p>
+Во всех трех тестах p-value очень низкое, поэтому следует отклонить гипотезу о том, что наша выборка имеет скос и эксцесс нормального распределения.
+				</p>
+				<p>
+Поскольку вычисление скоса и эксцесса нашей выборки основаны на центральных моментах, мы получим точно такие же результаты, даже если нормализуем значения в выборке:
+				</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> print('normaltest teststat = %6.3f pvalue = %6.4f' %
+...       stats.normaltest((x-x.mean())/x.std()))
+normaltest teststat = 30.379 pvalue = 0.0000
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					<p>
+Можно проверить, насколько разумные результаты дает тест на нормальность для других случаев
+				</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> print('normaltest teststat = %6.3f pvalue = %6.4f' %
+...       stats.normaltest(stats.t.rvs(10, size=100)))
+normaltest teststat =  4.698 pvalue = 0.0955
+>>> print('normaltest teststat = %6.3f pvalue = %6.4f' %
+...              stats.normaltest(stats.norm.rvs(size=1000)))
+normaltest teststat =  0.613 pvalue = 0.7361
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+												
+				<p>
+При тестировании на нормальность выборки t-распределенных наблюдений, имеющей объем в 100 значений, p-value достаточно велико, чтобы отклонить нулевую гипотезу (выборка принадлежит нормальному распределению). 
+Это связано с тем, что тест недостаточно силен на небольших объемах выборки.
+				</p>
+				
+			</div>
+				<!-- Section End -->
+
+				
+				<!-- Section Start -->						
+				<div class="section" id="сравнение-двух">
+				<h3 class="headerlink"><a>Сравнение двух выборок</a></h3>
+				<p>
+Пусть имеются две выборки, которые могут иметь одинаковые распределения. Проверим, имеют ли эти выборки одинаковые статистические свойства.
+				</p>
+				
+				<h4 class="headerlink">Сравнение средних</h4>
+				<p>	
+Испытание с выборок с идентичными средними
+				</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> rvs1 = stats.norm.rvs(loc=5, scale=10, size=500)
+>>> rvs2 = stats.norm.rvs(loc=5, scale=10, size=500)
+>>> stats.ttest_ind(rvs1, rvs2)
+Ttest_indResult(statistic=-0.5489036175088705, pvalue=0.5831943748663959)
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					<p>
+Испытание выборок с различными средними
+				</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> rvs3 = stats.norm.rvs(loc=8, scale=10, size=500)
+>>> stats.ttest_ind(rvs1, rvs3)
+Ttest_indResult(statistic=-4.533414290175026, pvalue=6.507128186389019e-06)
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+								
+								
+				<h4 class="headerlink">Тест Смирнова-Колмогорова ks_2samp </h4>	
+				<p>
+В первом примере, где обе выборки имеют одинаковые распределения, мы не можем отклонить нулевую гипотезу, поскольку p-value достаточно высоко.
+				</p>
+
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> stats.ks_2samp(rvs1, rvs2)
+Ks_2sampResult(statistic=0.025999999999999995, pvalue=0.9954119517306488)
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					<p>
+Во втором примере  мы можем отклонить нулевую гипотезу, так как p-value меньше 1%
+				</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> stats.ks_2samp(rvs1, rvs3)
+Ks_2sampResult(statistic=0.11399999999999999, pvalue=0.002713210366128314)
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+						
+				</div>
+				<!-- Section End -->						
+				
+				
+				<!-- Section Start -->		
+				<div class="section" id="оценка-плотности">
+				<h3 class="headerlink"><a >Оценка плотности ядра распределения</a></h3>
+				<p>
+Общей задачей статистики является оценка функции плотности вероятности (pdf) СВ для заданной выборки данных. 
+Эта задача называется оценкой плотности. Наиболее известным инструментом для этого является гистограмма. 
+Гистограмма – полезный и понятный инструмент для визуализации, однако не очень эффективно использует доступные данные. 
+Оценка ядра плотности распределения (KDE) является более эффективным инструментом для этой задачи. 
+Функция gaussian_kde может использоваться для оценки плотности как одномерных, так и многомерных данных. 
+Оценка работает лучше всего, если данные являются одномодальными.
+				</p>
+				
+				<h4 class="headerlink">Одномерная оценка</h4>
+				<p>
+Рассмотрим пример с малой выборкой (size=5), чтобы увидеть, как работает gaussian_kde , и как влияют варианты выбора полосы пропускания. 
+Пять значений выборки отображаются как синие штрихи внизу рисунка:
+				</p>
+					
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> from scipy import stats
+>>> import matplotlib.pyplot as plt
+>>>
+>>> x1 = np.array([-7, -5, 1, 4, 5], dtype=np.float)
+>>> kde1 = stats.gaussian_kde(x1)
+>>> kde2 = stats.gaussian_kde(x1, bw_method='silverman')
+>>>
+>>> fig = plt.figure()
+>>> ax = fig.add_subplot(111)
+>>>
+>>> ax.plot(x1, np.zeros(x1.shape), 'b+', ms=20)  # rug plot
+>>> x_eval = np.linspace(-10, 10, num=200)
+>>> ax.plot(x_eval, kde1(x_eval), 'k-', label="Scott's Rule")
+>>> ax.plot(x_eval, kde2(x_eval), 'r-', label="Silverman's Rule")
+>>>
+>>> plt.show()
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+						
+						<!-- Post Image Start -->
+						<div class="post-image margin-top-40 margin-bottom-40">
+						   <img src="img/stats3.png" alt="">
+						</div>
+						  <!-- Post Image End -->
+					<p>
+Мы видим, что между результатами оценки по правилу Скотта и Сильвермана имеются небольшие отличия. 
+Из графика также видно, что полосы пропускания довольно широкие для такого ограниченного объема выборки. 
+Мы можем определить нашу собственную функцию полосы пропускания, чтобы получить менее сглаженный результат.
+				</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> def my_kde_bandwidth(obj, fac=1./5):
+...     """We use Scott's Rule, multiplied by a constant factor."""
+...     return np.power(obj.n, -1./(obj.d+4)) * fac
+>>>
+>>> fig = plt.figure()
+>>> ax = fig.add_subplot(111)
+>>>
+>>> ax.plot(x1, np.zeros(x1.shape), 'b+', ms=20)  # rug plot
+>>> kde3 = stats.gaussian_kde(x1, bw_method=my_kde_bandwidth)
+>>> ax.plot(x_eval, kde3(x_eval), 'g-', label="With smaller BW")
+>>>
+>>> plt.show()
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+					
+						<!-- Post Image Start -->
+						<div class="post-image margin-top-40 margin-bottom-40">
+						   <img src="img/stats4.png" alt="">
+						</div>
+						  <!-- Post Image End -->
+				<p>
+Мы видим, что узкая ширина полосы пропускания приводит к тому, что полученная оценка функции плотности вероятности (pdf) будет просто набором нормальных распределений вокруг каждой точки.
+				</p>
+				<p>
+Теперь мы рассмотрим более реальный пример, чтобы увидеть разницу между двумя правилами выбора ширины полосы пропускания. 
+Известно, что эти правила хорошо работают для выборок близких к нормальному распределению. 
+Но даже для одномодальных распределений, которые довольно сильно отличаются от нормальных, они работают достаточно хорошо. 
+В качестве ненормального распределения возьмем распределение Стьюдента с 5 степенями свободы.
+				</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
+
+
+np.random.seed(12456)
+x1 = np.random.normal(size=200)  # random data, normal distribution
+xs = np.linspace(x1.min()-1, x1.max()+1, 200)
+
+kde1 = stats.gaussian_kde(x1)
+kde2 = stats.gaussian_kde(x1, bw_method='silverman')
+
+fig = plt.figure(figsize=(8, 6))
+
+ax1 = fig.add_subplot(211)
+ax1.plot(x1, np.zeros(x1.shape), 'b+', ms=12)  # rug plot
+ax1.plot(xs, kde1(xs), 'k-', label="Scott's Rule")
+ax1.plot(xs, kde2(xs), 'b-', label="Silverman's Rule")
+ax1.plot(xs, stats.norm.pdf(xs), 'r--', label="True PDF")
+
+ax1.set_xlabel('x')
+ax1.set_ylabel('Density')
+ax1.set_title("Normal (top) and Student's T$_{df=5}$ (bottom) distributions")
+ax1.legend(loc=1)
+
+x2 = stats.t.rvs(5, size=200)  # random data, T distribution
+xs = np.linspace(x2.min() - 1, x2.max() + 1, 200)
+
+kde3 = stats.gaussian_kde(x2)
+kde4 = stats.gaussian_kde(x2, bw_method='silverman')
+
+ax2 = fig.add_subplot(212)
+ax2.plot(x2, np.zeros(x2.shape), 'b+', ms=12)  # rug plot
+ax2.plot(xs, kde3(xs), 'k-', label="Scott's Rule")
+ax2.plot(xs, kde4(xs), 'b-', label="Silverman's Rule")
+ax2.plot(xs, stats.t.pdf(xs, 5), 'r--', label="True PDF")
+
+ax2.set_xlabel('x')
+ax2.set_ylabel('Density')
+
+plt.show()
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+						
+						<!-- Post Image Start -->
+						<div class="post-image margin-top-40 margin-bottom-40">
+						   <img src="img/stats5.png" alt="">
+						</div>
+						  <!-- Post Image End -->				
+						  
+				<p>
+Теперь рассмотрим двухмодальное распределение с одной более широкой и одной более узкой гауссовой функцией.
+Мы ожидаем, что это будет более сложная плотность для аппроксимации из-за разных полос частот, необходимых для точного решения каждой функции.
+				</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> from functools import partial
+>>>
+>>> loc1, scale1, size1 = (-2, 1, 175)
+>>> loc2, scale2, size2 = (2, 0.2, 50)
+>>> x2 = np.concatenate([np.random.normal(loc=loc1, scale=scale1, size=size1),
+...                      np.random.normal(loc=loc2, scale=scale2, size=size2)])
+>>>
+>>> x_eval = np.linspace(x2.min() - 1, x2.max() + 1, 500)
+>>>
+>>> kde = stats.gaussian_kde(x2)
+>>> kde2 = stats.gaussian_kde(x2, bw_method='silverman')
+>>> kde3 = stats.gaussian_kde(x2, bw_method=partial(my_kde_bandwidth, fac=0.2))
+>>> kde4 = stats.gaussian_kde(x2, bw_method=partial(my_kde_bandwidth, fac=0.5))
+>>>
+>>> pdf = stats.norm.pdf
+>>> bimodal_pdf = pdf(x_eval, loc=loc1, scale=scale1) * float(size1) / x2.size + \
+...               pdf(x_eval, loc=loc2, scale=scale2) * float(size2) / x2.size
+>>>
+>>> fig = plt.figure(figsize=(8, 6))
+>>> ax = fig.add_subplot(111)
+>>>
+>>> ax.plot(x2, np.zeros(x2.shape), 'b+', ms=12)
+>>> ax.plot(x_eval, kde(x_eval), 'k-', label="Scott's Rule")
+>>> ax.plot(x_eval, kde2(x_eval), 'b-', label="Silverman's Rule")
+>>> ax.plot(x_eval, kde3(x_eval), 'g-', label="Scott * 0.2")
+>>> ax.plot(x_eval, kde4(x_eval), 'c-', label="Scott * 0.5")
+>>> ax.plot(x_eval, bimodal_pdf, 'r--', label="Actual PDF")
+>>>
+>>> ax.set_xlim([x_eval.min(), x_eval.max()])
+>>> ax.legend(loc=2)
+>>> ax.set_xlabel('x')
+>>> ax.set_ylabel('Density')
+>>> plt.show()
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+		
+						<!-- Post Image Start -->
+						<div class="post-image margin-top-40 margin-bottom-40">
+						   <img src="img/stats6.png" alt="">
+						</div>
+						  <!-- Post Image End -->				
+				
+				<p>
+Как и ожидалось, KDE не так близок к истинному PDF как хотелось бы.  
+Разная ширина двух горбов двухмодального распределения хорошо иллюстрирует влияние полосы пропускания на качество оценки функции плотности. 
+Уменьшая полосу пропускания ( Scott * 0.5 ), мы можем несколько улучшаем оценку для обоих пиков. 
+Уменьшая пропускную способность в 5 раз, получаем недостаточно гладкую оценку функции плотности для первого горба, но более точную оценку для второго. 
+В данном примере было бы полезно иметь неравномерную (адаптивную) полосу пропускания.
+				</p>
+				
+				
+				<h4 class="headerlink">Многомерная оценка</h4>				  
+				
+				<p>
+Функция gaussian_kde позволяет оценить как одномерные, так и многомерные данные. 
+Рассмотрим пример двумерной СВ с двумя коррелированными параметрами.
+				</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> def measure(n):
+...     """Measurement model, return two coupled measurements."""
+...     m1 = np.random.normal(size=n)
+...     m2 = np.random.normal(scale=0.5, size=n)
+...     return m1+m2, m1-m2
+>>>
+>>> m1, m2 = measure(2000)
+>>> xmin = m1.min()
+>>> xmax = m1.max()
+>>> ymin = m2.min()
+>>> ymax = m2.max()
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+						
+				<p>
+Применим KDE к данным:
+				</p>
+
+													
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+					  <div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> X, Y = np.mgrid[xmin:xmax:100j, ymin:ymax:100j]
+>>> positions = np.vstack([X.ravel(), Y.ravel()])
+>>> values = np.vstack([m1, m2])
+>>> kernel = stats.gaussian_kde(values)
+>>> Z = np.reshape(kernel.evaluate(positions).T, X.shape)
+</pre>
+					 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+						
+					<p>
+Построим оценку двумерного распределения в виде цветовой карты и нанесем сверху отдельные точки данных.
+				</p>
+					<!-- Post Coding (SyntaxHighlighter) Start -->
+				<div class="margin-top-40 margin-bottom-40">  
+					   <pre class="brush: python">
+>>> fig = plt.figure(figsize=(8, 6))
+>>> ax = fig.add_subplot(111)
+>>>
+>>> ax.imshow(np.rot90(Z), cmap=plt.cm.gist_earth_r,
+...           extent=[xmin, xmax, ymin, ymax])
+>>> ax.plot(m1, m2, 'k.', markersize=2)
+>>>
+>>> ax.set_xlim([xmin, xmax])
+>>> ax.set_ylim([ymin, ymax])
+>>>
+>>> plt.show()
+</pre>
+				 </div>
+					 <!-- Post Coding (SyntaxHighlighter) End -->
+						
+					<!-- Post Image Start -->
+						<div class="post-image margin-top-40 margin-bottom-40">
+						   <img src="img/stats7.png" alt="">
+						</div>
+						  <!-- Post Image End -->	
+		
+		
+		</div>
+				<!-- Section End -->
+				
+
+			   
+<!-- Footer Start -->
+<div class="col-md-12 page-body margin-top-50 footer">
+  <footer>
+  <ul class="menu-link">
+	   <li><a href="index.html">Содержание</a></li>
+	   <li><a href="about.html">О сайте</a></li>
+	</ul>
+	
+  <p>© Copyright 2016 DevBlog. All rights reserved</p>
+  
+						  
+  <!-- UiPasta Credit Start -->
+  <div class="uipasta-credit">Design By <a href="http://www.uipasta.com" target="_blank">UiPasta</a></div>
+  <!-- UiPasta Credit End -->
+  
+   
+ </footer>
+</div>
+ <!-- Footer End -->			 
+
+		
+			</div>
+			</div>	
+			<!-- Post  End-->	
+			
+			</div>		
+			</div>		
+			</div>
+		<!-- Blog Post (Right Sidebar) End -->
+		
+	</div>
+	</div>
+	</div>
+
+    
+
+    
+    <!-- Back to Top Start -->
+    <a href="#" class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></a>
+    <!-- Back to Top End -->
+    
+    
+    <!-- All Javascript Plugins  -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/plugin.js"></script>
+    
+    <!-- Main Javascript File  -->
+    <script type="text/javascript" src="js/scripts.js"></script>
+    
+    <!-- Syntax Highlighter Javascript File  -->
+    <script type="text/javascript" src="js/syntax/shCore.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushCss.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushJScript.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPerl.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPhp.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPlain.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPython.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushRuby.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushSql.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushVb.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushXml.js"></script>
+    
+	<!-- Syntax Highlighter Call Function -->
+	<script type="text/javascript">
+		SyntaxHighlighter.config.clipboardSwf = 'js/syntax/clipboard.swf';
+		SyntaxHighlighter.all();
+	</script>
+
+	
+
+    
+   </body>
+ </html>

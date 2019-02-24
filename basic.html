@@ -1,0 +1,425 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    
+    <!-- Meta Tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- SEO -->
+    <meta name="description" content="учебник scipy, пакет программ для научных вычислений, специальные функции, интегрирование, оптимизация, интерполяция, преобразования Фурье, цифровая обработка сигналов, линейная алгебра, проблема собственных значений разреженных матриц, алгоритмы на разреженных графах, пространственные структуры данных и алгоритмы, статистика, обработка многомерных данных, numpy">
+    <meta name="author" content="labintsevai">
+    <meta name="url" content="http://www.scipy-tutorial.ru">
+    <meta name="copyright" content="labintsevai">
+    <meta name="robots" content="index,follow">
+	
+	
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(51612041, "init", {
+        id:51612041,
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/51612041" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+    
+    <title>SciPy Научные вычисления</title>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="144x144" type="image/x-icon" href="images/favicon/apple-touch-icon.png">
+    
+    <!-- All CSS Plugins -->
+    <link rel="stylesheet" type="text/css" href="css/plugin.css">
+    
+    <!-- Main CSS Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+    <!-- Google Web Fonts  -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700">
+    
+    <!-- Syntax Highlighter  -->
+    <link rel="stylesheet" type="text/css" href="css/syntax/shCore.css">
+    <link rel="stylesheet" type="text/css" href="css/syntax/shThemeDefault.css">
+    
+    
+    <!-- HTML5 shiv and Respond.js support IE8 or Older for HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+	   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+
+  </head>
+
+ <body>
+
+	
+     
+	 <!-- Preloader Start -->
+     <div class="preloader">
+	   <div class="rounder"></div>
+      </div>
+      <!-- Preloader End -->
+      
+      
+    
+    
+    <div id="main">
+        <div class="container">
+            <div class="row">
+            	
+               
+                 
+                 <!-- About Me (Left Sidebar) Start -->
+                 <div class="col-md-3">
+                   <div class="about-fixed">
+
+                     <div class="my-pic">
+                        <img src="images/pic/scipyLogo.png" alt="">
+                     </div>
+                      
+                      
+                      
+                      <div class="my-detail">
+                    	
+                        <div class="white-spacing">
+                            <h1><a href="https://docs.scipy.org/doc/scipy/reference/tutorial/index.html">SciPy.org</a></h1>
+                            <span>Научные вычисления</span>
+                        </div> 
+                       
+                       <ul class="social-icon">
+                         <li><a href="https://www.facebook.com/scipyconf" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                         <li><a href="https://twitter.com/hashtag/scipy" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://github.com/scipy" target="_blank" class="github"><i class="fa fa-github"></i></a></li>
+                        </ul>
+
+                    </div>
+                  </div>
+                </div>
+                <!-- About Me (Left Sidebar) End -->
+                
+                
+                
+                
+                 
+<!-- Blog Post (Right Sidebar) Start -->
+<div class="col-md-9">
+<div class="col-md-12 page-body">
+<div class="row">
+
+
+<div class="sub-title">
+	<h2><a href="index.html">Содержание</h2></a>
+ </div>
+
+
+<div class="col-md-12 content-page">
+  <div class="col-md-12 blog-post">
+	
+	
+	<!-- Post Headline Start -->
+	<div class="post-title">
+	<ul class="simple">
+	<h3>Базовые функции</h3>
+	<li><a class="reference internal" href="#id2">Индексация в структурах данных</a></li>
+	<li><a class="reference internal" href="#id3">Манипуляция формой</a></li>
+	<li><a class="reference internal" href="#id4">Полиномы </a></li>
+	<li><a class="reference internal" href="#id5">Преобразование скалярных функций в векторные</a></li>
+	<li><a class="reference internal" href="#id6">Обработка типов</a></li>
+	<li><a class="reference internal" href="#id7">Другие полезные функции </a></li>
+	
+	</ul>
+	</div>
+	   <!-- Post Headline End -->
+
+<div class="section" id="id1">
+
+Scipy основан на Numpy, поэтому функции Numpy используются следующим образом:
+
+ <div class="margin-top-40 margin-bottom-40">  
+   <pre class="brush: js">
+>>>>>> >>>  import numpy as np
+>>>  np . some_function ()
+   </pre>
+</div>
+
+Вместо подробного описания каждой из этих функций (которая доступна в Справочном руководстве Numpy или с помощью команд help , info и source), в этом учебнике рассмотрены некоторые наиболее полезные команды, которые требуют отдельного описания для использования их полного потенциала. 
+
+Чтобы использовать функции из модулей Scipy, используются команды: 
+
+<div class="margin-top-40 margin-bottom-40">  
+   <pre class="brush: js">
+ >>>  from scipy import some_module
+>>>  some_module . some_function ()
+   </pre>
+</div>
+
+Непосредственно в пакете scipy также содержатся некоторые функции numpy и numpy.lib.scimath . Однако лучше использовать их непосредственно из модуля numpy . 
+
+</div>
+
+<div class="section" id="id2">
+<h3>Индексация в структурах данных </h3>
+
+
+В scipy имеются некоторые экземпляры классов для работы с диапазонами индексов, которые обеспечивают эффективные средства для построения массива. В этой части обсуждается работа  np.mgrid , np.ogrid , np.r_ и np.c_ для быстрого построения массивов. 
+
+Например, вместо того, чтобы писать:
+
+<div class="margin-top-40 margin-bottom-40">  
+   <pre class="brush: js">
+>>>  a = np . concatenate (([ 3 ], [ 0 ] * 5 , np . arange ( - 1 , 1.002 , 2 / 9.0 )))
+  </pre>
+</div>
+ 
+с командой r_ можно ввести это как 
+
+<div class="margin-top-40 margin-bottom-40">  
+   <pre class="brush: js">
+>>>  a = np . r_ [ 3 ,[ 0 ] * 5 , - 1 : 1 : 10 j ]
+  </pre>
+</div>
+ 
+Такая форма может облегчить ввод и сделать код более читаемым. Обратите внимание, каким образом объекты конкатенированы, а также на синтаксис работы с диапазонами. Отдельное внимание стоит уделить использованию комплексного числа 10j в качестве размера шага в синтаксисе  диапазона. Это нестандартное использование позволяет интерпретировать число как количество точек, создаваемых в диапазоне, а не как размер шага (заметим, что можно было использовать длинную целочисленную нотацию, 10L, но эта нотация может исчезнуть в Python, так как целые числа унифицированы). Это нестандартное использование может быть неочевидным для некоторых, однако оно дает пользователю возможность быстро создавать сложные векторы в очень читаемом виде. Когда количество точек указано таким образом, конечная точка включена. 
+
+«R» означает конкатенацию строк, потому что, если объекты между запятыми являются 2-мерными массивами, они складываются построчно ( следовательно, должны иметь соразмерные столбцы). Существует эквивалентная команда c_ которая суммирует 2d массивы по столбцам, но работает так же как r_ для 1d массивов. 
+
+Еще один очень полезный экземпляр класса, который использует расширенную нотацию нарезки диапазонов - это функция mgrid . В простейшем случае эта функция может быть использована для построения 1d диапазонов в качестве удобной замены для range. Она также позволяет использовать комплексные числа в размере шага, чтобы указать количество точек, которые должны размещаться между (включенными) конечными точками. Однако настоящей целью этой функции является создание N, N-мерных массивов, для описания пространства N-мерного объема. Рассмотрим пример его использования: 
+
+<div class="margin-top-40 margin-bottom-40">  
+   <pre class="brush: js">
+>>>>>> >>>  np . mgrid [ 0 : 5 , 0 : 5 ]
+array([[[0, 0, 0, 0, 0],
+        [1, 1, 1, 1, 1],
+        [2, 2, 2, 2, 2],
+        [3, 3, 3, 3, 3],
+        [4, 4, 4, 4, 4]],
+       [[0, 1, 2, 3, 4],
+        [0, 1, 2, 3, 4],
+        [0, 1, 2, 3, 4],
+        [0, 1, 2, 3, 4],
+        [0, 1, 2, 3, 4]]])
+>>>  np . mgrid [ 0 : 5 : 4 j , 0 : 5 : 4 j ]
+array([[[ 0.    ,  0.    ,  0.    ,  0.    ],
+        [ 1.6667,  1.6667,  1.6667,  1.6667],
+        [ 3.3333,  3.3333,  3.3333,  3.3333],
+        [ 5.    ,  5.    ,  5.    ,  5.    ]],
+       [[ 0.    ,  1.6667,  3.3333,  5.    ],
+        [ 0.    ,  1.6667,  3.3333,  5.    ],
+        [ 0.    ,  1.6667,  3.3333,  5.    ],
+        [ 0.    ,  1.6667,  3.3333,  5.    ]]])
+  </pre>
+</div>		
+ 
+Такие сетчатые массивы иногда очень полезны. Тем не менее, не всегда необходимо просто вычислить некоторую функцию от N переменных в соответствии с правилами работы с массивами в Numpy и SciPy. При создании N, N-мерных массивов, где только одно измерение в каждом массиве имеет длину больше 1, для создания meshgrid рационально использовать функцию ogrid которая генерирует «открытую» сетку с использованием newaxis. Это позволяет сэкономить память и получить тот же результат для оценки значений функции N переменных. 
+
+</div>
+
+<div class="section" id="id3">
+<h3>Манипуляция формой </h3>
+
+В этой категории функций имеются подпрограммы для выделения векторов и массивов заданной длины и размерности из N-мерных массивов, проверка размерности массивов, и конкатенации массивов по строкам, столбцам и «Страницам» (в третьем измерении). Также доступны процедуры для разделения массивов (обратная процедура от объединения массивов). 
+
+</div>
+
+<div class="section" id="id4">
+<h3>Полиномы</h3>
+
+
+Существует два взаимозаменяемых способа обработки 1-мерных многочленов в SciPy. Первый заключается в использовании класса poly1d из Numpy. Этот класс принимает коэффициенты или полиномиальные корни для инициализации многочлена. Затем полином можно использовать в алгебраических выражениях, интегрировать, дифференцировать и оценивать. При этом способе доступен вывод многочлена в консоль: 
+
+<div class="margin-top-40 margin-bottom-40">  
+   <pre class="brush: js">
+>>>>>> >>>  from numpy import poly1d
+>>>  p = poly1d ([ 3 , 4 , 5 ])
+>>>  print ( p )
+   2
+3 x + 4 x + 5
+>>>  print ( p * p )
+   4      3      2
+9 x + 24 x + 46 x + 40 x + 25
+>>>  print ( p . integ ( k = 6 ))
+   3     2
+1 x + 2 x + 5 x + 6
+>>>  print ( p . deriv ())
+6 x + 4
+>>>  p ([ 4 , 5 ])
+array([ 69, 100])
+   </pre>
+</div>
+
+Другой способ задания и обработки многочленов - это определение массива коэффициентов, в котором первый элемент массива соответствует коэффициенту при наибольшей мощности (степени). Существуют явные функции для добавления, вычитания, умножения, деления, интегрирования, дифференцирования и оценки полиномов, представленных в виде последовательностей коэффициентов. 
+
+</div>
+
+<div class="section" id="id5">
+<h3>Преобразование скалярных функций в векторные </h3>
+
+
+Одной из особых возможностей, которую предлагает NumPy, является класс vectorize для преобразования обычной функции Python, которая принимает скаляры и возвращает скаляры в «векторизованную функцию» с теми же правилами, что и другие функции Numpy ( т.е. универсальные функции или ufuncs). Например, имеется функция Python с именем addsubtract, определенная как: 
+
+<div class="margin-top-40 margin-bottom-40">  
+   <pre class="brush: js">
+>>>  def addsubtract ( a , b ):
+...    if a > b :
+...        return a - b
+...    else :
+...        return a + b
+   </pre>
+</div>
+ 
+Функция определена для двух скалярных переменных, возвращает скалярный результат. Класс vectorize можно использовать для «векторизации» этой функции:
+
+<div class="margin-top-40 margin-bottom-40">  
+   <pre class="brush: js">
+>>>  vec_addsubtract = np . vectorize ( addsubtract )
+   </pre>
+</div>
+ 
+Это возвращает функцию, которая принимает аргументы массива и возвращает результат массива: 
+
+
+<div class="margin-top-40 margin-bottom-40">  
+   <pre class="brush: js">
+>>>  vec_addsubtract ([ 0 , 3 , 6 , 9 ],[ 1 , 3 , 5 , 7 ])
+array([1, 6, 1, 2])
+   </pre>
+</div>
+
+Эта конкретная функция могла быть записана в векторной форме без использования vectorize . Однако функции, которые используют процедуры оптимизации или интеграции, удобнее векторизовать с использованием vectorize. 
+
+</div>
+
+<div class="section" id="id6">
+<h3>Обработка типов</h3>
+
+
+Обратите внимание на разницу между функциями np.iscomplex / np.isreal и np.iscomplexobj / np.isrealobj . Первая команда основана на массиве и возвращает байт-массивы из них и нули - результат элементарного теста. Вторая команда основана на объекте и возвращает скаляр, описывающий результат теста для всего объекта. 
+
+Часто требуется получить только действительную и / или мнимую часть комплексного числа. При обработке сложных чисел и массивов, которые возвращают действительные и/или мнимые значения, лучше использовать функции вида np.real и np.imag . Эти функции преуспевают для всего, что можно превратить в массив Numpy. Рассмотрим также функцию np.real_if_close которая преобразует комплекснозначное число с малой мнимой частью в действительное число. 
+
+Иногда требуется проверить, является ли число скаляром. Эта функциональность предоставляется в удобной функции np.isscalar, которая возвращает 1 или 0. 
+
+Необходимость проверки принадлежности объектов к определенному типу Numpy возникает достаточно часто, поэтому в SciPy предоставлен удобный интерфейс с использованием словаря np.cast . Словарь задается типом, который требуется выполнить, и хранит функции для приведения типа. Таким образом, np.cast['f'](d) возвращает массив np.float32 из d . Эта функция также полезна как простой способ получить скаляр определенного типа: 
+
+<div class="margin-top-40 margin-bottom-40">  
+   <pre class="brush: js">
+ >>>  np . cast [ 'f' ]( np . pi )
+array(3.1415927410125732, dtype=float32)
+   </pre>
+</div>
+
+</div>
+
+<div class="section" id="id7">
+<h3>Другие полезные функции </h3>
+
+
+Есть также несколько других полезных функций, которые следует упомянуть. Для выполнения фазовой обработки полезны angle функций и unwrap . Кроме того, функции linspace и logspace возвращают равномерно распределенные отсчеты в линейном или логарифмическом масштабе. Наконец, полезно знать возможности индексирования Numpy. Следует упомянуть о функции select, которая расширяет функциональность where -  включает несколько условий и несколько вариантов. Синтаксис имеет вид: select(condlist,choicelist,default=0). Таким образом, select - это векторизованная форма множественного оператора if. Она позволяет быстро построить функцию, которая возвращает массив результатов, основанный на списке условий. Каждый элемент возвращаемого массива берется из массива в choicelist, соответствующий истине условию в condlist. Например 
+
+<div class="margin-top-40 margin-bottom-40">  
+   <pre class="brush: js">
+ >>>  x = np . r_ [ - 2 : 3 ]
+>>>  x
+array([-2, -1,  0,  1,  2])
+>>>  np . select ([ x > 3 , x >= 0 ], [ 0 , x + 2 ])
+array([0, 0, 2, 3, 4])
+  </pre>
+</div>
+
+
+Некоторые дополнительные полезные функции также можно найти в модуле scipy.misc . Например, функции factorial и comb вычисляют n! И n!/k!(nk)! с использованием либо точной целочисленной арифметики (благодаря целочисленному объекту Python Long), либо с использованием чисел с плавающей запятой и гамма-функций. Функция lena возвращает общий образ, используемый при обработке изображений.
+
+Наконец, предусмотрены две функции, которые полезны для аппроксимации производных функций с использованием дискретных разностей. Функция central_diff_weights возвращает весовые коэффициенты для равномерно распределенной N -точной аппроксимации производной 0-порядка. Эти веса должны быть умножены на функцию, соответствующую этим точкам, и в результате получают приближенное значение производной. Эта функция предназначена для использования, когда доступны только выборки значений функции. Когда функция является объектом, который может быть передан подпрограмме и оценен, для оценки производной в любой точке используется функция derivative.
+
+
+
+
+ </div>							
+								
+			
+                       
+<!-- Footer Start -->
+<div class="col-md-12 page-body margin-top-50 footer">
+  <footer>
+  <ul class="menu-link">
+	   <li><a href="index.html">Содержание</a></li>
+	   <li><a href="about.html">О сайте</a></li>
+	</ul>
+	
+  <p>© Copyright 2016 DevBlog. All rights reserved</p>
+  
+						  
+  <!-- UiPasta Credit Start -->
+  <div class="uipasta-credit">Design By <a href="http://www.uipasta.com" target="_blank">UiPasta</a></div>
+  <!-- UiPasta Credit End -->
+  
+   
+ </footer>
+</div>
+ <!-- Footer End -->
+
+</div>
+<!-- Blog Post (Right Sidebar) End -->
+
+</div>
+</div>
+</div>
+    
+    
+    
+     
+     <!-- Endpage Box (Popup When Scroll Down) Start 
+     <div id="scroll-down-popup" class="endpage-box">
+       <h4>Read Also</h4>
+       <a href="#">How to make your company website based on bootstrap framework...</a>
+      </div>
+      <!-- Endpage Box (Popup When Scroll Down) End -->
+      
+    
+    
+    
+    <!-- Back to Top Start -->
+    <a href="#" class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></a>
+    <!-- Back to Top End -->
+    
+    
+    <!-- All Javascript Plugins  -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/plugin.js"></script>
+    
+    <!-- Main Javascript File  -->
+    <script type="text/javascript" src="js/scripts.js"></script>
+    
+    <!-- Syntax Highlighter Javascript File  -->
+    <script type="text/javascript" src="js/syntax/shCore.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushCss.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushJScript.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPerl.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPhp.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPlain.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPython.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushRuby.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushSql.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushVb.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushXml.js"></script>
+    
+	<!-- Syntax Highlighter Call Function -->
+	<script type="text/javascript">
+		SyntaxHighlighter.config.clipboardSwf = 'js/syntax/clipboard.swf';
+		SyntaxHighlighter.all();
+	</script>
+
+    
+   </body>
+ </html>

@@ -1,0 +1,945 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    
+    <!-- Meta Tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- SEO -->
+    <meta name="description" content="учебник scipy, пакет программ для научных вычислений, специальные функции, интегрирование, оптимизация, интерполяция, преобразования Фурье, цифровая обработка сигналов, линейная алгебра, проблема собственных значений разреженных матриц, алгоритмы на разреженных графах, пространственные структуры данных и алгоритмы, статистика, обработка многомерных данных, numpy">
+    <meta name="author" content="labintsevai">
+    <meta name="url" content="http://www.scipy-tutorial.ru">
+    <meta name="copyright" content="labintsevai">
+    <meta name="robots" content="index,follow">
+	
+	 
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(51612041, "init", {
+        id:51612041,
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/51612041" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+    
+    <title>SciPy Интегрирование</title>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="144x144" type="image/x-icon" href="images/favicon/apple-touch-icon.png">
+    
+    <!-- All CSS Plugins -->
+    <link rel="stylesheet" type="text/css" href="css/plugin.css">
+    
+    <!-- Main CSS Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+    <!-- Google Web Fonts  -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700">
+    
+    <!-- Syntax Highlighter  -->
+    <link rel="stylesheet" type="text/css" href="css/syntax/shCore.css">
+    <link rel="stylesheet" type="text/css" href="css/syntax/shThemeDefault.css">
+    
+	<!-- MathJax support-->
+	<script type="text/javascript" async
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML" async>
+	</script>
+
+    
+    
+    <!-- HTML5 shiv and Respond.js support IE8 or Older for HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+	   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+
+  </head>
+
+ <body>
+
+	
+     
+	 <!-- Preloader Start -->
+     <div class="preloader">
+	   <div class="rounder"></div>
+      </div>
+      <!-- Preloader End -->
+      
+      
+    
+    
+<div id="main">
+<div class="container">
+<div class="row">
+
+
+<!-- About Me (Left Sidebar) Start -->
+<div class="col-md-3">
+<div class="about-fixed">
+
+<div class="my-pic">
+<img src="images/pic/scipyLogo.png" alt="">
+</div>
+
+
+
+<div class="my-detail">
+
+<div class="white-spacing">
+<h1><a href="https://docs.scipy.org/doc/scipy/reference/tutorial/index.html">SciPy.org</a></h1>
+<span>Научные вычисления</span>
+</div> 
+
+<ul class="social-icon">
+<li><a href="https://www.facebook.com/scipyconf" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a></li>
+<li><a href="https://twitter.com/hashtag/scipy" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a></li>
+<li><a href="https://github.com/scipy" target="_blank" class="github"><i class="fa fa-github"></i></a></li>
+</ul>
+
+</div>
+</div>
+</div>
+<!-- About Me (Left Sidebar) End -->
+
+
+
+<!-- Blog Post (Right Sidebar) Start -->
+<div class="col-md-9">
+<div class="col-md-12 page-body">
+<div class="row">
+
+<div class="sub-title">
+	<h2><a href="index.html">Содержание</h2></a>
+ </div>
+
+
+<div class="col-md-12 content-page">
+  <div class="col-md-12 blog-post">
+	
+	
+	<!-- Post Headline Start -->
+	<div class="post-title">
+	<ul class="simple">
+	<h3>Интегрирование (scipy.integrate)</h3>
+	<li><a class="reference internal" href="#id1">Численное интегрирование (quad)</a></li>
+	<li><a class="reference internal" href="#id2">Интегралы высших порядков (dblquad , tplquad , nquad)</a></li>
+	<li><a class="reference internal" href="#id3">Метод Гаусса</a></li>
+	<li><a class="reference internal" href="#id4">Метод Ромберга</a></li>
+	<li><a class="reference internal" href="#id5">Интегрирование функций, заданных в виде отсчетов значений</a></li>
+	<li><a class="reference internal" href="#id6">Ускорение интегрирования с использованием низкоуровневых функций обратного вызова</a></li>
+	<li><a class="reference internal" href="#id7">Обыкновенные дифференциальные уравнения (odeint)</a></li>
+	</ul>
+	</div>
+	   <!-- Post Headline End -->
+		
+	<p>
+В пакете scipy.integrate представлены несколько методов интегрирования, включая интегратор для решения обыкновенных  дифференциальных уравнений (ОДУ). 
+Обзор функций пакета обеспечивается с помощью команды help: 
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>>  help ( integrate )
+ 	</pre>
+	</div>
+	
+	<p>
+ Методы интегрирования функций, заданных в виде объектов.
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   quad          -- Обыкновенный интеграл.
+   dblquad       -- Двойной интеграл.
+   tplquad       -- Тройной интеграл.
+   fixed_quad    -- Интегрирование  func(x) с помощью квадратурной формулы Гаусса.
+   quadrature    -- Квадратурное интегрирование Гаусса с заданной погрешностью.
+   romberg       -- Интегрирование методом Ромберга.
+ 	</pre>
+	</div>
+	
+	<p>
+Методы интегрирования функций, заданных в виде отсчетов значений.
+	</p>
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   trapz         --  интегрирование методом трапеций.
+   cumtrapz      -- интегрирование методом трапеций с кумулятивным накоплением.
+   simps         -- интегрирование методом Симпсона.
+   romb          -- интегрирование методом Ромберга выборки (2**k + 1).
+ 	</pre>
+	</div>
+	<p>
+Поиск корней и весовых функций осуществляется с помощью модуля ортогональных полиномов из пакета special.
+	</p>
+	<p>
+ Интерфейсы для численного решения систем обыкновенных дифференциальных уравнений (ОДУ).
+	</p>
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   odeint        -- Общий метод численного решения ОДУ.
+   ode           -- Решение ОДУ с помощью алгоритмов  VODE and ZVODE.
+  	</pre>
+	</div>
+
+<div class="section" id="id1">
+<h3>Численное интегрирование ( quad ) </h3>
+	
+	<p>
+Функция quad предназначена для вычисления интеграла функции одной переменной между двумя точками. В качестве  точек могут быть указаны бесконечные пределы  ( \( ± inf \) ). Рассмотрим интеграл функции Бесселя jv(2.5, x) на интервале [0, 4.5]. 
+
+$$ I=\int\limits_{0}^{4.5}J_{2.5}(x)dx $$
+
+ Этот интеграл можно вычислить с помощью функции quad : 
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>>  import scipy.integrate as integrate
+>>>  import scipy.special as special
+>>>  result = integrate . quad ( lambda x : special . jv ( 2.5 , x ), 0 , 4.5 )
+>>>  result
+(1.1178179380783249, 7.8663172481899801e-09)
+  	</pre>
+	</div>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>>  from numpy import sqrt , sin , cos , pi
+>>>  I = sqrt ( 2 / pi ) * ( 18.0 / 27 * sqrt ( 2 ) * cos ( 4.5 ) - 4.0 / 27 * sqrt ( 2 ) * sin ( 4.5 ) +
+...                 sqrt ( 2 * pi ) * special . fresnel ( 3 / sqrt ( pi ))[ 0 ])
+>>>  I
+1.117817938088701
+  	</pre>
+	</div>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> >>>  print ( abs ( result [ 0 ] - I ))
+1.03761443881e-11
+  	</pre>
+	</div>
+	
+	<p>
+Первый аргумент для quad - это «вызываемый» объект Python ( т. е. функция, метод или экземпляр класса). Обратите внимание на использование лямбда-функции в качестве аргумента. Следующие два аргумента являются пределами интегрирования. Возвращаемое значение представляет собой кортеж из двух элементов. Первый элемент содержит оценочное значение интеграла, а второй элемент - верхнюю границу ошибки. Заметим, что в нашем примере истинное значение этого интеграла 
+
+$$ I = \sqrt{\frac{2}{\pi}} (\frac{18}{27}\sqrt{2}cos(4.5) − \frac{42}{72} sin(4.5)+ \sqrt{2\pi} Si( \frac{3}{\sqrt{\pi} }) $$
+
+ где 
+
+$$ Si(x)=\int\limits_0^x sin(\frac{\pi}{2} t^2) dt $$
+
+ является интегралом синуса Френеля. Заметим, что ошибка численно вычисленного интеграла находится в пределах \( 1.04×10^{−11} \) от точного результата, значительно ниже изначально сообщаемой погрешности \( 7.87×10^{-9} \). 
+
+Если функция под интегралом принимает дополнительные параметры, они могут быть представлены в аргументе args . Предположим, что вычисляется следующий интеграл: 
+
+$$ I(a,b) = \int\limits_{0}^{1} a x^2 + b dx$$.
+
+ Этот интеграл можно вычислить, используя следующий код: 
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> >>>  from scipy.integrate import quad
+>>>  def integrand ( x , a , b ):
+...     return a * x ** 2 + b
+...
+>>>  a = 2
+>>>  b = 1
+>>>  I = quad ( integrand , 0 , 1 , args = ( a , b ))
+>>>  I
+(1.6666666666666667, 1.8503717077085944e-14)
+  	</pre>
+	</div>
+ 
+	<p>
+Бесконечные пределы также допустимы для функции quad, необходимо использовать \(± \infty \) как один из аргументов. Например, предположим, что численное значение для экспоненциального интеграла равно: 
+
+$$ E_n (x) = \int\limits_{1}^{\infty} \frac{e^{−xt} } {t^n} dt $$
+
+Опустим тот факт, что этот интеграл может быть вычислен как special.expn(n,x) . Эту же функциональность special.expn можно реализовать путем определения новой функции vec_expint на основе численного интеграла quad : 
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> >>>  from scipy.integrate import quad
+>>>  def integrand ( t , n , x ):
+...     return np . exp ( - x * t ) / t ** n
+...
+ >>>  def expint ( n , x ):
+...     return quad ( integrand , 1 , np . inf , args = ( n , x ))[ 0 ]
+...
+ >>>  vec_expint = np . vectorize ( expint )
+>>>  vec_expint ( 3 , np . arange ( 1.0 , 4.0 , 0.5 ))
+array([ 0.1097,  0.0567,  0.0301,  0.0163,  0.0089,  0.0049])
+>>>  import scipy.special as special
+>>>  special . expn ( 3 , np . arange ( 1.0 , 4.0 , 0.5 ))
+array([ 0.1097,  0.0567,  0.0301,  0.0163,  0.0089,  0.0049])
+  	</pre>
+	</div>
+	
+	<p>
+Интегрируемая функция может даже использовать quad в качестве аргумента (хотя ошибка может быть недооценена из-за наличия ошибки в подынтегральном выражении). Интеграл в этом случае равен 
+
+$$ I_n=\int\limits_0^{\inf}\int\limits_1^{\inf} \frac{e^{−xt} } {t^n} dt dx=\frac{1}{n} $$
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> >>>  result = quad ( lambda x : expint ( 3 , x ), 0 , np . inf )
+>>>  print ( result )
+(0.33333333324560266, 2.8548934485373678e-09)
+ 
+>>> >>>  I3 = 1.0 / 3.0
+>>>  print ( I3 )
+0.333333333333
+ 
+>>> >>>  print ( I3 - result [ 0 ])
+8.77306560731e-11
+  	</pre>
+	</div>
+	
+	<p>
+В этом последнем примере показано, что интеграл высшего порядка может быть вычислен с помощью повторных вызовов  quad . 
+	</p>
+
+</div>
+
+<div class="section" id="id2">
+<h3>Интегралы высших порядков ( dblquad , tplquad , nquad )</h3>
+
+	<p>
+Механизмы  двойного и тройного интегрирования реализованы в функциях dblquad и tplquad . Они  принимают в качестве аргументов интегрируемую  функцию и четыре или шесть пределов интегрирования, соответственно. Пределы всех внутренних интегралов должны быть определены как функции. 
+
+Ниже приведен пример использования двойного интеграла для вычисления нескольких значений \(I_n\) : 
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> >>>  from scipy.integrate import quad , dblquad
+>>>  def I ( n ):
+...     return dblquad ( lambda t , x : np . exp ( - x * t ) / t ** n , 0 , np . inf , lambda x : 1 , lambda x : np . inf )
+...
+ 	</pre>
+	</div>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> >>>  print ( I ( 4 ))
+(0.2500000000043577, 1.29830334693681e-08)
+>>>  print ( I ( 3 ))
+(0.33333333325010883, 1.3888461883425516e-08)
+>>>  print ( I ( 2 ))
+(0.4999999999985751, 1.3894083651858995e-08)
+ 	</pre>
+	</div>
+	
+	<p>
+В качестве примера для переменных пределов рассмотрим интеграл 
+	
+
+$$ I=\int\limits_{y=0}^{1/2} \int\limits_{x=0}^{1−2y} xy dx dy=\frac{1}{96} $$
+
+ Этот интеграл можно вычислить с помощью приведенного ниже выражения (обратите внимание на использование лямбда-функций для верхнего предела внутреннего интеграла): 
+	</p>
+ 
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> >>>  from scipy.integrate import dblquad
+>>>  area = dblquad ( lambda x , y : x * y , 0 , 0.5 , lambda x : 0 , lambda x : 1 - 2 * x )
+>>>  area
+(0.010416666666666668, 1.1564823173178715e-16)
+ 	</pre>
+	</div>
+	
+	<p>
+Для n-кратного интегрирования scipy предоставляет функцию nquad . Границы интегрирования являются итерируемым объектом: либо списком констант, либо списком функций. Порядок интегрирования (и, следовательно, пределы) - от самого внутреннего интеграла к самому внешнему. 
+
+Интеграл из примера выше 
+
+$$ I=\int\limits_{0}^{\infty} \int\limits_{0}^{\infty} \frac{e^{−xt} } {t^n} dt dx =\frac{1}{n} $$
+
+ может быть вычислент как 
+	</p>
+ 
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> >>>  from scipy import integrate
+>>>  N = 5
+>>>  def f ( t , x ):
+...    return np . exp ( - x * t ) / t ** N
+...
+>>>  integrate . nquad ( f , [[ 1 , np . inf ],[ 0 , np . inf ]])
+(0.20000000000002294, 1.2239614263187945e-08)
+ 	</pre>
+	</div>
+	
+	<p>
+Заметим, что порядок следования аргументов для функции f должен соответствовать порядку пределов интегрирования. Т. е. внутренний интеграл относительно t находится на отрезке [1,∞] а внешний интеграл по x находится на отрезке [0,∞] . 
+
+Переменные пределы интегрирования можно рассматривать аналогичным образом. Рассмотренный выше пример
+
+$$ I=\int\limits_{y=0}^{1/2} \int\limits_{x=0}^{1−2y} xy dx dy=\frac{1}{96} $$
+ 
+может быть вычислен следующим образом
+	</p>
+	
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> >>>  from scipy import integrate
+>>>  def f ( x , y ):
+...     return x * y
+...
+>>>  def bounds_y ():
+...     return [ 0 , 0.5 ]
+...
+>>>  def bounds_x ( y ):
+...     return [ 0 , 1 - 2 * y ]
+...
+>>>  integrate . nquad ( f , [ bounds_x , bounds_y ])
+(0.010416666666666668, 4.101620128472366e-16)
+ 	</pre>
+	</div>
+	
+	<p>
+Как видно, результатом тот же что и раньше. 
+	</p>
+</div>
+
+<div class="section" id="id3">
+<h3>Метод Гаусса </h3>
+
+	<p>
+В scipy.integrate реализовано несколько функций для численного интегрирования методом Гаусса на фиксированном интервале. Первая функция - fixed_quad – выполняет интегрирование методом Гауссас фиксированным порядком. Вторая функция - quadrature которая выполняет интегрирование с увеличением порядка, пока погрешность интегрирования не будет ниже некоторого допуска, определенного пользователем. Эти функции используют модуль special.orthogonal с помощью которого вычисляются корни и квадратурные веса ортогональных полиномов(сами полиномы доступны как специальные функции, возвращающие экземпляры класса - например, special.legendre ). 
+	</p>
+</div>
+
+<div class="section" id="id4">
+<h3>Метод Ромберга </h3>
+
+	<p>
+Метод Ромберга [WPR] - еще один метод численной оценки интеграла. Для romberg дополнительной информации см. romberg функцию для romberg . 
+	</p>
+</div>
+
+<div class="section" id="id5">
+<h3>Интегрирование функций, заданных в виде отсчетов значений  </h3>
+
+	<p>
+Пусть заданы 2k+1 отсчетов значений функции, равномерно распределенных на интервале интегрирования.  Тогда  для получения высокоточных оценок интеграла можно применить интегрирование методом Ромберга romb. В основе лежит метод трапеций в точках, связанных степенью двойки, а также используется экстраполяция Ричардсона для приближения интеграла с более высокой степенью точности. 
+В случае произвольных интервалов между отсчетами в выборке,  используются функции trapz (определенные в numpy [NPT] ) и simps . Они используют формулы Ньютона-Коутса 1 и 2 порядка соответственно для выполнения интегрирования. Метод трапеций аппроксимирует функцию как прямую линию между соседними точками, в то время как в методе Симпсона значение функции между тремя соседними точками аппроксимируется в виде параболы. 
+Для нечетного числа равномерно распределенных отсчетов, интегрирование методом Симпсона является точным, если функция является многочленом порядка 3 или менее. Если отсчеты распределены неравномерно, то результат будет точным, если функция является многочленом порядка 2 или меньше. 
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> >>>  import numpy as np
+>>>  def f1 ( x ):
+...    return x ** 2
+...
+>>>  def f2 ( x ):
+...    return x ** 3
+...
+>>>  x = np . array ([ 1 , 3 , 4 ])
+>>>  y1 = f1 ( x )
+>>>  from scipy.integrate import simps
+>>>  I1 = simps ( y1 , x )
+>>>  print ( I1 )
+21.0
+ 	</pre>
+	</div>
+	
+	<p>
+Это точно соответствует 
+
+$$ \int\limits_{1}^{4} x^2 dx = 21 $$ ,
+
+ тогда как интегрирование второй функции 
+	</p>
+ 
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> >>>  y2 = f2 ( x )
+>>>  I2 = integrate . simps ( y2 , x )
+>>>  print ( I2 )
+61.5
+ 	</pre>
+	</div>
+	
+	<p>
+не соответствует выражению
+
+$$ \int\limits_{1}^{4} x^3 dx=63.75 $$
+
+ потому что порядок многочлена функции f2 больше двух. 
+	</p>
+</div>
+
+<div class="section" id="id6">
+<h3>Ускорение интегрирования с использованием низкоуровневых функций обратного вызова </h3>
+
+	<p>
+Пользователь, желающий сократить время вычисления интеграла, может передать указатель на модуль вычисления значения интегрируемой функции C, написанный на языке С, через scipy.LowLevelCallable в quad , dblquad , tplquad или nquad. Подключенная таким образом функция будет проинтегрирована и результат вычисления будет возращен в Python. Увеличение производительности здесь обусловлено двумя факторами. Первичное улучшение - это более быстрое вычисление значений функции, которое обеспечивается компиляцией самой функции. Кроме того, ускорение достигается устранением вызовов функций между C и Python в quad . Этот метод может обеспечить улучшение скорости порядка двух раз для тривиальных функций, таких как синус. Однако для более сложных функций это может привести к значительно более заметным улучшениям (10x +). Эта возможность позволяет решать задачи с весьма интенсивной вычислительной нагрузкой. 
+
+Этот подход можно реализовать, например, через ctypes за несколько простых шагов: 
+
+1.) Напишите функцию подынтегральной функции в C с сигнатурой функции double f(int n, double *x, void *user_data) , где x - массив, содержащий точку, в которой вычисляется функция f, а user_data - произвольные дополнительные данные. 
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+ /* testlib.c */
+double f ( int n , double * x , void * user_data ) {
+    double c = * ( double * ) user_data ;
+    return c + x [ 0 ] - x [ 1 ] * x [ 2 ]; /* corresponds to c + x - y * z */
+}
+ 	</pre>
+	</div>
+	
+	<p>
+2.) Скомпилируйте этот файл в общую / динамическую библиотеку (быстрый поиск поможет в различных ОС). Пользователь должен обеспечить подключение необходимых математических библиотек и т. д. В linux это выглядит так: 
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+$ gcc -shared -fPIC -o testlib.so testlib.c
+ 	</pre>
+	</div>
+	
+	<p>
+Библиотека вывода будет называться testlib.so , но может иметь другое расширение файла. Т.о., был создан модуль вычисления функции, который может быть загружен в Python с помощью ctypes . 
+
+3.) Загрузите модуль в Python с помощью ctypes и установите restypes и argtypes - это позволяет Scipy правильно интерпретировать функцию: 
+
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+import os , ctypes
+from scipy import integrate , LowLevelCallable
+
+lib = ctypes . CDLL ( os . path . abspath ( 'testlib.so' ))
+lib . f . restype = ctypes . c_double
+lib . f . argtypes = ( ctypes . c_int , ctypes . POINTER ( ctypes . c_double ), ctypes . c_void_p )
+
+c = ctypes . c_double ( 1.0 )
+user_data = ctypes . cast ( ctypes . pointer ( c ), ctypes . c_void_p )
+
+func = LowLevelCallable ( lib . f , user_data )
+ 	</pre>
+	</div>
+	
+	<p>
+Последняя функция void *user_data в функции является необязательной и может быть опущена (как в функции C, так и в типах ctypes), если это не требуется. Обратите внимание, что координаты передаются как массив double, а не отдельный аргумент. 
+
+4.) Теперь интегрируйте библиотечную функцию как обычно, используя nquad : 
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> >>>  integrate . nquad ( func , [[ 0 , 10 ], [ - 10 , 0 ], [ - 1 , 1 ]])
+(1200.0, 1.1102230246251565e-11)
+ 	</pre>
+	</div>
+	
+	<p>
+Таким образом, результат вычисляется за более короткий промежуток времени.  При этом доступны все возможные опции, включая указание метода, бесконечных пределов и т.д. 
+	</p>
+</div>
+
+
+
+<div class="section" id="id7">
+<h3>Обыкновенные дифференциальные уравнения (odeint)</h3>
+
+	<p>
+Другим полезным примером является интегрирование системы обыкновенных дифференциальных уравнений (ОДУ) с заданными начальными условиями. Функция odeint из scipy.integrate используется для интегрирования векторного дифференциального уравнения первого порядка: 
+	
+$$ \frac{dy}{dt}=f(y,t) $$,
+
+при заданных начальных условиях \(y(0)=y0\).   y - вектор длины N,  \(f\) является отображением из \(R^N\) в \(R^N\).  ОДУ высшего порядка всегда может быть сведено к ДУ этого типа, путем ввода промежуточных производных в вектор y . 
+
+Например, предположим, что нужно найти решение следующего ДУ второго порядка: 
+
+$$ \frac{d^2 w }{ dz^2} − zw(z) = 0 $$
+
+ с начальными условиями \( w(0)= \frac{1}{ \sqrt[3]{3^2} } Γ(2/3) \) и \( \frac{dw}{dz} |_{z=0} = − \frac{1}{\sqrt[3]{3} } Γ(1/3) \). Известно, что решением этого ДУ с  такими граничными условиями является функция Эйри:
+
+$$w=Ai(z)$$ ,
+
+Проверим правильность интегрирования с использованием special.airy . 
+
+Сначала преобразуем ОДУ в стандартную форму, установив \(y=[\frac{dw}{dz},w],   t=z \). Таким образом, дифференциальное уравнение записывается в матричной форме
+
+$$ \frac{dy}{dt} = \begin{bmatrix} t y_1 \\ y_0 \end{bmatrix} = \begin{bmatrix} 0 && t \\ 1 && 0 \end{bmatrix} \begin{bmatrix} y_0 \\ y_1 \end{bmatrix} = \begin{bmatrix} 0 && t \\ 1 && 0 \end{bmatrix} y $$.
+
+ Другими словами, 
+
+$$ f(y,t)=A(t)y$$.
+
+Заметим, что если \(A(t) \) коммутирует с \( \int_0^t  A(τ)dτ \) при матричном умножении, то это линейное дифференциальное уравнение имеет точное решение в виде матричной экспоненты: 
+
+
+$$ y(t)=exp⁡(\int_0^t A(τ)dτ)y(0) $$ ,
+
+ В этом случае \(A(t) \) и ее интеграл не коммутируют. 
+
+Существует множество дополнительных входов и выходов, доступных при использовании odeint, которые помогу настроить решатель должным образом. Эти дополнительные входы и выходы не требуются большую часть времени, достаточно трех входных аргументов и одного выходного решения. К необходимым входным данным  относятся функция  fprime, определяющая производную, вектор начальных условий y0 и временные точки t  для решения (с начальной точкой значения как первым элементом этой последовательности). Выход решателя odeint - это матрица, в которой каждая строка содержит вектор решения в каждый определенный момент времени \(t_i\)(таким образом, начальные условия задаются в первой выходной строке). 
+
+Следующий пример иллюстрирует использование odeint, включая использование опции Dfun, которая позволяет пользователю указывать градиент (относительно y ) функции, f(y,t) . 
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> >>>  from scipy.integrate import odeint
+>>>  from scipy.special import gamma , airy
+>>>  y1_0 = 1.0 / 3 ** ( 2.0 / 3.0 ) / gamma ( 2.0 / 3.0 )
+>>>  y0_0 = - 1.0 / 3 ** ( 1.0 / 3.0 ) / gamma ( 1.0 / 3.0 )
+>>>  y0 = [ y0_0 , y1_0 ]
+>>>  def func ( y , t ):
+...     return [ t * y [ 1 ], y [ 0 ]]
+...
+ 
+
+>>> >>>  def gradient ( y , t ):
+...     return [[ 0 , t ], [ 1 , 0 ]]
+...
+ 
+
+>>> >>>  x = np . arange ( 0 , 4.0 , 0.01 )
+>>>  t = x
+>>>  ychk = airy ( x )[ 0 ]
+>>>  y = odeint ( func , y0 , t )
+>>>  y2 = odeint ( func , y0 , t , Dfun = gradient )
+ 
+
+>>> >>>  ychk [: 36 : 6 ]
+array([0.355028, 0.339511, 0.324068, 0.308763, 0.293658, 0.278806])
+ 
+
+>>> >>>  y [: 36 : 6 , 1 ]
+array([0.355028, 0.339511, 0.324067, 0.308763, 0.293658, 0.278806])
+ 
+
+>>> >>>  y2 [: 36 : 6 , 1 ]
+array([0.355028, 0.339511, 0.324067, 0.308763, 0.293658, 0.278806])
+ 	</pre>
+	</div>
+
+<h4>Решение системы с диагональной сгруппированной (bounded) матрицей Якоби</h4>
+
+	<p>
+Одним из параметров решателя odeint является признак того, что матрица Якоби является сгруппированной (приведена к виду, в котором не равны нулю главная диагональ и несколько смежных с ней). Для больших систем ДУ это может значительно повысить производительность. 
+
+В качестве примера мы будем решать одномерные ДУ с частными производными Грей-Скотта, используя метод линий [MOL] . Уравнения Грей-Скотта для функций u(x,t) и v(x,t) на отрезке x∈[0,L] 
+
+$$ \frac{∂u}{∂t} = D_u \frac{∂^2 u}{∂x^2} – uv^2 + f(1−u) $$
+$$ \frac{∂v}{∂t} = D_v \frac{∂^2 v}{∂x^2} + uv^2 − (f+k)v $$
+
+где \(D_u\) и \(D_v\) - коэффициенты диффузии компонент u и v соответственно, а f и k - постоянные. (Для получения дополнительной информации о системе см. Http://groups.csail.mit.edu/mac/projects/amorphous/GrayScott/ ) 
+
+Будем считать граничные условия Неймана (т. е. «без потока»): 
+
+$$\frac{∂u}{∂x}(0,t) = 0,   \frac{∂v}{∂x}(0,t)=0,  \frac{∂u}{∂x}(L,t)=0, \frac{∂v}{∂x} (L,t)=0 $$
+
+ Чтобы применить метод линий, мы дискретизируем переменную x , определяя равномерно распределенную сетку из N точек \( {x_0,x_1,…,x_{N−1} } \) , причем \(x_0=0\) и \(x_{N−1}= L\) . Определим \( u_j(t)≡u(x_k,t) \) и \(v_j(t)≡v(x_k,t)\) и заменим производные по x конечными разностями. То есть, 
+
+$$ \frac{∂^2 u}{∂x^2} (x_j, t) →\frac{ u_{j−1}(t)−2u_j(t)+u_{j+1}(t)}{(Δx)^2} $$
+
+Далее мы имеем систему из 2N обыкновенных дифференциальных уравнений: (1)
+
+
+$$ \frac{\partial^2 u}{\partial x^2}(x_j, t) \rightarrow
+    \frac{u_{j-1}(t) - 2 u_{j}(t) + u_{j+1}(t)}{(\Delta x)^2} $$
+
+
+$$ \frac{dv_j}{dt} = \frac{D_v} {(Δx)^2} (v_{j−1} − 2v_j + v_{j+1}) + u_j v_j^2 − (f+k)v_j$$
+
+ Для удобства аргумент (t) был опущен. 
+	</p>
+
+	<p>
+Чтобы обеспечить соблюдение граничных условий, введем дополнительные («призрачные») точки \(x_{−1} \) и \( x_N \) и определим \(u_{−1}(t)≡u_1(t) \) , \(u_N(t)≡u_{N−2} (t) \) ; \( v−1(t) \) и \( vN(t) \) определяются аналогично. 
+Затем 
+
+(2) 
+$$ \frac{du_0} {dt} = \frac{D_u}{(Δx)^2} (2u_1−2u_0)−u_0v_0^2+f(1−u_0)dv_0dt=D_v(Δx)2(2v_1−2v_0)+u_0v_0^2−(f+k)v_0 $$
+
+ а также 
+
+(3) 
+$$ \frac{du_{N−1}}{dt} = \frac{D_u}{(Δx)^2}(2u_{N−2} − 2u_{N−1} )−u_{N−1}v_{N−1}^2+f(1−u_{N−1})dv_{N−1}dt=D_v(Δx)^2(2v_{N−2}− 2v_{N−1})+u_{N−1}v_{N−1}^2−(f+k)v_{N−1} $$
+
+ Наша полная система из 2N ОДУ равна (1) для \( k=1,2,…,N−2\) , а также (2) и (3). 
+	</p>
+	<p>
+Теперь мы можем начать реализацию этой системы в коде. Мы должны объединить \( {u_k} \) и \( {v_k} \) в один вектор длины 2N . Два очевидных варианта: \({u_0,u_1,…,u_{N−1},v_0, v_1,…,v_{N−1}}\) и \({u_0,v_0,u_1,v_1,…,u_{N−1},v_{N−1} }\) . Математически это не имеет значения, но выбор влияет на то, насколько эффективно odeint может решить систему. Причина в том, как порядок влияет на шаблон ненулевых элементов матрицы Якоби. 
+
+Когда переменные упорядочиваются как \({u_0,u_1,…,u_{N−1},v_0,v_1,…,v_{N−1} } \) , картина ненулевых элементов матрицы Якоби имеет вид : 
+	</p>
+
+	<p>
+$$ \begin{smallmatrix}
+   * & * & 0 & 0 & 0 & 0 & 0  &  * & 0 & 0 & 0 & 0 & 0 & 0 \\
+   * & * & * & 0 & 0 & 0 & 0  &  0 & * & 0 & 0 & 0 & 0 & 0 \\
+   0 & * & * & * & 0 & 0 & 0  &  0 & 0 & * & 0 & 0 & 0 & 0 \\
+   0 & 0 & * & * & * & 0 & 0  &  0 & 0 & 0 & * & 0 & 0 & 0 \\
+   0 & 0 & 0 & * & * & * & 0  &  0 & 0 & 0 & 0 & * & 0 & 0 \\
+   0 & 0 & 0 & 0 & * & * & *  &  0 & 0 & 0 & 0 & 0 & * & 0 \\
+   0 & 0 & 0 & 0 & 0 & * & *  &  0 & 0 & 0 & 0 & 0 & 0 & * \\
+   * & 0 & 0 & 0 & 0 & 0 & 0  &  * & * & 0 & 0 & 0 & 0 & 0 \\
+   0 & * & 0 & 0 & 0 & 0 & 0  &  * & * & * & 0 & 0 & 0 & 0 \\
+   0 & 0 & * & 0 & 0 & 0 & 0  &  0 & * & * & * & 0 & 0 & 0 \\
+   0 & 0 & 0 & * & 0 & 0 & 0  &  0 & 0 & * & * & * & 0 & 0 \\
+   0 & 0 & 0 & 0 & * & 0 & 0  &  0 & 0 & 0 & * & * & * & 0 \\
+   0 & 0 & 0 & 0 & 0 & * & 0  &  0 & 0 & 0 & 0 & * & * & * \\
+   0 & 0 & 0 & 0 & 0 & 0 & *  &  0 & 0 & 0 & 0 & ) & * & * \\
+\end{smallmatrix} $$
+
+ Якобиан с переменными, чередующимися как {u0,v0,u1,v1,…,uN−1,vN−1} является 
+
+<br>
+$$ \begin{smallmatrix}
+   * & * & * & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+   * & * & 0 & * & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+   * & 0 & * & * & * & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+   0 & * & * & * & 0 & * & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+   0 & 0 & * & 0 & * & * & * & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+   0 & 0 & 0 & * & * & * & 0 & * & 0 & 0 & 0 & 0 & 0 & 0 \\
+   0 & 0 & 0 & 0 & * & 0 & * & * & * & 0 & 0 & 0 & 0 & 0 \\
+   0 & 0 & 0 & 0 & 0 & * & * & * & 0 & * & 0 & 0 & 0 & 0 \\
+   0 & 0 & 0 & 0 & 0 & 0 & * & 0 & * & * & * & 0 & 0 & 0 \\
+   0 & 0 & 0 & 0 & 0 & 0 & 0 & * & * & * & 0 & * & 0 & 0 \\
+   0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & * & 0 & * & * & * & 0 \\
+   0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & * & * & * & 0 & * \\
+   0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & * & 0 & * & * \\
+   0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & * & * & * \\
+\end{smallmatrix} $$
+	</p>
+
+	<p>
+ В обоих случаях имеется всего пять нетривиальных диагоналей, но когда переменные чередуются, ширина полосы намного меньше. То есть основная диагональ и две диагонали, расположенные непосредственно выше, а две непосредственно ниже главной диагонали - это ненулевые диагонали. Это важно, поскольку входы mu и ml odeint являются верхней и нижней odeint матрицы Якоби. Когда переменные чередуются, mu и ml равны 2. Когда переменные складываются с \({v_k}\) следующей за \({u_k}\) , верхняя и нижняя полосы пропускания равны N . 
+	
+С принятым решением мы можем написать функцию, реализующую систему дифференциальных уравнений. 
+
+Во-первых, мы определяем функции источника и условия реакции системы: 
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+ def G ( u , v , f , k ):
+    return f * ( 1 - u ) - u * v ** 2
+
+def H ( u , v , f , k ):
+    return - ( f + k ) * v + u * v ** 2
+ 	</pre>
+	</div>
+	
+	<p>
+Затем мы определяем функцию, вычисляющую правую часть системы дифференциальных уравнений: 
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+ def grayscott1d ( y , t , f , k , Du , Dv , dx ):
+    """
+    Differential equations for the 1D Gray-Scott equations.
+
+    The ODEs are derived using the method of lines.
+    """
+    # The vectors u and v are interleaved in y.  We define
+    # views of u and v by slicing y.
+    u = y [:: 2 ]
+    v = y [ 1 :: 2 ]
+
+    # dydt is the return value of this function.
+    dydt = np . empty_like ( y )
+
+    # Just like u and v are views of the interleaved vectors
+    # in y, dudt and dvdt are views of the interleaved output
+    # vectors in dydt.
+    dudt = dydt [:: 2 ]
+    dvdt = dydt [ 1 :: 2 ]
+
+    # Compute du/dt and dv/dt.  The end points and the interior points
+    # are handled separately.
+    dudt [ 0 ]    = G ( u [ 0 ],    v [ 0 ],    f , k ) + Du * ( - 2.0 * u [ 0 ] + 2.0 * u [ 1 ]) / dx ** 2
+    dudt [ 1 : - 1 ] = G ( u [ 1 : - 1 ], v [ 1 : - 1 ], f , k ) + Du * np . diff ( u , 2 ) / dx ** 2
+    dudt [ - 1 ]   = G ( u [ - 1 ],   v [ - 1 ],   f , k ) + Du * ( - 2.0 * u [ - 1 ] + 2.0 * u [ - 2 ]) / dx ** 2
+    dvdt [ 0 ]    = H ( u [ 0 ],    v [ 0 ],    f , k ) + Dv * ( - 2.0 * v [ 0 ] + 2.0 * v [ 1 ]) / dx ** 2
+    dvdt [ 1 : - 1 ] = H ( u [ 1 : - 1 ], v [ 1 : - 1 ], f , k ) + Dv * np . diff ( v , 2 ) / dx ** 2
+    dvdt [ - 1 ]   = H ( u [ - 1 ],   v [ - 1 ],   f , k ) + Dv * ( - 2.0 * v [ - 1 ] + 2.0 * v [ - 2 ]) / dx ** 2
+
+    return dydt
+ 	</pre>
+	</div>
+	
+	<p>
+Мы не будем реализовывать функцию для вычисления якобиана, но мы скажем odeint что матрица Якоби odeint . Это позволяет базовому решателю (LSODA) избегать вычислений, которые, как он знает, равны нулю. Для большой системы это значительно улучшает производительность, как показано в следующем сеансе ipython. 
+
+Во-первых, мы определяем необходимые входные данные: 
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+In [ 31 ]: y0 = np . random . randn ( 5000 )
+In [ 32 ]: t = np . linspace ( 0 , 50 , 11 )
+In [ 33 ]: f = 0.024
+In [ 34 ]: k = 0.055
+In [ 35 ]: Du = 0.01
+In [ 36 ]: Dv = 0.005
+In [ 37 ]: dx = 0.025
+  	</pre>
+	</div>
+	
+	<p>
+Время вычисления без использования полосчатой структуры матрицы Якоби: 
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+ In [ 38 ]: % timeit sola = odeint ( grayscott1d , y0 , t , args = ( f , k , Du , Dv , dx ))
+1 loop , best of 3 : 25.2 s per loop
+	</pre>
+	</div>
+	
+	<p>
+Теперь положим ml=2 и mu=2 , поэтому odeint знает, что матрица якобиана является групповой: 
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+ In [ 39 ]: % timeit solb = odeint ( grayscott1d , y0 , t , args = ( f , k , Du , Dv , dx ), ml = 2 , mu = 2 )
+10 loops , best of 3 : 191 ms per loop
+ 	</pre>
+	</div>
+	
+	<p>
+Это довольно быстро! 
+
+Проверим, что в результате вычислен один и тот же результат: 
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+ In [ 41 ]: np . allclose ( sola , solb )
+Out [ 41 ]: True
+	</pre>
+	</div>
+</div>
+
+<div class="section" id="id8">
+<h3>Ссылки</h3>
+	<p>
+[WPR] 
+
+https://en.wikipedia.org/wiki/Romberg's_method 
+	</p>
+	<p>
+[NPT] 
+
+https://docs.scipy.org/doc/numpy/reference/generated/numpy.trapz.html 
+	</p>
+	<p>
+[MOL] 
+
+https://en.wikipedia.org/wiki/Method_of_lines
+
+	</p>
+</div>
+	
+	
+	
+
+<!-- Footer Start -->
+<div class="col-md-12 page-body margin-top-50 footer">
+  <footer>
+  <ul class="menu-link">
+	   <li><a href="index.html">Содержание</a></li>
+	   <li><a href="about.html">О сайте</a></li>
+	</ul>
+	
+  <p>© Copyright 2016 DevBlog. All rights reserved</p>
+  
+						  
+  <!-- UiPasta Credit Start -->
+  <div class="uipasta-credit">Design By <a href="http://www.uipasta.com" target="_blank">UiPasta</a></div>
+  <!-- UiPasta Credit End -->
+  
+   
+ </footer>
+</div>
+ <!-- Footer End -->
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<!-- Blog Post (Right Sidebar) End -->
+
+</div>
+</div>
+</div>
+    
+    
+    
+     
+     <!-- Endpage Box (Popup When Scroll Down) Start 
+     <div id="scroll-down-popup" class="endpage-box">
+       <h4>Read Also</h4>
+       <a href="#">How to make your company website based on bootstrap framework...</a>
+      </div>
+      <!-- Endpage Box (Popup When Scroll Down) End -->
+      
+    
+    
+    
+    <!-- Back to Top Start -->
+    <a href="#" class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></a>
+    <!-- Back to Top End -->
+    
+    
+    <!-- All Javascript Plugins  -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/plugin.js"></script>
+    
+    <!-- Main Javascript File  -->
+    <script type="text/javascript" src="js/scripts.js"></script>
+    
+    <!-- Syntax Highlighter Javascript File  -->
+    <script type="text/javascript" src="js/syntax/shCore.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushCss.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushJScript.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPerl.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPhp.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPlain.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPython.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushRuby.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushSql.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushVb.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushXml.js"></script>
+    
+	<!-- Syntax Highlighter Call Function -->
+	<script type="text/javascript">
+		SyntaxHighlighter.config.clipboardSwf = 'js/syntax/clipboard.swf';
+		SyntaxHighlighter.all();
+	</script>
+
+    
+   </body>
+ </html>

@@ -1,0 +1,456 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    
+    <!-- Meta Tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- SEO -->
+    <meta name="description" content="учебник scipy, пакет программ для научных вычислений, специальные функции, интегрирование, оптимизация, интерполяция, преобразования Фурье, цифровая обработка сигналов, линейная алгебра, проблема собственных значений разреженных матриц, алгоритмы на разреженных графах, пространственные структуры данных и алгоритмы, статистика, обработка многомерных данных, numpy">
+    <meta name="author" content="labintsevai">
+    <meta name="url" content="http://www.scipy-tutorial.ru">
+    <meta name="copyright" content="labintsevai">
+    <meta name="robots" content="index,follow">
+	
+	
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(51612041, "init", {
+        id:51612041,
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/51612041" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+    
+    <title>SciPy Специальные функции</title>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="144x144" type="image/x-icon" href="images/favicon/apple-touch-icon.png">
+    
+    <!-- All CSS Plugins -->
+    <link rel="stylesheet" type="text/css" href="css/plugin.css">
+    
+    <!-- Main CSS Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+    <!-- Google Web Fonts  -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700">
+    
+    <!-- Syntax Highlighter  -->
+    <link rel="stylesheet" type="text/css" href="css/syntax/shCore.css">
+    <link rel="stylesheet" type="text/css" href="css/syntax/shThemeDefault.css">
+    
+        	<!-- MathJax support-->
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML" async>
+</script>
+
+    <!-- HTML5 shiv and Respond.js support IE8 or Older for HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+	   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+
+  </head>
+
+ <body>
+
+	<!-- Preloader Start -->
+     <div class="preloader">
+	   <div class="rounder"></div>
+      </div>
+      <!-- Preloader End -->
+      
+      
+    
+    
+<div id="main">
+<div class="container">
+<div class="row">
+
+<!-- About Me (Left Sidebar) Start -->
+<div class="col-md-3">
+<div class="about-fixed">
+
+<div class="my-pic">
+<img src="images/pic/scipyLogo.png" alt="">
+</div>
+
+
+
+<div class="my-detail">
+
+<div class="white-spacing">
+	<h1><a href="https://docs.scipy.org/doc/scipy/reference/tutorial/index.html">SciPy.org</a></h1>
+	<span>Научные вычисления</span>
+</div> 
+
+<ul class="social-icon">
+ <li><a href="https://www.facebook.com/scipyconf" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a></li>
+ <li><a href="https://twitter.com/hashtag/scipy" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a></li>
+<li><a href="https://github.com/scipy" target="_blank" class="github"><i class="fa fa-github"></i></a></li>
+</ul>
+
+</div>
+</div>
+</div>
+<!-- About Me (Left Sidebar) End -->
+
+<!-- Blog Post (Right Sidebar) Start -->
+<div class="col-md-9">
+<div class="col-md-12 page-body">
+<div class="row">
+	
+<div class="sub-title">
+	<h2><a href="index.html">Содержание</h2></a>
+ </div>
+
+<div class="col-md-12 content-page">
+	<div class="col-md-12 blog-post">
+
+	<!-- Post Headline Start -->
+	<div class="post-title">
+	<ul class="simple">
+	<li><h4>Специальные функции ( scipy.special ) </h4><ul>
+		<li><a class="reference internal" href="#id1">Функции Бесселя действительного порядка </a></li>
+		<li><a class="reference internal" href="#id2">Связка Cython для специальных функций  </a>
+			<ul><li>Сокращение накладных расходов при вызове функций Python <l/i>
+					<li>Освобождение блокировки GIL <l/i>
+			</ul>
+		</li>
+		<li><a class="reference internal" href="#id3">Функции не в scipy.special  </a></li>
+	</ul>	
+	</li>
+	</ul>
+	</div>
+	   <!-- Post Headline End -->
+	   
+			<p>	   
+Основное назначение пакета scipy.special является определение важнейших специальных функций математической физики. В пакете доступны следующие функции: Эйри, эллиптические, Бесселя, гамма, бета, гипергеометрические, параболического цилиндра, Матье, сфероидальной волны, Струве и Кельвина. Также в пакет включены некоторые низкоуровневые статистические функции, которые не предназначены для общего использования. Более простой интерфейс для этих функций обеспечивается модулем stats . 
+			</p>
+			
+			<p>
+Большинство функций пакет special могут принимать в качестве аргумента скаляр или массив. Возвращаемый результат тоже будет скаляром или массивом по тем же правилам расширения размерности (broadcasting), что и другие математические функции в Numerical Python. Многие из этих функций также могут принимать комплексные числа в качестве входных данных. Полный список доступных функций  в актуальной версии пакета scipy может быть получен через консоль с помощью команды >>> help(special). Каждая функция также имеет собственную документацию, доступную в справке. Если вы не найдете в пакете нужную Вам функцию, подумайте о ее написании и внесении ее в библиотеку. Вы также можете написать функцию в C, Fortran или Python. Посмотрите в исходном коде библиотеки примеры для каждого из этих видов функций. 
+			</p>
+
+	<div class="section" id="id1">
+		<h3>Функции Бесселя действительного порядка</h3>
+		
+			<p>		
+Функции Бесселя - это семейство решений дифференциального уравнения Бесселя с вещественным или комплексным альфа: 
+$$x^2 \frac{d^2 y}{dx^2} + x \frac{dy}{dx} + (x^2 - \alpha^2)y = 0$$
+Помимо прочих применений, эти функции возникают при описании распространения волн, таких как колебание тонкой мембраны. Рассмотрим пример колебания мембраны барабана, закрепленной на краю: 
+			</p>
+			
+		  <div class="margin-top-40 margin-bottom-40">  
+		   <pre class="brush: js">
+ >>>  from scipy import special
+>>>  def drumhead_height ( n , k , distance , angle , t ):
+...    kth_zero = special . jn_zeros ( n , k )[ - 1 ]
+...    return np . cos ( t ) * np . cos ( n * angle ) * special . jn ( n , distance * kth_zero )
+>>>  theta = np . r_ [ 0 : 2 * np . pi : 50 j ]
+>>>  radius = np . r_ [ 0 : 1 : 50 j ]
+>>>  x = np . array ([ r * np . cos ( theta ) for r in radius ])
+>>>  y = np . array ([ r * np . sin ( theta ) for r in radius ])
+>>>  z = np . array ([ drumhead_height ( 1 , 1 , r , theta , 0.5 ) for r in radius ])
+		  </pre>
+		 </div>
+ 
+		  <div class="margin-top-40 margin-bottom-40">  
+		   <pre class="brush: js">
+ >>>  import matplotlib.pyplot as plt
+>>>  from mpl_toolkits.mplot3d import Axes3D
+>>>  from matplotlib import cm
+>>>  fig = plt . figure ()
+>>>  ax = Axes3D ( fig )
+>>>  ax . plot_surface ( x , y , z , rstride = 1 , cstride = 1 , cmap = cm . jet )
+>>>  ax . set_xlabel ( 'X' )
+>>>  ax . set_ylabel ( 'Y' )
+>>>  ax . set_zlabel ( 'Z' )
+>>>  plt . show ()
+ 		   </pre>
+		 </div>
+		 
+<img src=””>
+
+	</div>
+	
+	<div class="section" id="id2">
+		<h3>Связка Cython для специальных функций</h3>
+
+			<p>
+Scipy позволяет использовать  Cython для многих специальных функций со скалярными, строго  типизированными аргументами. Рассмотрим код Cython в качестве простого примера того, как можно использовать специальные функции: 
+			</p>
+			
+		  <div class="margin-top-40 margin-bottom-40">  
+		   <pre class="brush: js">
+cimport scipy.special.cython_special as csc
+cdef :
+    double x = 1
+    double complex z = 1 + 1 j
+    double si , ci , rgam
+    double complex cgam
+
+rgam = csc . gamma ( x )
+print ( rgam )
+cgam = csc . gamma ( z )
+print ( cgam )
+csc . sici ( x , & si , & ci )
+print ( si , ci )
+ 		   </pre>
+		 </div>
+		 
+ 			<p>
+(Для подробной справки по компиляции смотри документацию Cython.) В примере выше функция csc.gamma работает так же как и эквивалентная ей gamma ufunc, хотя в качестве аргументов вместо массивов NumPy используются типы данных языка C. Обратите внимание, что функция перегружена для поддержки действительных и комплексных аргументов. Правильный вариант выбирается во время компиляции. Функция csc.sici работает несколько иначе, чем sic.  Для ufunc мы могли бы написать ai, bi = sici(x), тогда как в версии Cython несколько возвращаемых значений передаются как указатели. Можно представить это как аналогичный вызов ufunc с выходным массивом: sici(x, out=(si, ci)) . 
+			</p>
+			<p>
+Существует два потенциальных преимущества использования связки с Cython: 
+сокращение накладных расходов при вызове функций Python;
+не требуются блокировка Python Global Interpreter Lock (GIL) .
+
+В следующих разделах обсуждается, как использовать эти преимущества, чтобы потенциально ускорить работу кода. Конечно, сначала всегда нужно профилировать код, чтобы убедиться, что дополнительные усилия оправдают себя. 
+			</p>
+
+<h4>Сокращение накладных расходов при вызове функций Python </h4>
+
+			<p>
+Для функций ufuncs из пакета special, накладные расходы сокращаются путем векторизации, то есть путем передачи массива в аргумент функции. Как правило, этот подход работает довольно хорошо, но иногда удобнее вызывать специальную функцию со скалярными аргументами внутри цикла, например, при реализации собственного ufunc. В этом случае накладные расходы при вызове функций Python могут стать значительными. Рассмотрим следующий пример: 
+			</p>
+
+		  <div class="margin-top-40 margin-bottom-40">  
+		   <pre class="brush: js">
+ import scipy.special as sc
+cimport scipy.special.cython_special as csc
+
+def python_tight_loop():
+    cdef:
+        int n
+        double x = 1
+
+    for n in range(100):
+        sc.jv(n, x)
+
+def cython_tight_loop():
+    cdef:
+        int n
+        double x = 1
+
+    for n in range(100):
+        csc.jv(n, x)
+		   </pre>
+		 </div>
+		 
+			<p>
+На одном и том же компьютере вычисление python_tight_loop заняло около 131 микросекунды, а cython_tight_loop около 18,2 микросекунд. Очевидно, что этот пример надуман: можно просто вызвать special.jv(np.arange(100), 1) и получить результаты так же быстро, как в cython_tight_loop . Дело в том, что если накладные функции функции Python становятся значительными в вашем коде, тогда привязки Cython могут быть полезны.
+			</p>
+			
+<h4>Освобождение блокировки GIL </h4>
+
+			<p>
+Часто приходится вычислять значения специальную функцию в нескольких точках, и, как правило, эти вычисления можно осуществлять параллельно. Поскольку Cython не требует блокировки ресурсов GIL, вычисления легко запускать параллельно, используя функцию prange Cython. Например, нужно вычислить фундаментальное решение уравнения Гельмгольца:
+$$\Delta_x G(x,y) + k^2 G(x,y) = \delta(x – y)  $$
+где k - волновое число, а  \(\delta\)  - дельта-функция Дирака. Известно, что в двумерном пространстве единственным (излучающим) решением является
+$$ G(x,y) = \frac{i}{4} H_0^{(1)} (k|x – y|) $$
+где \( H_0^{(1)}  \) - функция Ханкеля первого рода, т. е. функция hankel1 . В следующем примере показано, как можно вычислить эту функцию параллельно:
+			</p>
+
+		  <div class="margin-top-40 margin-bottom-40">  
+		   <pre class="brush: js">
+ from libc.math cimport fabs
+cimport cython
+from cython.parallel cimport prange
+
+import numpy as np
+import scipy.special as sc
+cimport scipy.special.cython_special as csc
+
+def serial_G ( k , x , y ):
+    return 0.25 j * sc . hankel1 ( 0 , k * np . abs ( x - y ))
+
+@cython . boundscheck ( False )
+@cython . wraparound ( False )
+cdef void _parallel_G ( double k , double [:,:] x , double [:,:] y ,
+                      double complex [:,:] out ) nogil :
+    cdef int i , j
+
+    for i in prange ( x . shape [ 0 ]):
+        for j in range ( y . shape [ 0 ]):
+            out [ i , j ] = 0.25 j * csc . hankel1 ( 0 , k * fabs ( x [ i , j ] - y [ i , j ]))
+
+def parallel_G ( k , x , y ):
+    out = np . empty_like ( x , dtype = 'complex128' )
+    _parallel_G ( k , x , y , out )
+    return out
+		   </pre>
+		 </div>
+		 
+			<p>
+(Для получения справки по компиляции параллельного кода в Cython см. документацию ) Если приведенный выше код Cython сохранить в файле test.pyx , можно сравнить параллельные и последовательные версии функции:
+			</p>
+			
+		  <div class="margin-top-40 margin-bottom-40">  
+		   <pre class="brush: js">
+ import timeit
+import numpy as np
+from test import serial_G , parallel_G
+def main ():
+    k = 1
+    x , y = np . linspace ( - 100 , 100 , 1000 ), np . linspace ( - 100 , 100 , 1000 )
+    x , y = np . meshgrid ( x , y )
+
+    def serial ():
+        serial_G ( k , x , y )
+
+    def parallel ():
+        parallel_G ( k , x , y )
+
+    time_serial = timeit . timeit ( serial , number = 3 )
+    time_parallel = timeit . timeit ( parallel , number = 3 )
+    print ( "Serial method took {:.3} seconds" . format ( time_serial ))
+    print ( "Parallel method took {:.3} seconds" . format ( time_parallel ))
+
+if __name__ == "__main__" :
+    main ()
+		   </pre>
+		 </div>
+		 
+			<p>
+На одном четырехъядерном компьютере последовательный метод занял 1,29 секунды, а параллельный метод занял 0,29 секунды.
+			</p>
+			
+	</div>
+
+	<div class="section" id="id3">
+		<h3>Функции не в scipy.special</h3>
+			<p>	
+Некоторые функции не включены в  пакет special, т.к. их легко реализовать с помощью существующих функций в NumPy и SciPy. 
+Чтобы не изобретать велосипед, в этом разделе представлены примеры таких функций, которые иллюстрируют, как вычислять подобные функции. 
+Во всех примерах NumPy импортирован как np, а special импортирован как sc.
+			</p>
+			<p>			
+Функция двоичной энтропии:
+			</p>
+		  <div class="margin-top-40 margin-bottom-40">  
+		   <pre class="brush: js">
+ def binary_entropy ( x ):
+    return - ( sc . xlogy ( x , x ) + sc . xlog1py ( 1 - x , - x )) / np . log ( 2 )
+		   </pre>
+		 </div>
+		 
+			<p>
+Функция прямоугольного шага на [0, 1]:
+			</p>
+		  <div class="margin-top-40 margin-bottom-40">  
+		   <pre class="brush: js">
+ def step ( x ):
+    return 0.5 * ( np . sign ( x ) + np . sign ( 1 - x ))
+		   </pre>
+		 </div>
+		 
+	<p>
+Перевод и масштабирование можно использовать для получения произвольной функции шага.
+			</p>
+			<p>
+Функция ramp:
+			</p>
+		  <div class="margin-top-40 margin-bottom-40">  
+		   <pre class="brush: js">
+ def ramp ( x ):
+    return np . maximum ( 0 , x )
+		   </pre>
+		 </div>
+		 
+	</div>
+
+</div>	
+		 
+
+
+<!-- Footer Start -->
+<div class="col-md-12 page-body margin-top-50 footer">
+  <footer>
+  <ul class="menu-link">
+	   <li><a href="index.html">Содержание</a></li>
+	   <li><a href="about.html">О сайте</a></li>
+	</ul>
+	
+  <p>© Copyright 2016 DevBlog. All rights reserved</p>
+  
+						  
+  <!-- UiPasta Credit Start -->
+  <div class="uipasta-credit">Design By <a href="http://www.uipasta.com" target="_blank">UiPasta</a></div>
+  <!-- UiPasta Credit End -->
+  
+   
+ </footer>
+</div>
+ <!-- Footer End -->
+ 
+</div>
+</div>
+
+   
+</div>
+</div>
+</div>
+
+<!-- Blog Post (Right Sidebar) End -->
+    
+    
+     
+     <!-- Endpage Box (Popup When Scroll Down) Start 
+     <div id="scroll-down-popup" class="endpage-box">
+       <h4>Read Also</h4>
+       <a href="#">How to make your company website based on bootstrap framework...</a>
+      </div>
+      <!-- Endpage Box (Popup When Scroll Down) End -->
+      
+    
+    
+    
+    <!-- Back to Top Start -->
+    <a href="#" class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></a>
+    <!-- Back to Top End -->
+    
+    
+    <!-- All Javascript Plugins  -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/plugin.js"></script>
+    
+    <!-- Main Javascript File  -->
+    <script type="text/javascript" src="js/scripts.js"></script>
+    
+    <!-- Syntax Highlighter Javascript File  -->
+    <script type="text/javascript" src="js/syntax/shCore.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushCss.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushJScript.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPerl.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPhp.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPlain.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPython.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushRuby.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushSql.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushVb.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushXml.js"></script>
+    
+	<!-- Syntax Highlighter Call Function -->
+	<script type="text/javascript">
+		SyntaxHighlighter.config.clipboardSwf = 'js/syntax/clipboard.swf';
+		SyntaxHighlighter.all();
+	</script>
+
+    
+   </body>
+ </html>

@@ -1,0 +1,1473 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    
+    <!-- Meta Tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- SEO -->
+    <meta name="description" content="учебник scipy, пакет программ для научных вычислений, специальные функции, интегрирование, оптимизация, интерполяция, преобразования Фурье, цифровая обработка сигналов, линейная алгебра, проблема собственных значений разреженных матриц, алгоритмы на разреженных графах, пространственные структуры данных и алгоритмы, статистика, обработка многомерных данных, numpy">
+    <meta name="author" content="labintsevai">
+    <meta name="url" content="http://www.scipy-tutorial.ru">
+    <meta name="copyright" content="labintsevai">
+    <meta name="robots" content="index,follow">
+	
+	  
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(51612041, "init", {
+        id:51612041,
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/51612041" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+    
+    <title>SciPy Оптимизация</title>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="144x144" type="image/x-icon" href="images/favicon/apple-touch-icon.png">
+    
+    <!-- All CSS Plugins -->
+    <link rel="stylesheet" type="text/css" href="css/plugin.css">
+    
+    <!-- Main CSS Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+    <!-- Google Web Fonts  -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700">
+    
+    <!-- Syntax Highlighter  -->
+    <link rel="stylesheet" type="text/css" href="css/syntax/shCore.css">
+    <link rel="stylesheet" type="text/css" href="css/syntax/shThemeDefault.css">
+
+    	<!-- MathJax support-->
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML" async>
+</script>
+
+
+    
+    <!-- HTML5 shiv and Respond.js support IE8 or Older for HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+	   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+
+  </head>
+
+ <body>
+
+	
+     
+	 <!-- Preloader Start -->
+     <div class="preloader">
+	   <div class="rounder"></div>
+      </div>
+      <!-- Preloader End -->
+      
+      
+    
+    
+<div id="main">
+<div class="container">
+<div class="row">
+            	
+               
+                 
+ <!-- About Me (Left Sidebar) Start -->
+ <div class="col-md-3">
+   <div class="about-fixed">
+
+	 <div class="my-pic">
+		<img src="images/pic/scipyLogo.png" alt="">
+	 </div>
+	  
+	  
+	  
+	  <div class="my-detail">
+		
+		<div class="white-spacing">
+			<h1><a href="https://docs.scipy.org/doc/scipy/reference/tutorial/index.html">SciPy.org</a></h1>
+			<span>Научные вычисления</span>
+		</div> 
+	   
+	   <ul class="social-icon">
+		 <li><a href="https://www.facebook.com/scipyconf" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a></li>
+		 <li><a href="https://twitter.com/hashtag/scipy" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a></li>
+		<li><a href="https://github.com/scipy" target="_blank" class="github"><i class="fa fa-github"></i></a></li>
+		</ul>
+
+	</div>
+  </div>
+</div>
+<!-- About Me (Left Sidebar) End -->
+
+                
+                
+                
+                 
+ <!-- Blog Post (Right Sidebar) Start -->
+	<div class="col-md-9">
+	<div class="col-md-12 page-body">
+	<div class="row">
+	
+	
+	<div class="sub-title">
+		<h2><a href="index.html">Содержание</h2></a>
+	</div>
+	
+	
+	<div class="col-md-12 content-page">
+	<div class="col-md-12 blog-post">
+		
+		
+	<!-- Post Headline Start -->
+	<div class="post-title">
+	<ul class="simple">
+	<h3>Оптимизация</h3>
+	<li><a class="reference internal" href="#id1">Безусловная минимизация скалярной функции нескольких переменных </a>
+		<ul class="simple">
+		<li>Симплекс-метод Нелдера-Мида </li>
+		<li>Алгоритм BFGS (Broyden-Fletcher-Goldfarb-Shanno) </li>
+		<li>Алгоритм сопряженных градиентов (Ньютона) </li>
+		<li>Алгоритм доверительной области (trust region) сопряженных градиентов (Ньютона) </li>
+		<li>Методы Крыловского типа </li>
+		<li>Алогоритм почти точного решения в доверительной области</li>
+		</ul>
+	</li>
+	<li><a class="reference internal" href="#id2">Условная минимизация скалярной функции нескольких переменных </a>
+		<ul class="simple">
+		<li>Алгоритм условной оптимизации в доверительной области </li>
+		<li>Алгоритм последовательного МНК </li>
+		</ul>
+	</li>
+	<li><a class="reference internal" href="#id3">Минимизация методом наименьших квадратов</a>
+		<ul class="simple">
+		<li>Пример решения задачи аппроксимации </li>
+		<li>Другие примеры </li>
+		</ul>	
+	</li>
+	<li><a class="reference internal" href="#id4">Минимизация функции одной переменной</a>
+		<ul class="simple">
+		<li>Минимизация без ограничений </li>
+		<li>Минимизация методом границ </li>
+		</ul>
+	</li>
+	<li><a class="reference internal" href="#id5">Произвольные минимизаторы</a></li>
+	<li><a class="reference internal" href="#id6">Поиск корней</a>
+		<ul class="simple">
+		<li>Скалярные функции </li>
+		<li>Поиск неподвижной точки </li>
+		<li>Системы уравнений </li>
+		<li>Поиск корней для масштабных задач </li>
+		<li>Ускорение решения. Предусловия </li>
+		<li>Ссылки </li>
+		</ul>
+	</li>	</ul>
+	</div>
+	<!-- Post Headline End -->
+	
+<div>
+	<p>
+В пакете scipy.optimize реализованы некоторые известные алгоритмы оптимизации. Подробную справку по актуальной версии scipy.optimize всегда можно получить с помощью команды help(scipy.optimize).
+	</p>
+	<p>
+Модуль scipy.optimize включает в себя:
+	</p>
+	<p>
+    1) Процедуры условной и безусловной минимизации скалярных функций нескольких переменных (minim) с помощью различных алгоритмов (например, BFGS, симплекс Nelder-Mead, сопряженных градиентов Ньютона, COBYLA или SLSQP) <br>
+    2) Процедуры глобальной оптимизации (например: basinhopping, diff_evolution)<br>
+    3) Процедуры минимизации методом наименьших квадратов (least_squares) и алгоритмы подгонки кривых (curve_fit)<br>
+    4) Процедуры минимизации скалярных функций одной переменной (minim_scalar) и поиска корней (root_scalar)<br>
+    5) Многомерные решатели системы уравнений (root) с использованием множества алгоритмов (например, гибридные Пауэлл, Левенберг-Марквардт или крупномасштабные методы, такие как Ньютона-Крылова).<br>
+	</p>
+	<p>
+Примеры использования этих процедур приведены ниже.
+	</p>
+</div>
+
+<div class="section" id="id1">
+<h3>Безусловная минимизация скалярной функции нескольких переменных (minim)</h3>
+<div>
+	<p>
+Функция minim из пакета scipy.optimize предоставляет общий интерфейс для решения задач условной и безусловной минимизации скалярных функций нескольких переменных. Чтобы продемонстрировать ее работу, рассмотрим задачу минимизации функции Розенброка от N переменных:
+
+$$ f\left(\mathbf{x}\right)=\sum_{i=2}^{N}100\left(x_{i+1}-x_{i}^{2}\right)^{2}+\left(1-x_{i}\right)^{2} $$
+
+Минимальное значение этой функции равно 0, которое достигается при \( x_i = 1 \).
+
+Обратите внимание, что функция Розенброка и ее производные реализованы в пакете scipy.optimize. 
+	</p>
+	<p>
+Примеры того, как определить целевую функцию, а также ее матрицы Якоби и Гессе (первой и второй производной соответственно), будут рассмотрены далее.
+	</p>
+</div>
+
+<h4>Симплекс-метод Нелдера-Мида (Nelder-Mead) </h4>
+<div>
+	<p>
+В примере ниже метод minim использует алгоритм симплекса Nelder-Mead (этот алгоритм указан в качестве параметра method):
+	</p>
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> import numpy as np
+    >>> from scipy.optimize import minimize
+
+    >>> def rosen(x):
+    ...     """The Rosenbrock function"""
+    ...     return sum(100.0*(x[1:]-x[:-1]**2.0)**2.0 + (1-x[:-1])**2.0)
+
+    >>> x0 = np.array([1.3, 0.7, 0.8, 1.9, 1.2])
+    >>> res = minimize(rosen, x0, method='nelder-mead',
+    ...                options={'xtol': 1e-8, 'disp': True})
+    Optimization terminated successfully.
+             Current function value: 0.000000
+             Iterations: 339
+             Function evaluations: 571
+
+    >>> print(res.x)
+    [1. 1. 1. 1. 1.]
+	</pre>
+	</div>
+
+	<p>
+Симплекс-метод является самым простым способом свести к минимуму явно определенную и довольно гладкую функцию. Он не требует вычисления производных функции, а только ее значений. Метод Нелдера-Мида является хорошим выбором для простых задач минимизации. Однако, поскольку он не использует оценки градиента, может потребоваться больше времени, чтобы найти минимум.
+	</p>
+	<p>
+Другой алгоритм оптимизации, в котором вычисляются только значения функций, это метод Пауэлла. Чтобы использовать его, нужно установить method = 'powell' в функции minim.
+	</p>
+</div>
+
+<h4>Алгоритм Бройдена-Флетчера-Голдфарба-Шанно (BFGS)</h4>
+<div>
+	<p>
+Для получения более быстрой сходимости к решению, процедура BFGS использует градиент целевой функции. Градиент может быть задан пользователем или вычисляться с помощью разностей первого порядка (если не задан). Метод BFGS обычно требует меньше вызовов функций, чем алгоритм симплекса, даже если градиент не задан явно и вычисляется по ходу.
+	</p>
+	<p>
+Чтобы продемонстрировать этот алгоритм, снова используем функцию Розенброка. Производная функции Розенброка, найденная в аналитическом виде, является вектором:
+$$ \frac{\partial f }{\partial x_j} = \sum\limits_{i=1}^N 200(x_i - x_{i-1}^2)(\delta_{i,j} - 2x_{i-1, j}) - 2(1 - x_{i-1}) \delta_{i-1,j} = $$
+$$ = 200(x_j - x_{j-1}^2) - 400x_j(x_{j+1} - x_j^2) - 2(1-x_j) $$
+
+Это выражение справедливо для производных всех внутренних переменных, кроме двух:
+$$ \frac{\partial f }{\partial x_0} = -400 x_0(x_1 - x_0^2) - 2(1 - x_0), $$
+$$ \frac{\partial f }{\partial x_{N-1}} = 200(x_{N-1} - x_{N-2}^2). $$
+
+Функция Python, которая вычисляет этот градиент:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> def rosen_der (x):
+    ... xm = x [1: -1]
+    ... xm_m1 = x [: - 2]
+    ... xm_p1 = x [2:]
+    ... der = np.zeros_like (x)
+    ... der [1: -1] = 200 * (xm-xm_m1 ** 2) - 400 * (xm_p1 - xm ** 2) * xm - 2 * (1-xm)
+    ... der [0] = -400 * x [0] * (x [1] -x [0] ** 2) - 2 * (1-x [0])
+    ... der [-1] = 200 * (x [-1] -x [-2] ** 2)
+    ... return der
+	</pre>
+	</div>
+
+	<p>
+Функция вычисления градиента указывается в качестве параметра jac функции minim, как показано ниже.
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> res = minimize(rosen, x0, method='BFGS', jac=rosen_der,
+    ...                options={'disp': True})
+    Optimization terminated successfully.
+             Current function value: 0.000000
+             Iterations: 51                     # may vary
+             Function evaluations: 63
+             Gradient evaluations: 63
+    >>> res.x
+    array([1., 1., 1., 1., 1.])
+
+	</pre>
+	</div>
+</div>
+
+<h4>Алгоритм сопряженных градиентов (Ньютона)</h4> 
+<div>
+	<p>
+Алгоритм Newton-Conjugate Gradient является модифицированным методом Ньютона. В нем используется алгоритм сопряженных градиентов для вычисления приближенного обратного значения матрицы Гессе в локальной области[NW]. Метод Ньютона основан на аппроксимации функции в локальной области полиномом второй степени:
+
+$$ f\left(\mathbf{x}\right)\approx f\left(\mathbf{x}_{0}\right)+\nabla f\left(\mathbf{x}_{0}\right)\cdot\left(\mathbf{x}-\mathbf{x}_{0}\right)+\frac{1}{2}\left(\mathbf{x}-\mathbf{x}_{0}\right)^{T}\mathbf{H}\left(\mathbf{x}_{0}\right)\left(\mathbf{x}-\mathbf{x}_{0}\right).$$
+
+где \( \mathbf{H}\left(\mathbf{x}_{0}\right) \) является матрицей вторых производных (матрица Гессе, гессиан). Если гессиан положительно определен, то локальный минимум этой функции можно найти, приравняв нулевой градиент квадратичной формы к нулю. В результате получится выражаение :
+
+$$ \mathbf{x}_{\textrm{opt}}=\mathbf{x}_{0}-\mathbf{H}^{-1}\nabla f $$
+
+Обратный гессиан вычисляется с помощью метода сопряженных градиентов. Пример использования этого метода для минимизации функции Розенброка приведен ниже. Чтобы полностью использовать метод Newton-CG, необходимо задать функцию, которая вычисляет гессиан. При этом нет необходимости задавать саму матрицу Гессе. Для процедуры минимизации нужен только вектор, равный произведением гессиана с другим произвольным вектором. Таким образом, пользователь может задать либо функцию для вычисления матрицы Гессе, которая затем будет умножена на вектор. Но предпочтительней сразу определить функцию, которая возвращает результат произведения гессиана с произвольным вектором. <br>
+Пример с определением матрицы Гессе:<br>
+
+Гессиан функции Розенброка равен:
+$$ H_{i,j} = \frac{\partial^2 f }{\partial x_i x_j} = 200(\delta_{i,j} - 2x_{i-1} \delta{i-1,j} - 400x_i(\delta_{i+1,j} - 2x_i \delta{i,j}) - 400 \delta_{i,j} (x_{i+1} - x_i^2) + 2\delta_{i,j} = $$
+$$ = (202 + 1200x_i^2 - 400x_{i+1})\delta_{i,j} - 400x_i \delta_{i+1,j} - 400x_{i-1}\delta_{i-1,j} $$
+
+где \( i, j \in \left[ 1, N-2 \right] \) и \( i, j \in \left [0, N-1 \right], \) определяют матрицу \( N \times N \). Остальные ненулевые элементы матрицы равны:
+$$ \frac{\partial^2 f }{\partial x_0^2} = 1200x_0^2 - 400x_1 +2 $$
+$$ \frac{\partial^2 f }{\partial x_0 x_1} = \frac{\partial^2 f }{\partial x_1 x_0} = -400x_0 $$
+$$ \frac{\partial^2 f }{\partial x_{N-1} x_{N-2}} = \frac{\partial^2 f }{\partial x_{N-2} x_{N-1}} = -400x_{N-2} $$
+$$ \frac{\partial^2 f }{\partial x_{N-1}^2} = 200x $$
+
+Например, при N = 5 матрица Гессе для функции Розенброка равна:
+
+$$ \mathbf{H}=\begin{bmatrix} 1200x_{0}^{2}-400x_{1}+2 & -400x_{0} & 0 & 0 & 0\\ -400x_{0} & 202+1200x_{1}^{2}-400x_{2} & -400x_{1} & 0 & 0\\ 0 & -400x_{1} & 202+1200x_{2}^{2}-400x_{3} & -400x_{2} & 0\\ 0 &  & -400x_{2} & 202+1200x_{3}^{2}-400x_{4} & -400x_{3}\\ 0 & 0 & 0 & -400x_{3} & 200\end{bmatrix}. $$
+
+Код, который вычисляет этот гессиан вместе с кодом для минимизации функции Розенброка с помощью метода сопряженных градиентов (Ньютона):
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> def rosen_hess(x):
+    ...     x = np.asarray(x)
+    ...     H = np.diag(-400*x[:-1],1) - np.diag(400*x[:-1],-1)
+    ...     diagonal = np.zeros_like(x)
+    ...     diagonal[0] = 1200*x[0]**2-400*x[1]+2
+    ...     diagonal[-1] = 200
+    ...     diagonal[1:-1] = 202 + 1200*x[1:-1]**2 - 400*x[2:]
+    ...     H = H + np.diag(diagonal)
+    ...     return H
+
+    >>> res = minimize(rosen, x0, method='Newton-CG',
+    ...                jac=rosen_der, hess=rosen_hess,
+    ...                options={'xtol': 1e-8, 'disp': True})
+    Optimization terminated successfully.
+             Current function value: 0.000000
+             Iterations: 19                       # may vary
+             Function evaluations: 22
+             Gradient evaluations: 19
+             Hessian evaluations: 19
+    >>> res.x
+    array([1.,  1.,  1.,  1.,  1.])
+
+	</pre>
+	</div>
+
+	<p>
+Пример с функцией произведения гессиана и произвольного вектора.<br>
+
+В реальных задачах вычисление и хранение всей матрицы Гессе может потребовать значительных ресурсов времени и памяти. Т.к. в алгоритме сопряженных градиентов (Ньютона-CG) требуется вычислять только произведение гессиана и произвольного вектора, пользователь может написать код лишь для вычисления этого произведения, а не полного гессиана. Функция hess, принимает вектор минимизации в качестве первого аргумента, а произвольный вектор - как второй аргумент (наряду с другими аргументами минимизируемой функции). Использование Newton-CG с функцией произведения гессиана значительно снижает затраты на поиск минимума.<br>
+
+В нашем случае вычислить произведение гессиана функции Розенброка с произвольным вектором не очень сложно . Если \( \mathbf {p} \) - произвольный вектор, то произведение \( H(x) \cdot p \) имеет вид:
+
+$$ \mathbf{H}\left(\mathbf{x}\right)\mathbf{p}=\begin{bmatrix} \left(1200x_{0}^{2}-400x_{1}+2\right)p_{0}-400x_{0}p_{1}\\ \vdots\\ -400x_{i-1}p_{i-1}+\left(202+1200x_{i}^{2}-400x_{i+1}\right)p_{i}-400x_{i}p_{i+1}\\ \vdots\\ -400x_{N-2}p_{N-2}+200p_{N-1}\end{bmatrix}. $$
+
+Это произведение гессиана и произвольного вектора используется как один из аргументов функции minimize:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> def rosen_hess_p(x, p):
+    ...     x = np.asarray(x)
+    ...     Hp = np.zeros_like(x)
+    ...     Hp[0] = (1200*x[0]**2 - 400*x[1] + 2)*p[0] - 400*x[0]*p[1]
+    ...     Hp[1:-1] = -400*x[:-2]*p[:-2]+(202+1200*x[1:-1]**2-400*x[2:])*p[1:-1] \
+    ...                -400*x[1:-1]*p[2:]
+    ...     Hp[-1] = -400*x[-2]*p[-2] + 200*p[-1]
+    ...     return Hp
+
+    >>> res = minimize(rosen, x0, method='Newton-CG',
+    ...                jac=rosen_der, hessp=rosen_hess_p,
+    ...                options={'xtol': 1e-8, 'disp': True})
+    Optimization terminated successfully.
+             Current function value: 0.000000
+             Iterations: 20                    # may vary
+             Function evaluations: 23
+             Gradient evaluations: 20
+             Hessian evaluations: 44
+    >>> res.x
+    array([1., 1., 1., 1., 1.])
+	</pre>
+	</div>
+
+	<p>
+Согласно [NW] стр. 170, алгоритм сопряженных градиентов Ньютона может быть неэффективным. Причиной может быть плохая обусловленность матрицы Гессе и неверные направления поиска. Метод доверительной области (trust-region) сопряженных градиентов (Ньютона) более эффективен в этой проблемной ситуации.
+	</p>
+</div>
+
+<h4>Алгоритм доверительной области (trust region) сопряженных градиентов (Ньютона) </h4>
+<div>
+	<p>
+Метод Newton-CG - это метод линейного поиска. Во-первых, находится направление, в котором значение функции (ее квадратичного приближения) убывает. Во-вторых используется алгоритм линейного поиска, чтобы найти (почти) оптимальный размер шага в этом направлении. Как было сказано выше, в случае плохой обусловленности гессиана, размер шага может быть определен неверно. Это может привести к тому, что точка поиска выйдет за пределы локального минимума, неверному решению или бесконечным итерациям.<br> 
+Альтернативный подход состоит в следующем. Во-первых, следует определить границу размера шага \( \Delta \), чтобы точка поиска не могла уйти слишком далеко. Затем нужно найти оптимальный шаг \( \mathbf {p} \) внутри данного доверительного радиуса. Математическая постановка задачи:
+$$ \min_p f(x_k) + \nabla f(x_k) \cdot p + \frac{1}{2} p^T H(x_k) p; $$
+$$ ||p|| \leq \Delta $$
+Затем решение (текущая точка поиска) обновляется \( \mathbf {x} _ {k + 1} = \ mathbf {x} _ {k} + \ mathbf {p} \). Доверительный радиус \( \Delta \) на следующем шаге выбирается в соответствии со степенью согласования квадратичной модель с реальной функцией. Это семейство методов известно как методы доверительной области (trust-region). Алгоритм trust-ncg может быть указан как значение аргумента функции minimize. Рассмотрим примеры использования алгоритма доверительной области сопряженных градиентов для решения задачи минимизации[NW].<br>
+Пример с определением матрицы Гессе:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> res = minimize(rosen, x0, method='trust-ncg',
+    ...                jac=rosen_der, hess=rosen_hess,
+    ...                options={'gtol': 1e-8, 'disp': True})
+    Optimization terminated successfully.
+             Current function value: 0.000000
+             Iterations: 20                    # may vary
+             Function evaluations: 21
+             Gradient evaluations: 20
+             Hessian evaluations: 19
+    >>> res.x
+    array([1., 1., 1., 1., 1.])
+	</pre>
+	</div>
+
+	<p>
+Пример с функцией произведения гессиана и произвольного вектора:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> res = minimize(rosen, x0, method='trust-ncg',
+    ...                jac=rosen_der, hessp=rosen_hess_p,
+    ...                options={'gtol': 1e-8, 'disp': True})
+    Optimization terminated successfully.
+             Current function value: 0.000000
+             Iterations: 20                    # may vary
+             Function evaluations: 21
+             Gradient evaluations: 20
+             Hessian evaluations: 0
+    >>> res.x
+    array([1., 1., 1., 1., 1.])
+	</pre>
+	</div>
+</div>
+
+<h4>Методы Крыловского типа </h4>
+<div>
+	<p>
+Подобно методу trust-ncg, методы Крыловского типа хорошо подходят для решения крупномасштабных задач, поскольку в них используется только матрично-векторные произведения. Решение квадратичной подзадачи находится более точно, чем методом trust-ncg.
+	</p>
+
+	<p>
+Метод trust-krylov реализует методы [TRLIB] и [GLTR]. Ее суть в решении задачи с помощью доверительной областью, ограниченной усеченным подпространством Крылова. Для неопределенных задач лучше использовать этот метод, так как он использует меньшее количество нелинейных итераций за счет меньшего количества матрично-векторных произведений на одну подзадачу, по сравнению с методом trust-ncg.<br>
+Пример с определением матрицы Гессе:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> res = minimize(rosen, x0, method='trust-krylov',
+    ...                jac=rosen_der, hess=rosen_hess,
+    ...                options={'gtol': 1e-8, 'disp': True})
+    Optimization terminated successfully.
+             Current function value: 0.000000
+             Iterations: 19                    # may vary
+             Function evaluations: 20
+             Gradient evaluations: 20
+             Hessian evaluations: 18
+    >>> res.x
+    array([1., 1., 1., 1., 1.])
+	</pre>
+	</div>
+
+	<p>
+Пример с функцией произведения гессиана и произвольного вектора:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> res = minimize(rosen, x0, method='trust-krylov',
+    ...                jac=rosen_der, hessp=rosen_hess_p,
+    ...                options={'gtol': 1e-8, 'disp': True})
+    Optimization terminated successfully.
+             Current function value: 0.000000
+             Iterations: 19                    # may vary
+             Function evaluations: 20
+             Gradient evaluations: 20
+             Hessian evaluations: 0
+    >>> res.x
+    array([1., 1., 1., 1., 1.])
+	</pre>
+	</div>
+
+	<p>
+Ссылки:<br>
+[TRLIB]	<a href="https://arxiv.org/abs/1611.04718"> F. Lenders, C. Kirches, A. Potschka: "trlib: A vector-free implementation of the GLTR method for iterative solution of the trust region problem". </a><br>
+[GLTR]	<a href="https://doi.org/10.1137/S1052623497322735"> N. Gould, S. Lucidi, M. Roma, P. Toint: "Solving the Trust-Region Subproblem using the Lanczos Method", SIAM J. Optim., 9(2), 504--525, (1999).</a> 
+	</p>
+</div>
+
+<h4>Алогоритм почти точного решения в доверительной области</h4>
+<div>
+	<p>
+Все методы (Newton-CG, trust-ncg и trust-krylov) хорошо подходят для решения крупномасштабных задач (с тысячами переменных). Это связано с тем, что лежащий в их основе алгоритм сопряженных градиентов подразумевает приближенное нахождение обратной матрицы Гессе. Решение находится итеративно, без явного разложения гессиана. Поскольку требуется определить только функцию для произведение гессиана и произвольного вектора, этот алгоритм особенно хорош для работы с разреженными (ленточными диагональными) матрицами. Это обеспечивает низкие затраты памяти и значительную экономию времени.<br>
+
+В задачах среднего размера затраты на хранение и факторизацию гессиана не имеют решающего значения. Это значит, что можно получить решение за меньшее количество итераций, разрешив подзадачи области доверия почти точно. Для этого некоторые нелинейные уравнения решается итеративно для каждой квадратичной подзадачи [CGT]. Такое решение требует обычно 3 или 4 разложения Холецкого матрицы Гессе. В результате метод сходится за меньшее количество итераций и требует меньше вычислений целевой функции, чем другие реализованные методы доверительной области. Этот алгоритм подразумевает только определение полной матрицы Гессе и не поддерживает возможность использовать функцию произведения гессиана и произвольного вектора. <br>
+Пример с использованием функции Розенброка:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> res = minimize(rosen, x0, method='trust-exact',
+    ...                jac=rosen_der, hess=rosen_hess,
+    ...                options={'gtol': 1e-8, 'disp': True})
+    Optimization terminated successfully.
+             Current function value: 0.000000
+             Iterations: 13                    # may vary
+             Function evaluations: 14
+             Gradient evaluations: 13
+             Hessian evaluations: 14
+    >>> res.x
+    array([1., 1., 1., 1., 1.])
+	</pre>
+	</div>
+	
+	<p>
+	Ссылки:<br>
+[NW]	(1, 2, 3) J. Nocedal, S.J. Wright "Numerical optimization." 2nd edition. Springer Science (2006).
+	</p>
+	<p>
+[CGT]	Conn, A. R., Gould, N. I., & Toint, P. L. "Trust region methods". Siam. (2000). pp. 169-200.
+	</p>
+	
+</div>
+
+</div>
+
+<div class="section" id="id2">
+<h3>Условная минимизация скалярной функции нескольких переменных (minim)</h3>
+<div>
+	<p>
+Функция minim реализует следующие алгоритмы условной минимизации: trust-constr, SLSQP и COBYLA. Они требуют, чтобы ограничения определялись с использованием различных структур данных. Алгоритм «trust-constr» требует, чтобы ограничения определялись как последовательность объектов LinearConstraint и NonlinearConstraint.  Алгоритмы SLSQP и COBYLA требуют ограничений, определяемых как последовательность словарей с ключами type, fun и jac.
+<br>
+В качестве примера рассмотрим условную минимизацию функции Розенброка:
+$$ \min_{x_0, x_1} 100(x_0 - x_1^2)^2 + (1-x_0)^2 $$
+$$ x_0 + 2x_1 \leq 1 $$
+$$ x_0^2 + x_1 \leq 1 $$
+$$ x_0^2 - x_1 \leq 1 $$
+$$ 2x_0 + x_1 = 1 $$
+$$ 0 \leq x_0 \leq 1 $$
+$$ -0.5 \leq x_1 \leq 2.0 $$
+
+Эта задача оптимизации имеет единственное решение \( [x_0, x_1] = [0.4149, 0.1701] \), для которого справедливы только первое и четвертое ограничения.
+	</p>
+</div>
+
+<h4>Алгоритм условной оптимизации в доверительной области</h4>
+<div>
+	
+	<p>
+Алгоритм условной оптимизации в доверительной области решает математическую задачу в следующем виде:
+$$ \min_x f(x) $$
+$$ c^l \leq c(x) \leq c^u ,$$
+$$ x^l \leq x \leq x^u ,$$
+
+При \( c^l_j = c^u_j \), метод считает j-е ограничение как ограничение строгого равенства и обрабатывает его соответственно. Кроме того, можно задать одностороннее ограничение, установив верхнюю или нижнюю границу np.inf с соответствующим знаком.
+
+Реализация метода основана на [EQSQP] для задач с ограничениями вида равенства и на [TRIP] для задач с ограничениями в виде неравенств. Оба метода являются алгоритмами доверительной области и хорошо подходят для крупномасштабных задач.
+<br>
+Определение ограничений в виде границ
+<br>
+Ограничения \( 0 \leq x_0 \leq 1 \) и \( -0.5 \leq x_1 \leq 2.0 \) определяются с помощью объекта Bounds.
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> from scipy.optimize import Bounds
+    >>> bounds = Bounds ([0, -0.5], [1.0, 2.0])
+	</pre>
+	</div>
+
+	<p>
+Определение линейных (матричных и векторных) ограничений
+<br>
+Ограничения \( x_0 + 2 x_1 \leq 1 \) и \( 2 x_0 + x_1 = 1 \) могут быть записаны в стандартной линейной форме:
+
+$$ \begin{bmatrix} - \infty \\ 1 \end{bmatrix} \leq \begin{bmatrix} 1 & 2 \\ 2 & 1 \end{bmatrix} \begin{bmatrix} x_0 \\ x_1 \end{bmatrix} \leq \begin{bmatrix} 1 \\ 1 \end{bmatrix}     $$
+
+и определяются в виде объекта LinearConstraint:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> from scipy.optimize import LinearConstraint
+    >>> linear_constraint = LinearConstraint ([[1, 2], [2, 1]], [-np.inf, 1], [1, 1])
+	</pre>
+	</div>
+
+	<p>
+Определение нелинейных ограничений
+<br>
+Пусть имеется нелинейное ограничение:
+
+$$ c(x) = \begin{bmatrix} x_0^2 + x_1 \\ x_0^2 - x_1 \end{bmatrix} \leq \begin{bmatrix} 1 \\ 1 \end{bmatrix}   $$
+
+Матрица Якоби:
+
+$$ J(x) = \begin{bmatrix} 2x_0 & 1 \\ 2x_0 & -1 \end{bmatrix}  $$
+
+Линейная комбинация матрицы Гессе с произвольным вектором \( v \):
+
+Тогда нелинейное ограничение определяется как объект NonlinearConstraint:
+
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> def cons_f(x):
+    ...     return [x[0]**2 + x[1], x[0]**2 - x[1]]
+    >>> def cons_J(x):
+    ...     return [[2*x[0], 1], [2*x[0], -1]]
+    >>> def cons_H(x, v):
+    ...     return v[0]*np.array([[2, 0], [0, 0]]) + v[1]*np.array([[2, 0], [0, 0]])
+    >>> from scipy.optimize import NonlinearConstraint
+    >>> nonlinear_constraint = NonlinearConstraint(cons_f, -np.inf, 1, jac=cons_J, hess=cons_H)
+	</pre>
+	</div>
+
+	<p>
+Альтернативно, гессиан \( H (x, v) \) можно определить  как разреженную матрицу:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> from scipy.sparse import csc_matrix
+    >>> def cons_H_sparse(x, v):
+    ...     return v[0]*csc_matrix([[2, 0], [0, 0]]) + v[1]*csc_matrix([[2, 0], [0, 0]])
+    >>> nonlinear_constraint = NonlinearConstraint(cons_f, -np.inf, 1,
+    ...                                            jac=cons_J, hess=cons_H_sparse)
+	</pre>
+	</div>
+
+	<p>
+или как объект LinearOperator:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> from scipy.sparse.linalg import LinearOperator
+    >>> def cons_H_linear_operator(x, v):
+    ...     def matvec(p):
+    ...         return np.array([p[0]*2*(v[0]+v[1]), 0])
+    ...     return LinearOperator((2, 2), matvec=matvec)
+    >>> nonlinear_constraint = NonlinearConstraint(cons_f, -np.inf, 1,
+    ...                                           jac=cons_J, hess=cons_H_linear_operator)
+	</pre>
+	</div>
+
+	<p>
+Когда вычисление матрицы Гессе ` H (x, v) ` требует больших затрат, можно использовать класс HessianUpdateStrategy. Доступны следующие стратегии: BFGS и  SR1.
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> from scipy.optimize import BFGS
+    >>> nonlinear_constraint = NonlinearConstraint(cons_f, -np.inf, 1, jac=cons_J, hess=BFGS())
+	</pre>
+	</div>
+	
+	<p>
+Альтернативно, гессиан может быть вычислен с помощью конечных разностей.
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> nonlinear_constraint = NonlinearConstraint (cons_f, -np.inf, 1, jac = cons_J, hess = '2-point')
+	</pre>
+	</div>
+	
+	<p>
+Матрица Якоби для ограничений также можно аппроксимировать с помощью конечных разностей. Однако, в этом случае матрица Гессе не может быть вычислен с помощью конечных разностей. Гессиан должен быть определен в виде функции или с помощью класса HessianUpdateStrategy.
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> nonlinear_constraint = NonlinearConstraint (cons_f, -np.inf, 1, jac = '2-point', hess = BFGS ())
+	</pre>
+	</div>
+	
+	<p>
+Решение оптимизационной задачи<br>
+
+Задача оптимизации решается следующим образом:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> x0 = np.array([0.5, 0])
+    >>> res = minimize(rosen, x0, method='trust-constr', jac=rosen_der, hess=rosen_hess,
+    ...                constraints=[linear_constraint, nonlinear_constraint],
+    ...                options={'verbose': 1}, bounds=bounds)
+    # may vary
+    `gtol` termination condition is satisfied.
+    Number of iterations: 12, function evaluations: 8, CG iterations: 7, optimality: 2.99e-09, constraint violation: 1.11e-16, execution time: 0.016 s.
+    >>> print(res.x)
+    [0.41494531 0.17010937]
+	</pre>
+	</div>
+
+	<p>
+При необходимости, функцию вычисления гессиана можно определить с помощью класса LinearOperator
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> def rosen_hess_linop(x):
+    ...     def matvec(p):
+    ...         return rosen_hess_p(x, p)
+    ...     return LinearOperator((2, 2), matvec=matvec)
+    >>> res = minimize(rosen, x0, method='trust-constr', jac=rosen_der, hess=rosen_hess_linop,
+    ...                constraints=[linear_constraint, nonlinear_constraint],
+    ...                options={'verbose': 1}, bounds=bounds)
+    # may vary
+    `gtol` termination condition is satisfied.
+    Number of iterations: 12, function evaluations: 8, CG iterations: 7, optimality: 2.99e-09, constraint violation: 1.11e-16, execution time: 0.018 s.
+    >>> print(res.x)
+    [0.41494531 0.17010937]
+	</pre>
+	</div>
+
+	<p>
+или произведение Гессиана и произвольного вектора через параметр hessp
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> res = minimize(rosen, x0, method='trust-constr', jac=rosen_der, hessp=rosen_hess_p,
+    ...                constraints=[linear_constraint, nonlinear_constraint],
+    ...                options={'verbose': 1}, bounds=bounds)
+    # may vary
+    `gtol` termination condition is satisfied.
+    Number of iterations: 12, function evaluations: 8, CG iterations: 7, optimality: 2.99e-09, constraint violation: 1.11e-16, execution time: 0.018 s.
+    >>> print(res.x)
+    [0.41494531 0.17010937]
+	</pre>
+	</div>
+
+	<p>
+Альтернативно, первая и вторая производные оптимизируемой функции могут быть вычислены приближенно. Например, гессиан может быть аппроксимирован с помощью функции «SR1» (квази-Ньютоновского приближения). Градиент может быть аппроксимирован конечными разностями.
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> from scipy.optimize import SR1
+    >>> res = minimize(rosen, x0, method='trust-constr',  jac="2-point", hess=SR1(),
+    ...                constraints=[linear_constraint, nonlinear_constraint],
+    ...                options={'verbose': 1}, bounds=bounds)
+    # may vary
+    `gtol` termination condition is satisfied.
+    Number of iterations: 12, function evaluations: 24, CG iterations: 7, optimality: 4.48e-09, constraint violation: 0.00e+00, execution time: 0.016 s.
+    >>> print(res.x)
+    [0.41494531 0.17010937]
+	</pre>
+	</div>
+
+	<p>
+Ссылки<br>
+[TRIP]	Byrd, Richard H., Mary E. Hribar, and Jorge Nocedal. 1999. An interior point algorithm for large-scale nonlinear programming. SIAM Journal on Optimization 9.4: 877-900.
+<br>
+[EQSQP]	Lalee, Marucha, Jorge Nocedal, and Todd Plantega. 1998. On the implementation of an algorithm for large-scale equality constrained optimization. SIAM Journal on Optimization 8.3: 682-706.
+</p>
+</div>
+
+<h4>Последовательное программирование методом наименьших квадратов (method="SLSQP")</h4>
+<div>
+	<p>
+Метод SLSQP предназначен для решения задачам минимизации в виде:
+
+$$ \min_x f(x) $$
+$$ c_j(x) = 0, j \in \mathcal {E}  $$
+$$ c_j(x) \geq 0, j \mathcal {I}  $$
+$$ lb_i \leq x_i \leq ub_i, i=1,...,N $$
+
+Где \( \mathcal {E} \) и  \( \mathcal {I} \) - множества индексов, содержащих ограничения равенства и неравенства.
+
+Линейные и нелинейные ограничения определяются как словари с ключами типа type, fun и jac.
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> ineq_cons = {'type': 'ineq',
+    ... 'fun': lambda x: np.array ([1 - x [0] - 2 * x [1],
+    ... 1 - x [0] ** 2 - x [1],
+    ... 1 - x [0] ** 2 + x [1]]),
+    ... 'jac': lambda x: np.array ([[- 1.0, -2.0],
+    ... [-2 * x [0], -1.0],
+    ... [-2 * x [0], 1.0]])}
+    >>> eq_cons = {'type': 'eq',
+    ... 'fun': lambda x: np.array ([2 * x [0] + x [1] - 1]),
+    ... 'jac': lambda x: np.array ([2.0, 1.0])}
+	</pre>
+	</div>
+
+	<p>
+Задача оптимизации решается следующим образом:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> x0 = np.array([0.5, 0])
+    >>> res = minimize(rosen, x0, method='SLSQP', jac=rosen_der,
+    ...                constraints=[eq_cons, ineq_cons], options={'ftol': 1e-9, 'disp': True},
+    ...                bounds=bounds)
+    # may vary
+    Optimization terminated successfully.    (Exit mode 0)
+                Current function value: 0.342717574857755
+                Iterations: 5
+                Function evaluations: 6
+                Gradient evaluations: 5
+    >>> print(res.x)
+    [0.41494475 0.1701105 ]
+	</pre>
+	</div>
+
+	<p>
+Большинство параметров, доступных для метода «trust-constr», недоступны для «SLSQP».
+	</p>
+</div>
+
+</div>
+
+<div class="section" id="id3">
+<h3>Идентификация методом наименьших квадратов</h3>
+
+	<p>
+ С помощью SciPy можно решать нелинейные условные задачи идентификации методом наименьших квадратов:
+
+$$ \min_x \frac{1}{2} \sum\limits_{i=1}^m \rho (f_i(x)^2) $$ 
+$$lb \leq x \leq ub $$
+
+Здесь `f_i (\ mathbf {x})` являются гладкими функциями из `\mathbb {R} ^ n` в `\mathbb {R}`, называемые остатками. Скалярная функция `\rho (\ cdot)` называется функцией потерь. Ее цель заключается в уменьшении влияния выбросов остатков и повышение устойчивости решения. Функция линейных потерь приводит к стандартной задаче наименьших квадратов. Кроме того, для некоторых `x_j` вводятся ограничения в виде нижних и верхних границ (lb, ub).
+
+Все методы, определенные для минимизации наименьших квадратов, используют матрицу частных производных ` m \times n`, (матрица Якоби, якобиан), определяемую как ` J_ {ij} = \frac{\partial f_i} {\partial x_j}`. Настоятельно рекомендуется определять эту матрицу аналитически и передавать функцию ее вычисления как аргумент в least_squares. В противном случае якобиан будет вычиcляться с помощью конечных разностей, что требует больших затрат и может давать неточный результат.
+
+Функция minimum_squares может использоваться для идентификации параметров функции `\varphi (t; \mathbf {x})` по эмпирическим данным `\{(t_i, y_i), i = 0, \ldots, m-1 \} `. Для этого нужно просто предварительно вычислить остатки как `f_i (\mathbf {x}) = w_i (\varphi (t_i; \mathbf {x}) - y_i)`, где `w_i` - веса, назначенные каждому наблюдению.<br>
+	</p>
+
+<h4>Пример решения задачи идентификации</h4>
+<div>
+<p>
+Рассмотрим задачу «Анализ ферментной реакции», сформулированную в [1]. Существует 11 остатков, определенных как
+
+$$ f_i (x) = \frac {x_0 (u_i ^ 2 + u_i x_1)} {u_i ^ 2 + u_i x_2 + x_3} - y_i, \quad i = 0, \ldots, 10 $$
+
+где `y_i` - значения измерений, а `u_i` - значения независимой переменной. Неизвестным вектором параметров (искомых коэффициентов) является `\mathbf {x} = (x_0, x_1, x_2, x_3) ^ T `. Как было сказано ранее, рекомендуется определить матрицу Якоби в явном виде:
+
+$$ J_{i,0} = \frac{\partial f_i}{\partial x_0} = \frac{u_i^2 + u_i x_1}{u_i^2 + u_i x_2 + x_3} $$
+$$ J_{i,1} = \frac{\partial f_i}{\partial x_1} = \frac{u_i x_0}{u_i^2 + u_i x_2 + x_3} $$
+$$ J_{i,2} = \frac{\partial f_i}{\partial x_2} = - \frac{x_0 (u_i^2 + u_i x_1) u_i}{(u_i^2 + u_i x_2 + x_3)^2} $$
+$$ J_{i,3} = \frac{\partial f_i}{\partial x_3} = - \frac{x_0 (u_i^2 + u_i x_1)}{(u_i^2 + u_i x_2 + x_3)^2} $$
+
+Мы будем использовать «твердую» начальную точку, определенную в [1]. Для поиска решения, имеющего физический смысл, следует избегать деления на нуль и обеспечить сходимость к глобальному минимуму. Для этого накладываем ограничения `0 \leq x_j \leq 100, j = 0, 1, 2, 3 `.
+
+В приведенном ниже коде реализована вычисление `\mathbf {x}` методом наименьших квадратов, строятся графики исходных данных и идентифицированной функции. 
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> from scipy.optimize import least_squares
+
+    >>> def model(x, u):
+    ...     return x[0] * (u ** 2 + x[1] * u) / (u ** 2 + x[2] * u + x[3])
+
+    >>> def fun(x, u, y):
+    ...     return model(x, u) - y
+
+    >>> def jac(x, u, y):
+    ...     J = np.empty((u.size, x.size))
+    ...     den = u ** 2 + x[2] * u + x[3]
+    ...     num = u ** 2 + x[1] * u
+    ...     J[:, 0] = num / den
+    ...     J[:, 1] = x[0] * u / den
+    ...     J[:, 2] = -x[0] * num * u / den ** 2
+    ...     J[:, 3] = -x[0] * num / den ** 2
+    ...     return J
+
+    >>> u = np.array([4.0, 2.0, 1.0, 5.0e-1, 2.5e-1, 1.67e-1, 1.25e-1, 1.0e-1,
+    ...               8.33e-2, 7.14e-2, 6.25e-2])
+    >>> y = np.array([1.957e-1, 1.947e-1, 1.735e-1, 1.6e-1, 8.44e-2, 6.27e-2,
+    ...               4.56e-2, 3.42e-2, 3.23e-2, 2.35e-2, 2.46e-2])
+    >>> x0 = np.array([2.5, 3.9, 4.15, 3.9])
+    >>> res = least_squares(fun, x0, jac=jac, bounds=(0, 100), args=(u, y), verbose=1)
+    `ftol` termination condition is satisfied.
+    Function evaluations 130, initial cost 4.4383e+00, final cost 1.5375e-04, first-order optimality 4.92e-08.
+    >>> res.x
+    array([ 0.19280596,  0.19130423,  0.12306063,  0.13607247])
+
+    >>> import matplotlib.pyplot as plt
+    >>> u_test = np.linspace(0, 5)
+    >>> y_test = model(res.x, u_test)
+    >>> plt.plot(u, y, 'o', markersize=4, label='data')
+    >>> plt.plot(u_test, y_test, label='fitted model')
+    >>> plt.xlabel("u")
+    >>> plt.ylabel("y")
+    >>> plt.legend(loc='lower right')
+    >>> plt.show()
+	</pre>
+	</div>
+	
+<img src="img/optimize-1.png">
+
+	<p>
+[1]	(1, 2) Brett M. Averick et al., "The MINPACK-2 Test Problem Collection".
+	</p>
+</div>
+
+<h4>Другие примеры</h4>
+<div>
+	<p>
+Три приведенных ниже интерактивных примера иллюстрируют использование функции least_squares более подробно.<br>
+
+    1) <a href = "https://scipy-cookbook.readthedocs.io/items/bundle_adjustment.html">Задача коррекции границ в scipy</a> демонстрирует возможности функции least_squares. В этой задаче рассмотрен эффективный способ вычисления конечной разностную аппроксимации разреженного якобиана.<br>
+    2) <a href = "https://scipy-cookbook.readthedocs.io/items/robust_regression.html">Надежная нелинейная регрессия в scipy </a> показывает, как справляться с выбросами и надежной функцией потерь в нелинейной регрессии.<br>
+    3) <a href = "https://scipy-cookbook.readthedocs.io/items/discrete_bvp.html">Дискретная краевая задача в scipy</a>. В ней решается большая система уравнений и используются ограничения для достижения желаемых свойств решения.<br>
+
+Подробные сведения о математических алгоритмах реализации см. в документации по least_squares.
+	</p>
+	</div>
+</div>
+
+<div class="section" id="id4">
+<h3>Минимизация функции одной переменной</h3>
+	<p>
+Часто требуется найти минимум одномерной функции (т. е. функции, которая принимает скаляр в качестве входных данных). Для решения этой задачи были разработаны более быстрые методы оптимизации. Они доступны в функции minim_scalar, которая позволяет выбрать несколько алгоритмов.
+	</p>
+
+<h4>Минимизация без ограничений </h4>
+<div>
+	<p>
+В scipy используются два метода минимизации одномерной функции: brent и golden. Метод golden - используется редко, в основном только для академических целей. Метод может быть выбран с помощью параметра функции minim_scalar. Метод brent использует алгоритм Брента для определения минимума. Желательно явно указывать параметр bracket, который определяет интервал поиска минимума. Скобка (bracket) является тройкой значений аргумента `\left (a, b, c \right)` для которой справедливо ` f(a) \&q; f(b) \&q; f(c) \&q;` и a \&q; b \&q; c , Если скобка не задана, то в качестве альтернативы можно выбрать две стартовые точки. Из этих точек будет найдена скобка, с помощью простого алгоритма перебора. Если две исходные точки не указаны, по умолчанию будет использоваться 0 и 1 (это может быть плохим выбором и привести к неожиданному результату).<br>
+
+Пример:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> from scipy.optimize import minim_scalar
+    >>> f = lambda x: (x - 2) * (x + 1) ** 2
+    >>> res = minim_scalar (f, method = 'brent')
+    >>> print (res.x)
+    1,0
+	</pre>
+	</div>
+</div>
+
+<h4>Условная минимизация</h4>
+<div>
+	<p>
+Очень часто до начала процедуры минимизации на пространство решения накладываются ограничения. Метод минимизации с ограничениями minim_scalar  обеспечивает поиск минимума скалярных функций на ограниченном интервале. Интервал между двумя фиксированными точками указывается с помощью обязательного параметра bounds.
+<br>
+Например, чтобы найти минимум `J_{1}  (x)`  в окрестности `x = 5`, minim_scalar вызвается с интервалом `[4, 7]` в качестве ограничения. Результат решения `x_{\textrm {min}} = 5.3314`:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> from scipy.special import j1
+    >>> res = minimize_scalar(j1, bounds=(4, 7), method='bounded')
+    >>> res.x
+    5.33144184241
+	</pre>
+	</div>
+	
+	</div>
+	
+</div>
+
+<div class="section" id="id5">
+<h3>Произвольные минимизаторы</h3>
+
+	<p>
+Иногда может быть полезно использовать собственный метод  минимизации, например, при реализации оберток для функции minim (basinhopping).
+Для этого вместо передачи имени метода, передается вызываемый объект (функция, либо объект, реализующий метод __call__) в качестве параметра метода.
+
+Рассмотрим метод произвольной многомерной минимизации, в котором поиск осуществляется в окрестности каждого измерения независимо, с фиксированным размером шага:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> from scipy.optimize import OptimizeResult
+>>> def custmin(fun, x0, args=(), maxfev=None, stepsize=0.1,
+...         maxiter=100, callback=None, **options):
+...     bestx = x0
+...     besty = fun(x0)
+...     funcalls = 1
+...     niter = 0
+...     improved = True
+...     stop = False
+...
+...     while improved and not stop and niter < maxiter:
+...         improved = False
+...         niter += 1
+...         for dim in range(np.size(x0)):
+...             for s in [bestx[dim] - stepsize, bestx[dim] + stepsize]:
+...                 testx = np.copy(bestx)
+...                 testx[dim] = s
+...                 testy = fun(testx, *args)
+...                 funcalls += 1
+...                 if testy &quot; besty:
+...                     besty = testy
+...                     bestx = testx
+...                     improved = True
+...             if callback is not None:
+...                 callback(bestx)
+...             if maxfev is not None and funcalls >= maxfev:
+...                 stop = True
+...                 break
+...
+...     return OptimizeResult(fun=besty, x=bestx, nit=niter,
+...                           nfev=funcalls, success=(niter &quot; 1))
+>>> x0 = [1.35, 0.9, 0.8, 1.1, 1.2]
+>>> res = minimize(rosen, x0, method=custmin, options=dict(stepsize=0.05))
+>>> res.x
+array([1., 1., 1., 1., 1.])
+	</pre>
+	</div>
+
+	<p>
+Произвольные минимизаторы работают так же хорошо и для одномерной оптимизации:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> def custmin(fun, bracket, args=(), maxfev=None, stepsize=0.1,
+...         maxiter=100, callback=None, **options):
+...     bestx = (bracket[1] + bracket[0]) / 2.0
+...     besty = fun(bestx)
+...     funcalls = 1
+...     niter = 0
+...     improved = True
+...     stop = False
+...
+...     while improved and not stop and niter < maxiter:
+...         improved = False
+...         niter += 1
+...         for testx in [bestx - stepsize, bestx + stepsize]:
+...             testy = fun(testx, *args)
+...             funcalls += 1
+...             if testy &q; besty:
+...                 besty = testy
+...                 bestx = testx
+...                 improved = True
+...         if callback is not None:
+...             callback(bestx)
+...         if maxfev is not None and funcalls >= maxfev:
+...             stop = True
+...             break
+...
+...     return OptimizeResult(fun=besty, x=bestx, nit=niter,
+...                           nfev=funcalls, success=(niter > 1))
+>>> def f(x):
+...    return (x - 2)**2 * (x + 2)**2
+>>> res = minimize_scalar(f, bracket=(-3.5, 0), method=custmin,
+...                       options=dict(stepsize = 0.05))
+>>> res.x
+-2,0
+	</pre>
+	</div>
+	
+	</div>
+	
+
+
+<div class="section" id="id6">
+<h3>Поиск корней</h3>
+
+<h4>Скалярные функции</h4>
+	<p>
+
+Для решения уравнения с одной переменной могут быть использованы четыре различных алгоритма поиска корней. Для каждого из этих алгоритмов необходимо указывать границы интервала, в котором предположительно находится корень уравнения (значение функции меняет знак). В общем случае лучшим выбором будет функция brentq. Другие методы могут быть полезны в особенных ситуациях или для академических целей. 
+	</p>
+
+<h4>Поиск неподвижной точки</h4>
+	<p>
+Задача поиска неподвижной точки очень похожа на поиск корней уравнения.  Неподвижной точкой функции называется точка, в которой значение функции равно ее аргументу: `g(x)=x`. Неподвижная точка g является корнем функции `f(x)=g(x)-x`. Соответственно, f является неподвижной точкой для `g(x)=f(x)+x`. Процедура fixed_point реализует простой итеративный метод Aitkens sequence acceleration для оценки неподвижной точки `g` для заданной начальной точки.
+	</p>
+
+<h4>Системы уравнений</h4>
+<div>
+	<p>
+Корни системы нелинейных уравнений могут быть найдены с помощью функции root. Доступны несколько алгоритмов решения, среди которых hybr (the default) и lm, которые ископользуют гибридный метод Powell и Levenberg-Marquardt из пакета MINPACK соответственно.
+
+В следующем примере рассмотрено трансцендентное уравнение одной переменной
+
+$$ x+2\cos(x)=0,$$
+
+Корень этого уравнения вычисляется  следующим образом:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> import numpy как np
+>>> from scipy.optimize import root
+>>> def func(x):
+...     return x + 2 * np.cos(x)
+>>> sol = root(func, 0.3)
+>>> sol.x
+array([-1.02986653])
+>>> sol.fun
+array([ -6.66133815e-16])
+	</pre>
+	</div>
+
+	<p>
+Теперь рассмотрим систему нелинейных уравнений
+$$ x_0 \cos(x_1) = 4 $$
+$$ x_0 x_1 - x_1 = 5 $$
+
+Целевая функция также используется для вычисления матрицы Якоби, это указано с помощью параметра jac = True. В примере ниже используется алгоритм Levenberg-Marquardt.
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> def func2(x):
+...     f = [x[0] * np.cos(x[1]) - 4,
+...          x[1]*x[0] - x[1] - 5]
+...     df = np.array([[np.cos(x[1]), -x[0] * np.sin(x[1])],
+...                    [x[1], x[0] - 1]])
+...     return f, df
+>>> sol = root(func2, [1, 1], jac=True, method='lm')
+>>> sol.x
+array([ 6.50409711,  0.90841421])
+	</pre>
+	</div>
+	
+</div>
+
+<h4>Поиск корней в масштабных задачах</h4>
+<div>
+	<p>
+Методы hybr и lm в функции root не могут быть использованы при большом числе переменных (N), т.к. в них на каждой итерации нужно вычислять обратную N x N матрицу Якоби. При росте числа N вычислительные затраты становятся весьма ощутимыми.
+
+Рассмотрим следующую задачу: необходимо решить интегро-дифференциальное уравнение на площади `[0,1]\times[0,1]`:
+
+$$ (\partial_x^2 + \partial_y^2) P + 5 \left(\int_0^1\int_0^1\cosh(P)\,dx\,dy\right)^2 = 0 $$
+
+Граничные условия `P(x,1) = 1` сверху и `P=0` в остальных границах. Решение находится путем замены непрерывной функции `P` на ее значения в узлах сетки, `P_{n,m}\approx{}P(n h, m h)`, с достаточно малым шагом h. Производные и интегралы могут быть вычислены приближенно. Например, ` \partial_x^2 P(x,y)\approx{}(P(x+h,y) - 2 P(x,y) + P(x-h,y))/h^2`. Задача эквивалентна поиску корней некоторой функции residual(P), где P - вектор длины `N_x N_y`.
+<br>
+Как было сказано выше, `N_x N_y` могут быть очень большими, поэтому методы hybr и lm в процедуре root потребуют много времени для решения этой задачи. Решение может быть найдено с помощью масштабных алгоритмов, например krylov, broyden2, или anderson. В них используется приближенный метод Ньютона, в котором вместо точного вычисления якобиана, используется аппроксимация.
+
+Задача может быть решена следующим образом:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    import numpy as np
+    from scipy.optimize import root
+    from numpy import cosh, zeros_like, mgrid, zeros
+
+    # parameters
+    nx, ny = 75, 75
+    hx, hy = 1./(nx-1), 1./(ny-1)
+
+    P_left, P_right = 0, 0
+    P_top, P_bottom = 1, 0
+
+    def residual(P):
+       d2x = zeros_like(P)
+       d2y = zeros_like(P)
+
+       d2x[1:-1] = (P[2:]   - 2*P[1:-1] + P[:-2]) / hx/hx
+       d2x[0]    = (P[1]    - 2*P[0]    + P_left)/hx/hx
+       d2x[-1]   = (P_right - 2*P[-1]   + P[-2])/hx/hx
+
+       d2y[:,1:-1] = (P[:,2:] - 2*P[:,1:-1] + P[:,:-2])/hy/hy
+       d2y[:,0]    = (P[:,1]  - 2*P[:,0]    + P_bottom)/hy/hy
+       d2y[:,-1]   = (P_top   - 2*P[:,-1]   + P[:,-2])/hy/hy
+
+       return d2x + d2y + 5*cosh(P).mean()**2
+
+    # solve
+    guess = zeros((nx, ny), float)
+    sol = root(residual, guess, method='krylov', options={'disp': True})
+    #sol = root(residual, guess, method='broyden2', options={'disp': True, 'max_rank': 50})
+    #sol = root(residual, guess, method='anderson', options={'disp': True, 'M': 10})
+    print('Residual: %g' % abs(residual(sol.x)).max())
+
+    # visualize
+    import matplotlib.pyplot as plt
+    x, y = mgrid[0:1:(nx*1j), 0:1:(ny*1j)]
+    plt.pcolor(x, y, sol.x)
+    plt.colorbar()
+    plt.show()
+	</pre>
+	</div>
+
+<img src="img/optimize-2.png">
+</div>
+
+<h4>Ускорение решения. Предусловия</h4>
+<div>
+	<p>
+При поиске корней функции `f_i({\bf x}) = 0, i = 1, 2, ..., N` с помощью алгоритма krylov, много времени тратится на вычисление обратного якобиана
+
+$$ J_{ij} = \frac{\partial f_i}{\partial x_j} .$$
+
+Если апроксимировать обратную матрицу `M\approx{}J^{-1}`, ее можно использовать для предварительного обусловливания линейной обратной задачи. Идея состоит в том, что вместо решения `J{\bf s}={\bf y} ` решается `MJ{\bf s}=M{\bf y}`. Т.к. матрица `MJ` практически равна единичной (в отличии от матрицы `J`), метод Крылова работает лучше. 
+
+Матрица M может быть передана в метод root с методом krylov как опция ['jac_options']['inner_M']. Она может быть обычной (разреженной) матрицей или экземпляром класса scipy.sparse.linalg.LinearOperator.
+
+Заметим, что в задаче из предыдущей секции, целевая функция состоит из двух частей.  Первая часть - применение оператора Лапласы, `[\partial_x^2 + \partial_y^2] P `, вторая - определенный интеграл. Вычисление матрицы Якоби для оператора Лапласа осуществляется в два этапа. В одном измерении:
+
+$$ \partial_x^2 \approx \frac{1}{h_x^2} \begin{pmatrix}
+-2 & 1 & 0 & 0 \cdots \\
+1 & -2 & 1 & 0 \cdots \\
+0 & 1 & -2 & 1 \cdots \\
+\ldots
+\end{pmatrix}
+= h_x^{-2} L $$
+
+В двух измерениях оператор имеет вид:
+
+$$ J_1 = \partial_x^2 + \partial_y^2
+\simeq
+h_x^{-2} L \otimes I + h_y^{-2} I \otimes L $$
+
+Матрица Якоби `J_2` для второй части уравнения (интеграла), вычисляется немного сложнее. Т.к. большинство ее элементов не равны нулю, нахождение обратной матрицы будет затруднено. `J_1` с другой стороны, относительно простая матрица, может быть обращена с помощью scipy.sparse.linalg.splu (приближенное обращение с помощью scipy.sparse.linalg.spilu). Т.о.,  `M\approx{}J_1^{-1}`  в определенном смысле является лучшим приближением.
+<br>
+В примере ниже используется предварительное обусловливание `M=J_1^{-1}`.
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+import numpy as np
+from scipy.optimize import root
+from scipy.sparse import spdiags, kron
+from scipy.sparse.linalg import spilu, LinearOperator
+from numpy import cosh, zeros_like, mgrid, zeros, eye
+
+# parameters
+nx, ny = 75, 75
+hx, hy = 1./(nx-1), 1./(ny-1)
+
+P_left, P_right = 0, 0
+P_top, P_bottom = 1, 0
+
+def get_preconditioner():
+    """Compute the preconditioner M"""
+    diags_x = zeros((3, nx))
+    diags_x[0,:] = 1/hx/hx
+    diags_x[1,:] = -2/hx/hx
+    diags_x[2,:] = 1/hx/hx
+    Lx = spdiags(diags_x, [-1,0,1], nx, nx)
+
+    diags_y = zeros((3, ny))
+    diags_y[0,:] = 1/hy/hy
+    diags_y[1,:] = -2/hy/hy
+    diags_y[2,:] = 1/hy/hy
+    Ly = spdiags(diags_y, [-1,0,1], ny, ny)
+
+    J1 = kron(Lx, eye(ny)) + kron(eye(nx), Ly)
+
+    # Now we have the matrix `J_1`. We need to find its inverse `M` --
+    # however, since an approximate inverse is enough, we can use
+    # the *incomplete LU* decomposition
+
+    J1_ilu = spilu(J1)
+
+    # This returns an object with a method .solve() that evaluates
+    # the corresponding matrix-vector product. We need to wrap it into
+    # a LinearOperator before it can be passed to the Krylov methods:
+
+    M = LinearOperator(shape=(nx*ny, nx*ny), matvec=J1_ilu.solve)
+    return M
+
+def solve(preconditioning=True):
+    """Compute the solution"""
+    count = [0]
+
+    def residual(P):
+        count[0] += 1
+
+        d2x = zeros_like(P)
+        d2y = zeros_like(P)
+
+        d2x[1:-1] = (P[2:]   - 2*P[1:-1] + P[:-2])/hx/hx
+        d2x[0]    = (P[1]    - 2*P[0]    + P_left)/hx/hx
+        d2x[-1]   = (P_right - 2*P[-1]   + P[-2])/hx/hx
+
+        d2y[:,1:-1] = (P[:,2:] - 2*P[:,1:-1] + P[:,:-2])/hy/hy
+        d2y[:,0]    = (P[:,1]  - 2*P[:,0]    + P_bottom)/hy/hy
+        d2y[:,-1]   = (P_top   - 2*P[:,-1]   + P[:,-2])/hy/hy
+
+        return d2x + d2y + 5*cosh(P).mean()**2
+
+    # preconditioner
+    if preconditioning:
+        M = get_preconditioner()
+    else:
+        M = None
+
+    # solve
+    guess = zeros((nx, ny), float)
+
+    sol = root(residual, guess, method='krylov',
+               options={'disp': True,
+                        'jac_options': {'inner_M': M}})
+    print('Residual', abs(residual(sol.x)).max())
+    print('Evaluations', count[0])
+
+    return sol.x
+
+def main():
+    sol = solve(preconditioning=True)
+
+    # visualize
+    import matplotlib.pyplot as plt
+    x, y = mgrid[0:1:(nx*1j), 0:1:(ny*1j)]
+    plt.clf()
+    plt.pcolor(x, y, sol)
+    plt.clim(0, 1)
+    plt.colorbar()
+    plt.show()
+
+
+if __name__ == "__main__":
+    main()
+	</pre>
+	</div>
+	<p>
+Результат без предобусловливания:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">	
+0:  |F(x)| = 803.614; step 1; tol 0.000257947
+1:  |F(x)| = 345.912; step 1; tol 0.166755
+2:  |F(x)| = 139.159; step 1; tol 0.145657
+3:  |F(x)| = 27.3682; step 1; tol 0.0348109
+4:  |F(x)| = 1.03303; step 1; tol 0.00128227
+5:  |F(x)| = 0.0406634; step 1; tol 0.00139451
+6:  |F(x)| = 0.00344341; step 1; tol 0.00645373
+7:  |F(x)| = 0.000153671; step 1; tol 0.00179246
+8:  |F(x)| = 6.7424e-06; step 1; tol 0.00173256
+Residual 3.57078908664e-07
+Evaluations 317	
+	</pre>
+	</div>
+	
+	<p>
+Результат с предусловливанием:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+0:  |F(x)| = 136.993; step 1; tol 7.49599e-06
+1:  |F(x)| = 4.80983; step 1; tol 0.00110945
+2:  |F(x)| = 0.195942; step 1; tol 0.00149362
+3:  |F(x)| = 0.000563597; step 1; tol 7.44604e-06
+4:  |F(x)| = 1.00698e-09; step 1; tol 2.87308e-12
+Residual 9.29603061195e-11
+Evaluations 77
+	</pre>
+	</div>
+
+	<p>
+Предусловие сокращает количество вычислений примерно в 4 раза. Для особо крупных задач возможность предобусловливания является критерием возможности практического решения.
+	</p>
+
+	<p>
+Предусловие - это искусство, наука и ремесло. В рассмотренных примерах изложены далеко не все тонкости решения оптимизационных задач.
+	</p>
+
+<h4>Ссылки</h4>
+
+<p>
+[KK]	D.A. Knoll and D.E. Keyes, "Jacobian-free Newton-Krylov methods", J. Comp. 
+<br>
+Phys. 193, 357 (2004). doi:10.1016/j.jcp.2003.08.010
+<br>
+[PP]	PETSc https://www.mcs.anl.gov/petsc/ and its Python bindings https://bitbucket.org/petsc/petsc4py/
+<br>
+[AMG]	PyAMG (algebraic multigrid preconditioners/solvers) https://github.com/pyamg/pyamg/issues
+
+	</p>
+
+</div>
+
+</div>
+
+<!-- Footer Start -->
+<div class="col-md-12 page-body margin-top-50 footer">
+  <footer>
+  <ul class="menu-link">
+	   <li><a href="index.html">Содержание</a></li>
+	   <li><a href="about.html">О сайте</a></li>
+	</ul>
+	
+  <p>© Copyright 2016 DevBlog. All rights reserved</p>
+  
+						  
+  <!-- UiPasta Credit Start -->
+  <div class="uipasta-credit">Design By <a href="http://www.uipasta.com" target="_blank">UiPasta</a></div>
+  <!-- UiPasta Credit End -->
+  
+   
+ </footer>
+</div>
+ <!-- Footer End -->		 
+			 
+  </div>
+  </div>
+  
+  </div>
+  </div>
+  </div>
+  <!-- Blog Post (Right Sidebar) End -->
+		
+</div>
+</div>
+</div>
+
+
+
+
+<!-- Endpage Box (Popup When Scroll Down) Start 
+<div id="scroll-down-popup" class="endpage-box">
+<h4>Read Also</h4>
+<a href="#">How to make your company website based on bootstrap framework...</a>
+</div>
+<!-- Endpage Box (Popup When Scroll Down) End -->
+
+
+
+
+<!-- Back to Top Start -->
+<a href="#" class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></a>
+<!-- Back to Top End -->
+
+
+<!-- All Javascript Plugins  -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plugin.js"></script>
+
+<!-- Main Javascript File  -->
+<script type="text/javascript" src="js/scripts.js"></script>
+    
+<!-- Syntax Highlighter Javascript File  -->
+<script type="text/javascript" src="js/syntax/shCore.js"></script>
+<script type="text/javascript" src="js/syntax/shBrushCss.js"></script>
+<script type="text/javascript" src="js/syntax/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/syntax/shBrushPerl.js"></script>
+<script type="text/javascript" src="js/syntax/shBrushPhp.js"></script>
+<script type="text/javascript" src="js/syntax/shBrushPlain.js"></script>
+<script type="text/javascript" src="js/syntax/shBrushPython.js"></script>
+<script type="text/javascript" src="js/syntax/shBrushRuby.js"></script>
+<script type="text/javascript" src="js/syntax/shBrushSql.js"></script>
+<script type="text/javascript" src="js/syntax/shBrushVb.js"></script>
+<script type="text/javascript" src="js/syntax/shBrushXml.js"></script>
+
+<!-- Syntax Highlighter Call Function -->
+<script type="text/javascript">
+SyntaxHighlighter.config.clipboardSwf = 'js/syntax/clipboard.swf';
+SyntaxHighlighter.all();
+</script>
+
+
+</body>
+</html>

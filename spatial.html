@@ -1,0 +1,579 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    
+    <!-- Meta Tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- SEO -->
+    <meta name="description" content="учебник scipy, пакет программ для научных вычислений, специальные функции, интегрирование, оптимизация, интерполяция, преобразования Фурье, цифровая обработка сигналов, линейная алгебра, проблема собственных значений разреженных матриц, алгоритмы на разреженных графах, пространственные структуры данных и алгоритмы, статистика, обработка многомерных данных, numpy">
+    <meta name="author" content="labintsevai">
+    <meta name="url" content="http://www.scipy-tutorial.ru">
+    <meta name="copyright" content="labintsevai">
+    <meta name="robots" content="index,follow">
+	
+	
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(51612041, "init", {
+        id:51612041,
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/51612041" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+	
+    <title>SciPy Пространственные структуры данных и алгоритмы</title>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="144x144" type="image/x-icon" href="images/favicon/apple-touch-icon.png">
+    
+    <!-- All CSS Plugins -->
+    <link rel="stylesheet" type="text/css" href="css/plugin.css">
+    
+    <!-- Main CSS Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+    <!-- Google Web Fonts  -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700">
+    
+    <!-- Syntax Highlighter  -->
+    <link rel="stylesheet" type="text/css" href="css/syntax/shCore.css">
+    <link rel="stylesheet" type="text/css" href="css/syntax/shThemeDefault.css">
+    
+        	<!-- MathJax support-->
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML" async>
+</script>
+
+    <!-- HTML5 shiv and Respond.js support IE8 or Older for HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+	   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+
+  </head>
+
+ <body>
+
+	<!-- Preloader Start -->
+     <div class="preloader">
+	   <div class="rounder"></div>
+      </div>
+      <!-- Preloader End -->
+      
+      
+    
+    
+<div id="main">
+<div class="container">
+<div class="row">
+
+<!-- About Me (Left Sidebar) Start -->
+<div class="col-md-3">
+<div class="about-fixed">
+
+<div class="my-pic">
+<img src="images/pic/scipyLogo.png" alt="">
+</div>
+
+
+
+<div class="my-detail">
+
+<div class="white-spacing">
+	<h1><a href="https://docs.scipy.org/doc/scipy/reference/tutorial/index.html">SciPy.org</a></h1>
+	<span>Научные вычисления</span>
+</div> 
+
+<ul class="social-icon">
+ <li><a href="https://www.facebook.com/scipyconf" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a></li>
+ <li><a href="https://twitter.com/hashtag/scipy" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a></li>
+<li><a href="https://github.com/scipy" target="_blank" class="github"><i class="fa fa-github"></i></a></li>
+</ul>
+
+</div>
+</div>
+</div>
+<!-- About Me (Left Sidebar) End -->
+
+<!-- Blog Post (Right Sidebar) Start -->
+<div class="col-md-9">
+<div class="col-md-12 page-body">
+<div class="row">
+	
+<div class="sub-title">
+	<h2><a href="index.html">Содержание</h2></a>
+ </div>
+
+<div class="col-md-12 content-page">
+	<div class="col-md-12 blog-post">
+
+	<!-- Post Headline Start -->
+	<div class="post-title">
+	<ul class="simple">
+	<h3>Пространственные структуры данных и алгоритмы (scipy.spatial) </h3>
+		<li><a class="reference internal" href="#id1">Триангуляция Делоне </a>
+			<ul><li>Копланарные точки </li>
+			</ul>
+		</li>
+		<li><a class="reference internal" href="#id2">Выпуклые оболочки </a></li>
+		<li><a class="reference internal" href="#id3">Диаграммы Вороного  </a></li>
+	</ul>	
+	</li>
+	</div>
+	   <!-- Post Headline End -->
+	<p>
+Пакет scipy.spatial позволяет вычислять триангуляции, диаграммы Вороного и выпуклые оболочки множества точек с помощью библиотеки Qhull.
+<br>
+Кроме того, он содержит реализации KDTree для кластеризации методом ближайшего соседа и утилиты для вычислений расстояний в разных метриках.
+	</p>
+	
+<div class="section" id="id1">
+<h3>Триангуляции Делоне</h3>
+	
+	<p>
+Триангуляция Делоне - это разделение множества точек на множество непересекающихся треугольников, так что ни одна точка не находится внутри  треугольника. На практике такие триангуляции позволяют избежать построение треугольников с малыми углами.
+
+Триангуляция Делоне может быть вычислена с помощью scipy.spatial следующим образом:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> from scipy.spatial import Delaunay
+   >>> points = np.array([[0, 0], [0, 1.1], [1, 0], [1, 1]])
+   >>> tri = Delaunay(points)
+	</pre>
+	</div>
+	
+	<p>
+   Мы можем визуализировать это:
+   	</p>
+   	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> import matplotlib.pyplot as plt
+   >>> plt.triplot(points[:,0], points[:,1], tri.simplices)
+   >>> plt.plot(points[:,0], points[:,1], 'o')
+	</pre>
+	</div>
+
+	<p>
+   И добавить некоторые дополнительные украшения:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> for j, p in enumerate(points):
+   ...     plt.text(p[0]-0.03, p[1]+0.03, j, ha='right') # label the points
+   >>> for j, s in enumerate(tri.simplices):
+   ...     p = points[s].mean(axis=0)
+   ...     plt.text(p[0], p[1], '#%d' % j, ha='center') # label triangles
+   >>> plt.xlim(-0.5, 1.5); plt.ylim(-0.5, 1.5)
+   >>> plt.show()
+	</pre>
+	</div>
+<img src="img/spatial-1.png">
+	<p>
+Структура триангуляции кодируется следующим образом: атрибут simplices содержит индексы точек которые составляют треугольник. Координаты точек хранятся в массиве points. Например:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> i = 1
+>>> tri.simplices[i,:]
+array([3, 1, 0], dtype=int32)
+>>> points[tri.simplices[i,:]]
+array([[ 1. ,  1. ],
+       [ 0. ,  1.1],
+       [ 0. ,  0. ]])
+	</pre>
+	</div>
+
+	<p>
+Кроме того, можно обнаружить и соседние треугольники:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> tri.neighbors[i]
+array([-1,  0, -1], dtype=int32)
+	</pre>
+	</div>
+	
+	<p>
+Это говорит нам о том, что этот треугольник имеет соседом треугольник # 0, но не имеет других соседей. Более того, сосед 0 находится напротив вершины 1 треугольника:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+>>> points[tri.simplices[i, 1]]
+array([ 0. ,  1.1])
+	</pre>
+	</div>
+	
+	<p>	
+Действительно, из рисунка видно, что это так.
+<br>
+Библиотека Qhull также позволяет выполнять тесселяции для симплексов  многомерных пространств (например, разбиение на тетраэдры в 3-D).
+	</p>
+	
+<h4>Копланарные точки</h4>
+	
+	<p>
+Важно отметить, что из-за проблем с численной точностью при формировании триангуляции, не все точки обязательно являются вершинами треугольников. Рассмотрим пример с дублирующейся точкой:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">	
+>>> points = np.array([[0, 0], [0, 1], [1, 0], [1, 1], [1, 1]])
+>>> tri = Delaunay(points)
+>>> np.unique(tri.simplices.ravel())
+array([0, 1, 2, 3], dtype=int32)
+	</pre>
+	</div>	
+
+	<p>
+Обратите внимание, что точка №4, которая является дубликатом, не является вершиной триангуляции. Вот как это проверить:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">	
+>>> tri.coplanar
+array ([[4, 0, 3]], dtype = int32)
+	</pre>
+	</div>	
+
+	<p>
+Это означает, что точка 4 находится около треугольника 0 и вершины 3, но не входит в триангуляцию.
+<br>
+Обратите внимание, что такие вырождения могут возникать не только из-за дублированных точек, но и по более сложным геометрическим причинам. Это может иметь место даже в множествах точек, которые на первый взгляд кажутся хорошо расположенными.
+<br>
+Тем не менее, процедура Qhull имеет параметр «QJ», который позволяет случайным образом перемещать входные данные до тех пор, пока не будет проблема вырожденности не будет решена:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">	
+>>> tri = Delaunay(points, qhull_options="QJ Pp")
+>>> points[tri.simplices]
+array([[[1, 0],
+        [1, 1],
+        [0, 0]],
+       [[1, 1],
+        [1, 1],
+        [1, 0]],
+       [[1, 1],
+        [0, 1],
+        [0, 0]],
+       [[0, 1],
+        [1, 1],
+        [1, 1]]])
+	</pre>
+	</div>	
+
+	<p>
+Появились два новых треугольника. Однако мы видим, что они вырождены и имеют нулевую площадь.
+	</p>
+	
+</div>
+
+<div class="section" id="id2">
+<h3>Выпуклые оболочки</h3>
+
+	<p>
+Выпуклая оболочка представляет собой наименьший выпуклый объект, который содержит все точки заданного множества.
+<br>
+Она может быть вычислена с помощью оболочки библиотеки Qhull в scipy.spatial следующим образом:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> from scipy.spatial import ConvexHull
+   >>> points = np.random.rand(30, 2)   # 30 random points in 2-D
+   >>> hull = ConvexHull(points)
+	</pre>
+	</div>	
+
+	<p>
+Выпуклая оболочка представлена ​​в виде множества N-мерных симплексов. В 2-D плоскости она имеет вид набора линий. Схема хранения данных - такая же, как и для симплексов триангуляции Делоне, изложенная
+выше.
+<br>
+   Мы можем проиллюстрировать приведенный выше результат:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> import matplotlib.pyplot as plt
+   >>> plt.plot(points[:,0], points[:,1], 'o')
+   >>> for simplex in hull.simplices:
+   ...     plt.plot(points[simplex,0], points[simplex,1], 'k-')
+   >>> plt.show()
+	</pre>
+	</div>	
+<img src="img/spatial-2.png">
+	<p>
+То же самое можно сделать с помощью scipy.spatial.convex_hull_plot_2d.
+	</p>
+	
+</div>
+
+<div class="section" id="id3">
+<h3>Диаграммы Вороного</h3>
+
+	<p>
+Диаграмма Вороного является разделением пространства на ближайшие окрестности точек для заданного множества.
+
+Существует два способа получить диаграмму с помощью scipy.spatial. Во-первых, можно использовать KDTree для ответа на вопрос «какая из точек ближе всего к этому» и определить области таким образом:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> from scipy.spatial import KDTree
+   >>> points = np.array([[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2],
+   ...                    [2, 0], [2, 1], [2, 2]])
+   >>> tree = KDTree(points)
+   >>> tree.query([0.1, 0.1])
+   (0.14142135623730953, 0)
+	</pre>
+	</div>	
+
+	<p>
+   Таким образом, точка (0.1, 0.1) принадлежит области 0. В цвете:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> x = np.linspace(-0.5, 2.5, 31)
+   >>> y = np.linspace(-0.5, 2.5, 33)
+   >>> xx, yy = np.meshgrid(x, y)
+   >>> xy = np.c_[xx.ravel(), yy.ravel()]
+   >>> import matplotlib.pyplot as plt
+   >>> plt.pcolor(x, y, tree.query(xy)[1].reshape(33, 31))
+   >>> plt.plot(points[:,0], points[:,1], 'ko')
+   >>> plt.show()
+	</pre>
+	</div>	
+<img src="img/spatial-3.png">
+
+	<p>
+Однако это не дает диаграмму Вороного как геометрический объект.
+
+Представление в терминах линий и точек может быть получено через оболочку Qhull в scipy.spatial:
+	<p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> from scipy.spatial import Voronoi
+   >>> vor = Voronoi(points)
+   >>> vor.vertices
+   array([[ 0.5,  0.5],
+          [ 1.5,  0.5],
+          [ 0.5,  1.5],
+          [ 1.5,  1.5]])
+	</pre>
+	</div>	
+
+	<p>
+Вершины диаграммы Вороного обозначают множество точек, образующих многоугольники краев областей. В нашем случае существует 9 различных областей:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> vor.regions
+   [[], [-1, 0], [-1, 1], [1, -1, 0], [3, -1, 2], [-1, 3], [-1, 2], [3, 2, 0, 1], [2, -1, 0], [3, -1, 1]]
+	</pre>
+	</div>	
+
+	<p>
+Отрицательное значение `-1` указывает бесконечную точку. В самом деле,
+только одна из областей, `[3, 1, 0, 2]`, ограничена. Обратите внимание, что из-за подобных проблем с численной точностью, как в триангуляции Делоне, областей Вороного может быть меньше, чем входных точек.
+<br>
+Ребра (линии в 2-D), разделяющие области, описываются как
+аналогичный набор симплексов в виде выпуклых областей:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> vor.ridge_vertices
+   [[-1, 0], [-1, 0], [-1, 1], [-1, 1], [0, 1], [-1, 3], [-1, 2], [ 2, 3], [-1, 3], [-1, 2], [0, 2], [1, 3]]
+	</pre>
+	</div>	
+
+	<p>
+Эти числа указывают на индексы вершин, составляющих сегменты линий. Точка бесконечности снова обозначена как `-1`. Четыре из 12 границ - это ограниченные отрезки, остальные уходят в бесконечность.
+
+Ребра областей Вороного перпендикулярны линиям, проведенным между
+входными точками. Каждым двум точкам соответствует ребро, что записывается так:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> vor.ridge_points
+   array([[0, 1],
+          [0, 3],
+          [6, 3],
+          [6, 7],
+          [3, 4],
+          [5, 8],
+          [5, 2],
+          [5, 4],
+          [8, 7],
+          [2, 1],
+          [4, 1],
+          [4, 7]], dtype=int32)
+	</pre>
+	</div>	
+
+	<p>
+Этой информации достаточно, чтобы построить полную диаграмму Вороного.
+
+Можно построить график следующим образом. Сначала точки и вершины Вороного:
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> plt.plot(points[:, 0], points[:, 1], 'o')
+   >>> plt.plot(vor.vertices[:, 0], vor.vertices[:, 1], '*')
+   >>> plt.xlim(-1, 3); plt.ylim(-1, 3)
+	</pre>
+	</div>	
+
+	<p>
+   Затем построение конечных отрезков линии так же, как и для выпуклой оболочки. Но теперь мы должны учесть бесконечные края:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> for simplex in vor.ridge_vertices:
+   ...     simplex = np.asarray(simplex)
+   ...     if np.all(simplex >= 0):
+   ...         plt.plot(vor.vertices[simplex, 0], vor.vertices[simplex, 1], 'k-')
+	</pre>
+	</div>	
+
+	<p>
+Край, простирающиеся до бесконечности, требуют немного большей осторожности:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> center = points.mean(axis=0)
+   >>> for pointidx, simplex in zip(vor.ridge_points, vor.ridge_vertices):
+   ...     simplex = np.asarray(simplex)
+   ...     if np.any(simplex < 0):
+   ...         i = simplex[simplex >= 0][0] # finite end Voronoi vertex
+   ...         t = points[pointidx[1]] - points[pointidx[0]]  # tangent
+   ...         t = t / np.linalg.norm(t)
+   ...         n = np.array([-t[1], t[0]]) # normal
+   ...         midpoint = points[pointidx].mean(axis=0)
+   ...         far_point = vor.vertices[i] + np.sign(np.dot(midpoint - center, n)) * n * 100
+   ...         plt.plot([vor.vertices[i,0], far_point[0]],
+   ...                  [vor.vertices[i,1], far_point[1]], 'k--')
+   >>> plt.show()
+	</pre>
+	</div>	
+
+<img src="img/spatial-4.png">
+
+	<p>
+Эту картину также можно создать с помощью scipy.spatial.voronoi_plot_2d.
+	</p>
+ 
+
+</div> 
+
+</div>
+ 
+</div>
+
+</div>	
+		 
+
+
+<!-- Footer Start -->
+<div class="col-md-12 page-body margin-top-50 footer">
+  <footer>
+  <ul class="menu-link">
+	   <li><a href="index.html">Содержание</a></li>
+	   <li><a href="about.html">О сайте</a></li>
+	</ul>
+	
+  <p>© Copyright 2016 DevBlog. All rights reserved</p>
+  
+						  
+  <!-- UiPasta Credit Start -->
+  <div class="uipasta-credit">Design By <a href="http://www.uipasta.com" target="_blank">UiPasta</a></div>
+  <!-- UiPasta Credit End -->
+  
+   
+ </footer>
+</div>
+ <!-- Footer End -->
+ 
+</div>
+</div>
+
+   
+</div>
+</div>
+</div>
+
+<!-- Blog Post (Right Sidebar) End -->
+    
+    
+     
+     <!-- Endpage Box (Popup When Scroll Down) Start 
+     <div id="scroll-down-popup" class="endpage-box">
+       <h4>Read Also</h4>
+       <a href="#">How to make your company website based on bootstrap framework...</a>
+      </div>
+      <!-- Endpage Box (Popup When Scroll Down) End -->
+      
+    
+    
+    
+    <!-- Back to Top Start -->
+    <a href="#" class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></a>
+    <!-- Back to Top End -->
+    
+    
+    <!-- All Javascript Plugins  -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/plugin.js"></script>
+    
+    <!-- Main Javascript File  -->
+    <script type="text/javascript" src="js/scripts.js"></script>
+    
+    <!-- Syntax Highlighter Javascript File  -->
+    <script type="text/javascript" src="js/syntax/shCore.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushCss.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushJScript.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPerl.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPhp.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPlain.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPython.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushRuby.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushSql.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushVb.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushXml.js"></script>
+    
+	<!-- Syntax Highlighter Call Function -->
+	<script type="text/javascript">
+		SyntaxHighlighter.config.clipboardSwf = 'js/syntax/clipboard.swf';
+		SyntaxHighlighter.all();
+	</script>
+
+    
+   </body>
+ </html>

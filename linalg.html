@@ -1,0 +1,968 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    
+    <!-- Meta Tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- SEO -->
+    <meta name="description" content="учебник scipy, пакет программ для научных вычислений, специальные функции, интегрирование, оптимизация, интерполяция, преобразования Фурье, цифровая обработка сигналов, линейная алгебра, проблема собственных значений разреженных матриц, алгоритмы на разреженных графах, пространственные структуры данных и алгоритмы, статистика, обработка многомерных данных, numpy">
+    <meta name="author" content="labintsevai">
+    <meta name="url" content="http://www.scipy-tutorial.ru">
+    <meta name="copyright" content="labintsevai">
+    <meta name="robots" content="index,follow">
+	
+	 
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(51612041, "init", {
+        id:51612041,
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/51612041" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+    
+    <title>SciPy Линейная алгебра</title>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="144x144" type="image/x-icon" href="images/favicon/apple-touch-icon.png">
+    
+    <!-- All CSS Plugins -->
+    <link rel="stylesheet" type="text/css" href="css/plugin.css">
+    
+    <!-- Main CSS Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+    <!-- Google Web Fonts  -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700">
+    
+    <!-- Syntax Highlighter  -->
+    <link rel="stylesheet" type="text/css" href="css/syntax/shCore.css">
+    <link rel="stylesheet" type="text/css" href="css/syntax/shThemeDefault.css">
+    
+        	<!-- MathJax support-->
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML" async>
+</script>
+
+    <!-- HTML5 shiv and Respond.js support IE8 or Older for HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+	   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+
+  </head>
+
+ <body>
+
+<!-- Preloader Start -->
+ <div class="preloader">
+   <div class="rounder"></div>
+  </div>
+  <!-- Preloader End -->
+      
+      
+    
+    
+<div id="main">
+<div class="container">
+<div class="row">
+
+<!-- About Me (Left Sidebar) Start -->
+<div class="col-md-3">
+<div class="about-fixed">
+
+<div class="my-pic">
+<img src="images/pic/scipyLogo.png" alt="">
+</div>
+
+
+
+<div class="my-detail">
+
+<div class="white-spacing">
+	<h1><a href="https://docs.scipy.org/doc/scipy/reference/tutorial/index.html">SciPy.org</a></h1>
+	<span>Научные вычисления</span>
+</div> 
+
+<ul class="social-icon">
+ <li><a href="https://www.facebook.com/scipyconf" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a></li>
+ <li><a href="https://twitter.com/hashtag/scipy" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a></li>
+<li><a href="https://github.com/scipy" target="_blank" class="github"><i class="fa fa-github"></i></a></li>
+</ul>
+
+</div>
+</div>
+</div>
+<!-- About Me (Left Sidebar) End -->
+
+<!-- Blog Post (Right Sidebar) Start -->
+<div class="col-md-9">
+<div class="col-md-12 page-body">
+<div class="row">
+	
+<div class="sub-title">
+	<h2><a href="index.html">Содержание</h2></a>
+ </div>
+
+<div class="col-md-12 content-page">
+<div class="col-md-12 blog-post">
+
+<!-- Post Headline Start -->
+<div class="post-title">
+<ul class="simple">
+<h3>Линейная алгебра (scipy.linalg) </h3><ul>
+<li><a class="reference internal" href="#id1">Сравнение scipy.linalg и numpy.linalg </a></li>
+<li><a class="reference internal" href="#id2">Сравнение numpy.matrix и 2D numpy.ndarray </a></li>
+<li><a class="reference internal" href="#id3">Основные процедуры </a>
+	<ul><li>Вычисление обратной матрицы </li>
+	<li>Решение СЛАУ </li>
+	<li>Вычисления определителя матрицы </li>
+	<li>Вычисление норм </li>
+	<li>Решение задачи МНК и псевдо-обращения </li>
+	<li>Обращение в общем виде </li>
+	</ul>
+</li>
+<li><a class="reference internal" href="#id4">Разложение матриц </a>
+	<ul><li>Собственные значения и собственные векторы </li>
+	<li>Сингулярное разложение </li>
+	<li>LU разложение </li>
+	<li>Разложение Холецкого </li>
+	<li>QR разложение </li>
+	<li>Разложение Шура </li>
+	<li>Интерполяционное разложение </li>
+	</ul>
+</li>
+<li><a class="reference internal" href="#id5">Матричные функции </a>
+	<ul><li>Экспоненциальные и логарифмические функции </li>
+	<li>Тригонометрические функции </li>
+	<li>Гипер тригонометрические функции </li>
+	<li>Произвольные функции </li>
+	</ul>
+</li>
+<li><a class="reference internal" href="#id6">Специальные матрицы </a></li>
+</ul>	
+</ul>
+</div>
+<!-- Post Headline End -->
+	   
+	<p>
+Пакет научных программ SciPy разработан с использованием оптимизированных библиотек ATLAS LAPACK и BLAS. Он обладает очень широкими возможностями быстрого решения задач линейной алгебры. При необходимости увеличения скорости вычислений можно подключить исходные библиотеки lapack и blas. В этом разделе описаны некоторые интерфейсы подпрограмм, более простых в использовании для решения задач линейной алгебра.<br>
+
+Все алгоритмы scipy.linalg подразумевают, что входной аргумент может быть преобразован в двумерный массив. Результат вычисления также является двумерным массивом.
+	</p>
+	
+<div class="section" id="id1">
+<h3>Сравнение scipy.linalg и numpy.linalg</h3>
+	<p>
+scipy.linalg содержит все функции numpy.linalg плюс некоторые другие более продвинутые.<br>
+
+ Другим важным преимуществом scipy.linalg является то, что процедуры скомпилированы с поддержкой BLAS / LAPACK, в то время как в numpy эта возможность не всегда реализована. В результате программа на scipy может быть быстрее, чем установленая версия ​​numpy.
+
+Поэтому, если вы не хотите добавлять scipy в качестве зависимости от вашей программы numpy, используйте scipy.linalg вместо numpy.linalg
+	</p>
+</div>
+
+<div class="section" id="id2">
+<h3>Сравнение numpy.matrix и 2D numpy.ndarray </h3>
+	<p>
+Матрицы, представленные в виде классов, и основные операции над ними (матричное умножение и транспонирование), являются частью numpy. Ниже приведены основные отличия между numpy.matrix и numpy.ndarray.
+<br>
+numpy.matrix - это класс, реализующий матрицу. Он имеет более удобный интерфейс, чем numpy.ndarray для операций с матрицами. Этот класс поддерживает синтаксис MATLAB для создания матрицы через точку с запятой, поддерживает матричное умножение по умолчанию для оператора * и содержит элементы I и T, которые служат в качестве ярлыков для обращения матрицы и ее транспонирования:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> import numpy as np
+    >>> A = np.mat('[1 2;3 4]')
+    >>> A
+    matrix([[1, 2],
+            [3, 4]])
+    >>> A.I
+    matrix([[-2. ,  1. ],
+            [ 1.5, -0.5]])
+    >>> b = np.mat('[5 6]')
+    >>> b
+    matrix([[5, 6]])
+    >>> b.T
+    matrix([[5],
+            [6]])
+    >>> A*b.T
+    matrix([[17],
+            [39]])
+	</pre>
+	</div>
+	<p>	
+Несмотря удобство использования, не рекомендуется необоснованное применение класса numpy.matrix. Поскольку он не добавляет ничего, что не может быть выполнено с помощью 2D numpy.ndarray, это может привести к путанице в том, какой класс используется. Например, приведенный выше код можно переписать следующим образом:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> import numpy as np
+    >>> from scipy import linalg
+    >>> A = np.array([[1,2],[3,4]])
+    >>> A
+    array([[1, 2],
+          [3, 4]])
+    >>> linalg.inv(A)
+    array([[-2. ,  1. ],
+          [ 1.5, -0.5]])
+    >>> b = np.array([[5,6]]) #2D array
+    >>> b
+    array([[5, 6]])
+    >>> b.T
+    array([[5],
+          [6]])
+    >>> A*b #not matrix multiplication!
+    array([[ 5, 12],
+          [15, 24]])
+    >>> A.dot(b.T) #matrix multiplication
+    array([[17],
+          [39]])
+    >>> b = np.array([5,6]) #1D array
+    >>> b
+    array([5, 6])
+    >>> b.T  #not matrix transpose!
+    array([5, 6])
+    >>> A.dot(b)  #does not matter for multiplication
+    array([17, 39])
+	</pre>
+	</div>
+	
+	<p>
+Процедуры scipy.linalg одинаково применимы к numpy.matrix и к объектам 2D numpy.ndarray.
+	</p>
+</div>
+
+<div class="section" id="id3">
+<h3>Основные процедуры</h3>
+
+<h4>Вычисление обратной матрицы</h4>
+<div>
+	<p>	
+Обратной к матрице `\mathbf {A}` является такая матрица `\mathbf {B}`, что `\mathbf {AB} = \mathbf {I}`, где `\mathbf {I}` - единичная матрица, состоящая из единиц по главной диагонали. Обычно `\mathbf {B}` обозначается как  `\mathbf {B} = \mathbf {A}^{- 1}`. В SciPy матрица `A`, обратная массиву NumPy, получается с помощью выражения linalg.inv(A) или с использованием A.I, если `A` является матрицей. Например, пусть
+
+$$ \mathbf {A} = \left [\begin {array} {ccc} 1 & 3 & 5 \\ 2 & 5 & 1 \\ 2 & 3 & 8 \end {array} \right] $$
+
+затем
+
+$$ \mathbf {A ^ {- 1}} = \frac {1} {25}
+    \left [\begin {array} {ccc} -37 & 9 & 22 \\
+                              14 & 2 & -9 \\
+                              4 & -3 & 1
+          \end {array} \right] =
+     \left [\begin {array} {ccc} -1.48 & 0.36 & 0.88 
+								\\ 0.56 & 0,08 & -0.36 
+								\\ 0.16 & -0,12 & 0,04 
+								\end {array} \right].$$
+<br>
+Следующий пример демонстрирует вычисление в SciPy
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> import numpy as np
+    >>> from scipy import linalg
+    >>> A = np.array([[1,3,5],[2,5,1],[2,3,8]])
+    >>> A
+    array([[1, 3, 5],
+          [2, 5, 1],
+          [2, 3, 8]])
+    >>> linalg.inv(A)
+    array([[-1.48,  0.36,  0.88],
+          [ 0.56,  0.08, -0.36],
+          [ 0.16, -0.12,  0.04]])
+    >>> A.dot(linalg.inv(A)) #double check
+    array([[  1.00000000e+00,  -1.11022302e-16,  -5.55111512e-17],
+          [  3.05311332e-16,   1.00000000e+00,   1.87350135e-16],
+          [  2.22044605e-16,  -1.11022302e-16,   1.00000000e+00]])
+	</pre>
+	</div>
+	
+</div>
+
+<h4>Решение СЛАУ</h4>
+<div>
+	<p>	
+Решение линейных систем алгебраических уравнений (СЛАУ) выполняется с помощью процедуры linalg.solve. Ее аргументами являются матрица коэффициентов и вектор значений правой стороны СЛАУ. Результ вычисления - вектор решения. Предлагается возможность использования симметричной матрицы, которая может ускорить вычисления (в случае когда это применимо). В качестве примера предположим, что желательно решить следующую систему:
+
+$$ 3x + 3y + 5z = 10 $$
+$$ 2x + 5y + z = 8 $$
+$$ 2x + 3y + 8z = 3 $$
+
+Вектор решения можно найти, используя обратную матрицу:
+
+$$ \left[\begin {array} {c} x \\ y \\ z \end {array} \right] = \left[ \begin {array} {ccc} 1 & 3 & 5 
+							\\ 2 & 5 & 1 
+							\\ 2 & 3 & 8 
+\end {array} \right]^{-1} \left[\begin {array} {c} 10 \\ 8 \\ 3 \end {array} \right] = \frac{1}{25} \left[ \begin {array} {c} -232 \\ 129 \\ 19 \end {array} \right] = \left[ \begin {array} {c} -9.28 \\ 5.16 \\ 0.76 \end {array} \right] $$
+
+Однако лучше использовать команду linalg.solve, которая может быть более быстрой и численно стабильной. Рассмотрим пример:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> import numpy as np
+    >>> from scipy import linalg
+    >>> A = np.array([[1, 2], [3, 4]])
+    >>> A
+    array([[1, 2],
+          [3, 4]])
+    >>> b = np.array([[5], [6]])
+    >>> b
+    array([[5],
+          [6]])
+    >>> linalg.inv(A).dot(b)  # slow
+    array([[-4. ],
+          [ 4.5]])
+    >>> A.dot(linalg.inv(A).dot(b)) - b  # check
+    array([[  8.88178420e-16],
+          [  2.66453526e-15]])
+    >>> np.linalg.solve(A, b)  # fast
+    array([[-4. ],
+          [ 4.5]])
+    >>> A.dot(np.linalg.solve(A, b)) - b  # check
+    array([[ 0.],
+          [ 0.]])
+	</pre>
+	</div>
+	
+</div>
+
+<h4>Вычисления определителя матрицы</h4>
+<div>
+	<p>
+Определитель квадратной матрицы `\mathbf {A}` часто обозначается как ` | \mathbf {A} | ` и является величиной, часто используемой в линейной алгебре. Предположим, что `a_ {ij}` являются элементами матрицы `\mathbf {A}`. Определитель матрицы \( M_{ij} = \left|\mathbf{A}_{ij}\right| \) вычисляется путем удаления строк \( i,j \) из `\mathbf {A}`. Тогда для любой строки `i`:
+
+$$ \left|\mathbf{A}\right|=\sum_{j}\left(-1\right)^{i+j}a_{ij}M_{ij}.$$
+
+Этот рекурсивный способ вычисления детерминанта сводится к тому, что определитель матрицы размером `1 \times 1` равен этому единственному  элементу. В SciPy определитель может быть вычислен с помощью процедуры linalg.det. Например, определитель
+
+$$ \mathbf{A=}\left[\begin{array}{ccc} 1 & 3 & 5\\ 2 & 5 & 1\\ 2 & 3 & 8\end{array}\right] $$
+
+вычисляется как
+
+$$ \left|\mathbf{A}\right|= 1 \begin{vmatrix} 5 & 1 \\ 3 & 8  \end{vmatrix} $$
+
+Пример вычисления в SciPy:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> import numpy as np
+    >>> from scipy import linalg
+    >>> A = np.array([[1,2],[3,4]])
+    >>> A
+    array([[1, 2],
+          [3, 4]])
+    >>> linalg.det(A)
+    -2.0
+	</pre>
+	</div>
+	
+</div>
+
+<h4>Вычисление норм</h4>
+<div>
+	<p>
+В SciPy нормы матриц и векторов различного порядка вычисляются с помощью функции linalg.norm. Аргументами функции могут быть массивы ранга-1 (векторы) или ранга-2 (матрицы). Необязательный аргумент определяет порядок нормы(по умолчанию order = 2). На основе этих входных данных вычисляется векторная или матричная норма определенного порядка.
+<br>
+Для вектора x параметр порядка может быть любым вещественным числом, включая inf или -inf. Норма вычисляется следующим образом:
+
+$$ \left\Vert \mathbf{x}\right\Vert =\left\{ \begin{array}{cc} \max\left|x_{i}\right| & \textrm{ord}=\textrm{inf}\\ \min\left|x_{i}\right| & \textrm{ord}=-\textrm{inf}\\ \left(\sum_{i}\left|x_{i}\right|^{\textrm{ord}}\right)^{1/\textrm{ord}} & \left|\textrm{ord}\right|<\infty.\end{array}\right. $$
+
+Для матриц `\mathbf {A}` допустимыми значениями порядка нормы являются `\pm2, \pm1, \pm inf` и 'fro' (или 'f'). Таким образом:
+
+$$ \left\Vert \mathbf{A}\right\Vert =\left\{ \begin{array}{cc} \max_{i}\sum_{j}\left|a_{ij}\right| & \textrm{ord}=\textrm{inf}\\ \min_{i}\sum_{j}\left|a_{ij}\right| & \textrm{ord}=-\textrm{inf}\\ \max_{j}\sum_{i}\left|a_{ij}\right| & \textrm{ord}=1\\ \min_{j}\sum_{i}\left|a_{ij}\right| & \textrm{ord}=-1\\ \max\sigma_{i} & \textrm{ord}=2\\ \min\sigma_{i} & \textrm{ord}=-2\\ \sqrt{\textrm{trace}\left(\mathbf{A}^{H}\mathbf{A}\right)} & \textrm{ord}=\textrm{'fro'}\end{array}\right. $$
+
+где `\sigma_{i}` - сингулярные значения `\mathbf {A}`.
+<br>
+Примеры:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> import numpy as np
+    >>> from scipy import linalg
+    >>> A=np.array([[1,2],[3,4]])
+    >>> A
+    array([[1, 2],
+          [3, 4]])
+    >>> linalg.norm(A)
+    5.4772255750516612
+    >>> linalg.norm(A,'fro') # frobenius norm is the default
+    5.4772255750516612
+    >>> linalg.norm(A,1) # L1 norm (max column sum)
+    6
+    >>> linalg.norm(A,-1)
+    4
+    >>> linalg.norm(A,np.inf) # L inf norm (max row sum)
+    7
+	</pre>
+	</div>
+	    
+</div>
+
+
+<h4>Решение задачи МНК и псевдо-обращения</h4>
+<div>
+	<p>
+Задачи, решаемые МНК часто встречаются во многих областях прикладной математики. Рассмотрим задачу, в которой нужно построить приближенную модель в соответствии с имеющимися данными. Предполагается, что данные `y_{i}` связаны с данными `\mathbf {x}_ {i}` с помощью вектора коэффициентов `c_{j}` и модели `f_{j}  ( \mathbf {x}_{i} ) ` в соответствии с выражением:
+
+$$ y_{i}=\sum_{j}c_{j}f_{j}\left(\mathbf{x}_{i}\right)+\epsilon_{i} $$
+
+где `\epsilon_{i}` представляет собой неопределенность исходных данных. Метод наименьших квадратов состоит в том, чтобы определить коэффициенты `c_{j}` для которых достигается минимум:
+
+$$ J\left(\mathbf{c}\right)= \sum_{i}\left|y_{i}-\sum_{j}c_{j}f_{j}\left(x_{i}\right)\right|^{2}. $$
+
+Теоретически глобальный минимум будет иметь место, когда
+
+$$ \frac{\partial J}{\partial c_{n}^{*}}= 0=\sum_{i}\left(y_{i}-\sum_{j}c_{j}f_{j}\left(x_{i}\right) \right)\left(-f_{n}^{*}\left(x_{i}\right)\right) $$
+
+или же
+
+$$ \sum_j c_j \sum_i f_i(x_i) f_n^*(x_i) = \sum_i y_i f_n^*(x_i) $$
+$$ A^H A c = A^H y $$
+
+где\( A^H \) - комплексно сопряженная матрица, \( \left\{ \mathbf{A}\right\} _{ij}=f_{j}\left(x_{i}\right). \)
+<br>
+Когда для произведения \( \mathbf {A ^ {H} A} \) существует обратная матрица, то
+
+$$ \mathbf{c}=\left(\mathbf{A}^{H}\mathbf{A}\right)^{-1} \mathbf{A}^{H}\mathbf{y}=\mathbf{A}^{\dagger}\mathbf{y} $$
+
+где \( \mathbf {A} ^ {\dagger} \) называется псевдообратной матрицей \( \mathbf {A} \). Обратите внимание, что используя это определение \( \mathbf {A} \), модель может быть переписана в виде:
+
+$$ \mathbf{y}=\mathbf{Ac}+ {\epsilon}. $$
+
+Процедура linalg.lstsq решает линейную задачу наименьших квадратов для вычисления вектора \( \mathbf {c} \) при заданных \( \mathbf {A} \) и \( \mathbf {y} \). Кроме того, для вычисления \( \mathbf {A} ^ {\dagger} \) при заданной \( \mathbf {A} \) используются процедуры linalg.pinv или linalg.pinv2 (использует другой метод, основанный на декомпозиции сингулярных значений).
+
+В следующем примере и на рисунке показано, как использовать linalg.lstsq и  linalg.pinv для решения задачи подбора модели данных. Представленные ниже данные были сгенерированы с использованием модели:
+
+$$ y_{i}=c_{1}e^{-x_{i}}+c_{2}x_{i} $$
+
+где `x_{i} = 0.1i ` для `i = 1 \ldots 10`, `c_{1} = 5` и `c_{2} = 4`. Шум добавляется к `y_{i}`, а коэффициенты `c_{1}` и `c_{2}` вычисляются с помощью линейного МНК.
+
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+   >>> import numpy as np
+   >>> from scipy import linalg
+   >>> import matplotlib.pyplot as plt
+
+   >>> c1, c2 = 5.0, 2.0
+   >>> i = np.r_[1:11]
+   >>> xi = 0.1*i
+   >>> yi = c1*np.exp(-xi) + c2*xi
+   >>> zi = yi + 0.05 * np.max(yi) * np.random.randn(len(yi))
+
+   >>> A = np.c_[np.exp(-xi)[:, np.newaxis], xi[:, np.newaxis]]
+   >>> c, resid, rank, sigma = linalg.lstsq(A, zi)
+
+   >>> xi2 = np.r_[0.1:1.0:100j]
+   >>> yi2 = c[0]*np.exp(-xi2) + c[1]*xi2
+
+   >>> plt.plot(xi,zi,'x',xi2,yi2)
+   >>> plt.axis([0,1.1,3.0,5.5])
+   >>> plt.xlabel('$x_i$')
+   >>> plt.title('Data fitting with linalg.lstsq')
+   >>> plt.show()
+	</pre>
+	</div>
+	
+	<img src="img/linalg-1.png">
+</div>
+
+<h4>Обращение в общем виде</h4>
+<div>
+	<p>
+Обращение матриц осуществляется с помощью процедур linalg.pinv или linalg.pinv2. Эти две процедуры отличаются способом вычисления. В первой используется алгоритм linalg.lstsq, а второй - разложение по сингулярным значениям. Пусть \( \mathbf {A} \) - матрица размером \( M \times N \). Если \(M > N \), тогда обращение матрицы в общем виде:
+
+$$ \mathbf{A}^{\dagger}=\left(\mathbf{A}^{H}\mathbf{A}\right)^{-1}\mathbf{A}^{H} $$
+
+а если матрица имеет размер \( M &lt; N \), то ее обращение:
+
+$$ \mathbf{A}^{\#}=\mathbf{A}^{H}\left(\mathbf{A}\mathbf{A}^{H}\right)^{-1}. $$
+
+В обоих случаях для \( M = N \) 
+
+$$ \mathbf{A}^{\dagger}=\mathbf{A}^{\#}=\mathbf{A}^{-1} $$
+
+при условии обратимости \( \mathbf {A} \).
+</p>
+
+</div>
+
+<div class="section" id="id4">
+<h3>Разложение матриц</h3>
+	<p>
+Во многих приложениях полезно представить матрицу в другом виде, используя разложение. SciPy поддерживает несколько видов разложений.
+	</p>
+	
+<h4>Собственные значения и собственные векторы</h4>
+<div>
+	<p>
+Вычисление собственного значения (собственного вектора) является одной из часто решаемых задач линейной алгебры. Эта задача состоит в том, чтобы для некоторой квадратной матрицы \( \mathbf {A} \) найти скалярную величину \( \lambda \) и соответствующий вектор \( \mathbf {v} \) такие, что
+
+$$ \mathbf {Av} = \lambda \mathbf {v}.$$
+
+Для матрицы размером \( N \times N \) существует \( N \) (не обязательно различающихся) собственных значений --- корней характеристического многочлена
+
+$$ \left| \mathbf {A} - \lambda \mathbf {I} \right| = 0.$$
+
+Собственный вектор \( \mathbf {v} \) иногда называется правым собственным вектором. Необходимо отличать его от другого набора левых собственных векторов, удовлетворяющих
+
+$$ \mathbf {v}_{L}^{H} \mathbf {A} = \lambda \mathbf {v}_{L}^{H} $$
+
+или же
+
+$$ \mathbf {А} ^ {H} \mathbf {v} _ {L} = \lambda ^ {*} \mathbf {v} _ {Ь}. $$
+
+С аргументами по умолчанию процедура linalg.eig возвращает \( \lambda \) и \( \mathbf {v} \). Однако она также может возвращать \( \mathbf {v} _ {L} \) и просто \( \lambda \) сами по себе (linalg.eigvals возвращает только \( \lambda \) ).
+
+Кроме того, с помощью linalg.eig также можно решать более общую задачу собственных значений
+
+$$ Av = \lambda B v $$
+$$ A^H v_L = \lambda^* B^H v_L $$
+
+для квадратных матриц \( \mathbf {A} \) и \( \mathbf {B} \). Стандартная задача собственных значений является примером общей задачи на собственные значения для \( \mathbf {B} = \mathbf {I} \). Если можно решить обобщенную задачу собственных значений, то существует разложение \( \mathbf {A} \) в виде 
+
+$$  \mathbf {A} = \mathbf {BV} {\Lambda} \mathbf {V} ^ {- 1} $$
+
+где \( \mathbf {V} \) - совокупность собственных векторов в столбцах, а \( {\lambda} \) - диагональная матрица собственных значений.
+<br>
+По определению, собственные векторы определяются только с постоянным масштабным коэффициентом. В SciPy коэффициент масштабирования для собственных векторов выбирается таким образом, что
+
+$$ \left \Vert \mathbf {v} \right \Vert ^ {2} = \sum_ {i} v_ {i} ^ {2} = 1. $$
+
+В качестве примера рассмотрим вычисление собственных значений и собственных векторов матрицы
+
+$$ \mathbf {A} = \left [\begin {array} {ccc} 1 & 5 & 2 \\ 2 & 4 & 1 \\ 3 & 6 & 2 \end {array} \right]. $$
+
+Ее характеристический многочлен равен
+
+$$ |A - \lambda I| = (1 - \lambda) [(4 - \lambda) (2 - \lambda) - 6] - $$
+$$ 5 [2 (2 - \lambda) - 3] + 2 [12 - 3(4 - \lambda)] $$
+$$ = - \lambda^3 + 7 \lambda^2 + 8 \lambda - 3 $$
+
+<br>
+Корнями этого многочлена являются собственные значения матрицы \( \mathbf {A} \):
+
+$$ \lambda_1 = 7.9579 $$
+$$ \lambda_2 = -1.2577 $$
+$$ \lambda_3 = 0.2997 $$
+
+Собственные векторы, соответствующие каждому собственному значению, можно найти с помощью исходного уравнения. Рассмотрим пример вычисления собственных векторов, связанных с этими собственными значениями.
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> import numpy as np
+    >>> from scipy import linalg
+    >>> A = np.array([[1, 2], [3, 4]])
+    >>> la, v = linalg.eig(A)
+    >>> l1, l2 = la
+    >>> print(l1, l2)   # eigenvalues
+    (-0.3722813232690143+0j) (5.372281323269014+0j)
+    >>> print(v[:, 0])   # first eigenvector
+    [-0.82456484  0.56576746]
+    >>> print(v[:, 1])   # second eigenvector
+    [-0.41597356 -0.90937671]
+    >>> print(np.sum(abs(v**2), axis=0))  # eigenvectors are unitary
+    [1. 1.]
+    >>> v1 = np.array(v[:, 0]).T
+    >>> print(linalg.norm(A.dot(v1) - l1*v1))  # check the computation
+    3.23682852457e-16
+	</pre>
+	</div>
+
+</div>
+
+<h4>Сингулярное разложение </h4>
+<div>
+	<p>
+Сингулярное разложение(SVD) можно рассматривать как расширение задачи собственных значений для матриц, которые не являются квадратными. 
+Пусть \( \mathbf {A} \) - матрица \( M \times N \) с произвольными M и N. Матрицы \( \mathbf {A} ^ {H} \mathbf {A} \) и  \( \mathbf {A} \mathbf {A} ^ {H} \) являются квадратными эрмитовыми матрицами [1] размерами \( N \times N \) и \( M \times M \) соответственно.
+Известно, что собственные значения квадратных эрмитовых матриц являются вещественными и неотрицательными. 
+Кроме того, существует не более \( \min (M, N ) \) одинаковых ненулевых собственных значений матриц \( \mathbf {A} ^ {H} \mathbf {A} \) и \( \mathbf {A} \mathbf {A} ^ {H} \). Определим эти положительные собственные значения как \( \sigma_{i} ^ {2} \). Квадратный корень из них называется сингулярным значением \( \mathbf {A} \). Собственные векторы \( \mathbf {A} ^ {H} \mathbf {A} \) собираются столбцами в унитарную матрицу \( V \) размером \( N \times N \).
+Собственные векторы \( \mathbf {A} \mathbf {A} ^ {H} \) собираются столбцами в унитарную матрицу \( \mathbf {U} \).
+Сингулярные значения  являются основными диагональными элементами в нулевой матрице \( \Sigma \) размером \( M \times N \). 
+Тогда выражение
+
+$$ А = U \Sigma V^H $$
+
+является сингулярным разложением матрицы \( \mathbf {A} \). Разложение по сингулярным значениям имеет каждая матрица. Иногда сингулярные значения называют спектром матрицы \( \mathbf {A} \). Процедура linalg.svd возвращает \( \mathbf {U}, \mathbf {V} ^ {H} \) и \( \sigma _{i} \) в виде массива сингулярных значений. Для получения матрицы \( \Sigma \) используется процедура linalg.diagsvd. Следующий пример иллюстрирует использование linalg.svd
+	</p>
+
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> import numpy as np
+    >>> from scipy import linalg
+    >>> A = np.array([[1,2,3],[4,5,6]])
+    >>> A
+    array([[1, 2, 3],
+          [4, 5, 6]])
+    >>> M,N = A.shape
+    >>> U,s,Vh = linalg.svd(A)
+    >>> Sig = linalg.diagsvd(s,M,N)
+    >>> U, Vh = U, Vh
+    >>> U
+    array([[-0.3863177 , -0.92236578],
+          [-0.92236578,  0.3863177 ]])
+    >>> Sig
+    array([[ 9.508032  ,  0.        ,  0.        ],
+          [ 0.        ,  0.77286964,  0.        ]])
+    >>> Vh
+    array([[-0.42866713, -0.56630692, -0.7039467 ],
+          [ 0.80596391,  0.11238241, -0.58119908],
+          [ 0.40824829, -0.81649658,  0.40824829]])
+    >>> U.dot(Sig.dot(Vh)) #check computation
+    array([[ 1.,  2.,  3.],
+          [ 4.,  5.,  6.]])
+	</pre>
+	</div>
+
+	<p>
+[1] Эрмитова матрица \( \mathbf {D} \) удовлетворяет \( \mathbf {D} ^ {H} = \mathbf {D} \). <br>
+[2] Унитарная матрица \( \mathbf {D} \) удовлетворяет \( \mathbf {D} ^ {H} \mathbf {D} = \mathbf {I} = \mathbf {D} \mathbf {D} ^ {H} \), чтобы \( \mathbf {D} ^ {- 1} = \mathbf {D} ^ {H} \).
+	</p>
+	
+</div>
+
+<h4>LU разложение </h4>
+<div>
+	<p>
+Разложение LU (Lower-Upper) позволяет представить матрицу \( \mathbf {A} \) размером \( M \times N \)  в виде произведения
+
+$$ \mathbf {A} = \mathbf {P} \, \mathbf {L} \, \mathbf {U} $$
+
+где \( \mathbf {P} \) - матрица перестановок размера \( M \times M \)   (перестановка строк единичной матрицы). Матрица \( \mathbf {L} \)  размером \( M \times K \) является нижней треугольной или трапецеидальной матрицой \( (K = \min ( M, N )) \) с единичной диагональю. Матрица \( \mathbf {U} \) - верхняя треугольная или трапецеидальная матрица. Процедура SciPy, осуществляющая это разложение - linalg.lu.
+<br>
+Такое разложение часто полезно для решения многих одинаковых уравнений, где левая сторона неизменна, а правая часть меняется. Например, рассмотрим решение уравнения
+
+$$ \mathbf {A} \mathbf {х} _ {i} = \mathbf {b}_{i} $$
+
+для нескольких различных векторов \( b \). Разложение LU позволяет записать это уравнение как
+$$ \mathbf {P L U x_i} = \mathbf {B}_{i}.$$
+
+Поскольку \( \mathbf {L} \) является нижней треугольной матрицей, уравнение можно решить для \( \mathbf {U} \mathbf {x}_{i} \)  и для \( \mathbf {x}_{i} \) очень быстро с помощью подстановок. Затраты времени на разложение \( \mathbf {A} \), окупаются за счет скорости решения системы уравнений. Если целью LU-разложения является решение линейных систем, тогда следует использовать процедуру linalg.lu_factor, за которой следует повторное применение команды linalg.lu_solve для решения системы для каждого нового правого раздела.
+	</p>
+	
+</div>
+
+<h4>Разложение Холецкого</h4>
+<div>
+	<p>
+Разложение Холецкого является частным случаем LU-разложения, применимого к эрмитовым положительным определенным матрицам. Когда \( \mathbf {A} = \mathbf {A} ^ {H} \) и \( \mathbf {x} ^ {H} \mathbf {Ax} \geq 0 \) для всех \( \mathbf {x} \), то разложение \( \mathbf {A} \) удовлетворяет соотношениям
+
+$$ A = U^H U $$
+$$ A = L L^H $$
+
+где \( \mathbf {L} \) - нижнетреугольная, а \( \mathbf {U} \) - верхнетреугольная матрицы. Обратите внимание, что \( \mathbf {L} = \mathbf {U} ^ {H} \). Процедура linalg.cholesky вычисляет разложение Холецкого. Для решения систем уравнений с помощью разложения Холецкого существуют также процедуры linalg.cho_factor и linalg.cho_solve, которые работают аналогично LU-разложению.
+	</p>
+</div>
+
+<h4>QR-разложение</h4>
+<div>
+	<p>
+QR-разложение (иногда называемое полярным разложением) работает для любой матрицы \( M \times N \). С помощью QR-разложения находится унитарная \( M \times M \) матрица \( \mathbf {Q} \) и верхняя трапециевидная \(M \times N \) матрица \( \mathbf {R} \) такая, что
+
+$$ \mathbf {А = QR}.$$
+
+Обратите внимание, что если сингулярное разложение (SVD) \( \mathbf {A} \) известно, то QR-разложение может быть найдено как
+
+$$ \mathbf {A} = \mathbf {U} {\Sigma} \mathbf {V} ^ {H} = \mathbf {QR} $$
+
+подразумевая, что \( \mathbf {Q} = \mathbf {U} \) и \( \mathbf {R} = {\Sigma} \mathbf {V} ^ {H} \). Обратите внимание, что не смотря на это, в SciPy для нахождения разложений QR и SVD используются независимые алгоритмы. Процедура для QR-разложения - linalg.qr.
+	</p>
+</div>
+
+<h4>Разложение Шура</h4>
+<div>
+	<p>
+Для квадратной \( N \times N \) матрицы \( \mathbf {A} \) разложение Шура подразумевает нахождение (не обязательно уникальных) матриц \( \mathbf {T} \) и \( \mathbf {Z} \) таких, что
+
+$$ \mathbf {A} = \mathbf {ZT} \mathbf {Z} ^ {H} $$
+
+где \( \mathbf {Z} \) - унитарная матрица, а \( \mathbf {T} \) либо верхняя треугольная, либо квази верхняя треугольная, в зависимости от того, нужна ли действитель или комплексная форма Шура. Для действительной формы и \( \mathbf {T} \) и \( \mathbf {Z} \) действительны, когда \( \mathbf {A} \) действительна. Когда \( \mathbf {A} \) - комплексная матрица, действительная форма schur является квази верхней треугольной, поскольку \( 2 \times 2 \) блоки выпадают из главной диагонали, в соответствующих комплексных собственных значениях. Процедура linalg.schur выполняет разложение Шура, а процедура linalg.rsf2csf преобразует \( \mathbf {T} \) и \( \mathbf {Z} \) из действительной в комплексную форму Шура. Форма Шура особенно полезна при вычислении матричных функций.
+<br>
+Следующий пример иллюстрирует разложение Шура:
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> from scipy import linalg
+    >>> A = np.mat('[1 3 2; 1 4 5; 2 3 6]')
+    >>> T, Z = linalg.schur(A)
+    >>> T1, Z1 = linalg.schur(A, 'complex')
+    >>> T2, Z2 = linalg.rsf2csf(T, Z)
+    >>> T
+    array([[ 9.90012467,  1.78947961, -0.65498528],
+           [ 0.        ,  0.54993766, -1.57754789],
+           [ 0.        ,  0.51260928,  0.54993766]])
+    >>> T2
+    array([[ 9.90012467+0.00000000e+00j, -0.32436598+1.55463542e+00j,
+            -0.88619748+5.69027615e-01j],
+           [ 0.        +0.00000000e+00j,  0.54993766+8.99258408e-01j,
+             1.06493862+3.05311332e-16j],
+           [ 0.        +0.00000000e+00j,  0.        +0.00000000e+00j,
+             0.54993766-8.99258408e-01j]])
+    >>> abs(T1 - T2) # different
+    array([[  1.06604538e-14,   2.06969555e+00,   1.69375747e+00],  # may vary
+           [  0.00000000e+00,   1.33688556e-15,   4.74146496e-01],
+           [  0.00000000e+00,   0.00000000e+00,   1.13220977e-15]])
+    >>> abs(Z1 - Z2) # different
+    array([[ 0.06833781,  0.88091091,  0.79568503],    # may vary
+           [ 0.11857169,  0.44491892,  0.99594171],
+           [ 0.12624999,  0.60264117,  0.77257633]])
+    >>> T, Z, T1, Z1, T2, Z2 = map(np.mat,(T,Z,T1,Z1,T2,Z2))
+    >>> abs(A - Z*T*Z.H)  # same
+    matrix([[  5.55111512e-16,   1.77635684e-15,   2.22044605e-15],
+            [  0.00000000e+00,   3.99680289e-15,   8.88178420e-16],
+            [  1.11022302e-15,   4.44089210e-16,   3.55271368e-15]])
+    >>> abs(A - Z1*T1*Z1.H)  # same
+    matrix([[  4.26993904e-15,   6.21793362e-15,   8.00007092e-15],
+            [  5.77945386e-15,   6.21798014e-15,   1.06653681e-14],
+            [  7.16681444e-15,   8.90271058e-15,   1.77635764e-14]])
+    >>> abs(A - Z2*T2*Z2.H)  # same
+    matrix([[  6.02594127e-16,   1.77648931e-15,   2.22506907e-15],
+            [  2.46275555e-16,   3.99684548e-15,   8.91642616e-16],
+            [  8.88225111e-16,   8.88312432e-16,   4.44104848e-15]])
+	</pre>
+	</div>
+	
+</div>
+
+<h4>Интерполяционное разложение</h4>
+<div>
+	<p>
+Модуль scipy.linalg.interpolative содержит процедуры для вычисления интерполяционного разложения (ID) матриц. Для матрицы \( A \in \mathbb {C} ^ {m \times n} \) ранга \( k \leq \min \{m, n \} \) это разложение имеет вид
+
+$$ A \Pi =
+\begin{bmatrix}
+ A \Pi_{1} & A \Pi_{2}
+\end{bmatrix} =
+A \Pi_{1}
+\begin{bmatrix}
+ I & T
+\end{bmatrix}, $$
+
+где \( \Pi = [\Pi_ {1}, \Pi_{2}] \) - матрица перестановок с \( \Pi_{1} \in \{0, 1 \} ^ {n \times k} \), т. е. \( A \Pi_{2} = A \Pi_{1} T \). Это выражение можно эквивалентно переписать в виде \( A = BP \), где \( B = A \Pi_{1} \) и \( P = [I, T] \Pi ^ {\mathsf {T}} \) - скелетная и интерполяционная матрицы соответственно.
+<br>
+Для получения дополнительной информации см. документацию scipy.linalg.interpolative
+	</p>
+	
+</div>
+
+</div>
+
+<div class="section" id="id5">
+<h3>Матричные функции</h3>	
+	<p>
+Рассмотрим функцию \( f \left( x \right) \) с разложением в ряд Тейлора
+
+$$ f\left(x\right)=\sum_{k=0}^{\infty}\frac{f^{\left(k\right)}\left(0\right)}{k!}x^{k}. $$
+
+Матричная функция может быть определена с помощью разложения в ряд Тейлора для квадратной матрицы \( \mathbf {A} \) следующим образом
+
+$$ f\left(\mathbf{A}\right)=\sum_{k=0}^{\infty}\frac{f^{\left(k\right)}\left(0\right)}{k!}\mathbf{A}^{k}. $$
+
+Несмотря на то, что это может быть полезным представлением матричной функции, на практите такой способ вычисления применяется редко.
+	</p>
+	
+<h4>Экспоненциальные и логарифмические функции</h4>
+<div>
+	<p>
+Матричная экспонента является одной из наиболее распространенных матричных функций. Предпочтительным методом реализации матричной экспоненты является использование масштабирования и приближение Паде для \( e ^ {x} \). Этот алгоритм реализован как linalg.expm.
+
+Матричный логарифм определяется как обратная функция матричной экспоненте
+
+$$ \mathbf{A}\equiv\exp\left(\log\left(\mathbf{A}\right)\right). $$
+
+Матричный логарифм можно получить с помощью linalg.logm.
+	</p>
+	
+</div>
+
+<h4>Тригонометрические функции</h4>
+<div>
+	<p>
+Тригонометрические функции \( \sin, \cos , \tan \) реализованы для матриц в процедурах linalg.sinm,  linalg.cosm и linalg.tanm соответственно. Матрицу sin и cos можно определить, используя равенство Эйлера
+
+$$ \sin(A) = \frac{e^{jA} - e^{-jA}}{2j} $$
+$$ \cos(A) = \frac{e^{jA} + e^{-jA}}{2} $$
+
+Тангенс определяется как
+
+$$ \tan\left(x\right)=\frac{\sin\left(x\right)}{\cos\left(x\right)}=\left[\cos\left(x\right)\right]^{-1}\sin\left(x\right) $$
+
+и соответственно матричный тангенс определяется как
+
+$$ \left[\cos\left(\mathbf{A}\right)\right]^{-1}\sin\left(\mathbf{A}\right).
+ $$
+	</p>
+</div>
+
+<h4>Гиперболические тригонометрические функции</h4>
+<div>
+	<p>
+Гиперболические тригонометрические функции \( \sinh, \cosh и \tanh \) также могут быть определены для матриц с использованием знакомых определений:
+
+$$ \sinh(A) = \frac{e^{A} - e^{-A}}{2} $$
+$$ \cosh(A) = \frac{e^{A} + e^{-A}}{2} $$
+$$ \tanh(A) = \left[\cosh\left(\mathbf{A}\right)\right] ^{-1}\sinh\left(\mathbf{A}\right).
+ $$
+Эти матричные функции можно найти, используя linalg.sinhm,  linalg.coshm и linalg.tanhm.
+	</p>
+</div>
+
+<h4>Произвольные функции</h4>
+<div>
+	<p>
+Наконец, любая произвольная функция, которая принимает комплексное число и возвращает комплексное число, может быть вызвана как матричная функция с помощью команды linalg.funm. Входными аргументами является матрица и произвольная функция Python. В процедуре реализован алгоритм из книги Golub и Van Loan "Matrix Computations" для вычисления функции, приложенной к входной матрице с использованием разложения Шура. Обратите внимание, что функция должна принимать комплексные числа в качестве входных данных для работы с этим алгоритмом. Например, следующий код вычисляет функцию Бесселя нулевого порядка, применяемую к матрице.
+	</p>
+	
+	<div class="margin-top-40 margin-bottom-40">  
+	<pre class="brush: python">
+    >>> from scipy import special, random, linalg
+    >>> np.random.seed(1234)
+    >>> A = random.rand(3, 3)
+    >>> B = linalg.funm(A, lambda x: special.jv(0, x))
+    >>> A
+    array([[ 0.19151945,  0.62210877,  0.43772774],
+           [ 0.78535858,  0.77997581,  0.27259261],
+           [ 0.27646426,  0.80187218,  0.95813935]])
+    >>> B
+    array([[ 0.86511146, -0.19676526, -0.13856748],
+           [-0.17479869,  0.7259118 , -0.16606258],
+           [-0.19212044, -0.32052767,  0.73590704]])
+    >>> linalg.eigvals(A)
+    array([ 1.73881510+0.j, -0.20270676+0.j,  0.39352627+0.j])
+    >>> special.jv(0, linalg.eigvals(A))
+    array([ 0.37551908+0.j,  0.98975384+0.j,  0.96165739+0.j])
+    >>> linalg.eigvals(B)
+    array([ 0.37551908+0.j,  0.98975384+0.j,  0.96165739+0.j])
+	</pre>
+	</div>
+	
+	<p>
+Обратите внимание, как в силу того, что матричная функция определена аналитически, функция Бесселя действует на собственные значения матрицы.
+	</p>
+</div>
+
+</div>
+
+<div class="section" id="id6">
+<h3>Специальные матрицы</h3>
+	<p>
+SciPy и NumPy предоставляют процедуры для создания специальных матриц, которые часто используются в науке и технике.<br>
+<b>scipy.linalg.block_diag </b> Создает блочную диагональную матрицу из предоставленных массивов.<br>
+<b>scipy.linalg.circulant</b> Создает циркулянт.<br>
+<b>scipy.linalg.companon</b> Создает сопровождающую матрицу.<br>
+<b>scipy.linalg.hadamard</b> Создает матрицу Адамара.<br>
+<b>scipy.linalg.hankel</b> Создает Ганкелеву матрицу.<br>
+<b>scipy.linalg.hilbert</b> Создает матрицу Гильберта.<br>
+<b>scipy.linalg.invhilbert</b> Создает обратную матрицу Гильберта.<br>
+<b>scipy.linalg.leslie</b> Создает матрицу Лесли.<br>
+<b>scipy.linalg.pascal</b> Создает матрицу Паскаля.<br>
+<b>scipy.linalg.toeplitz</b> Создает матрицу Теплица.<br>
+<b>numpy.vander</b> Создает матрицу Вандермонда.<br>
+
+Примеры использования этих функций см. В соответствующих документах.
+	</p>
+
+ 
+
+</div>
+
+
+</div>
+</div>
+<!-- Footer Start -->
+<div class="col-md-12 page-body margin-top-50 footer">
+  <footer>
+  <ul class="menu-link">
+	   <li><a href="index.html">Содержание</a></li>
+	   <li><a href="about.html">О сайте</a></li>
+	</ul>
+	
+  <p>© Copyright 2016 DevBlog. All rights reserved</p>
+  
+						  
+  <!-- UiPasta Credit Start -->
+  <div class="uipasta-credit">Design By <a href="http://www.uipasta.com" target="_blank">UiPasta</a></div>
+  <!-- UiPasta Credit End -->
+  
+   
+ </footer>
+</div>
+ <!-- Footer End -->
+ 
+</div>
+</div>
+
+   
+</div>
+</div>
+</div>
+
+<!-- Blog Post (Right Sidebar) End -->
+    
+    
+     
+     <!-- Endpage Box (Popup When Scroll Down) Start 
+     <div id="scroll-down-popup" class="endpage-box">
+       <h4>Read Also</h4>
+       <a href="#">How to make your company website based on bootstrap framework...</a>
+      </div>
+      <!-- Endpage Box (Popup When Scroll Down) End -->
+      
+    
+    
+    
+    <!-- Back to Top Start -->
+    <a href="#" class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></a>
+    <!-- Back to Top End -->
+    
+    
+    <!-- All Javascript Plugins  -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/plugin.js"></script>
+    
+    <!-- Main Javascript File  -->
+    <script type="text/javascript" src="js/scripts.js"></script>
+    
+    <!-- Syntax Highlighter Javascript File  -->
+    <script type="text/javascript" src="js/syntax/shCore.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushCss.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushJScript.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPerl.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPhp.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPlain.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushPython.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushRuby.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushSql.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushVb.js"></script>
+    <script type="text/javascript" src="js/syntax/shBrushXml.js"></script>
+    
+	<!-- Syntax Highlighter Call Function -->
+	<script type="text/javascript">
+		SyntaxHighlighter.config.clipboardSwf = 'js/syntax/clipboard.swf';
+		SyntaxHighlighter.all();
+	</script>
+
+    
+   </body>
+ </html>
